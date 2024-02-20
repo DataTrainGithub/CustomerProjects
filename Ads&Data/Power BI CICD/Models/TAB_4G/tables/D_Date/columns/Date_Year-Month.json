@@ -1,0 +1,14 @@
+{
+  "name": "Date_Year-Month",
+  "dataType": "string",
+  "sourceColumn": "Date_Year-Month",
+  "sortByColumn": "Date_Year-Month_Sort",
+  "lineageTag": "f7046785-da4e-4906-a129-369c0c056fba",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    }
+  ]
+}

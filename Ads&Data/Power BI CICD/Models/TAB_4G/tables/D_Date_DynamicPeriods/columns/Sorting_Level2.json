@@ -1,0 +1,26 @@
+{
+  "type": "calculatedTableColumn",
+  "name": "Sorting_Level2",
+  "dataType": "dateTime",
+  "isNameInferred": true,
+  "isDataTypeInferred": true,
+  "isHidden": true,
+  "sourceColumn": "[Sorting_Level2]",
+  "formatString": "General Date",
+  "lineageTag": "442637db-ab12-4c96-8e8d-ad7c9282ee0d",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    },
+    {
+      "name": "PBI_FormatHint",
+      "value": "{\"isCustom\":true}"
+    },
+    {
+      "name": "PBI_ChangedProperties",
+      "value": "[\"FormatString\",\"IsHidden\"]"
+    }
+  ]
+}

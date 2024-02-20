@@ -1,0 +1,23 @@
+{
+  "name": "Fn_Date_Helper",
+  "kind": "m",
+  "expression": [
+    "(input_date as text) =>",
+    "let",
+    "    Output = try DateTime.Date(#datetime(Number.FromText(Text.Start(input_date, 4)), Number.FromText(Text.Range(input_date, 4, 2)), Number.FromText(Text.Range(input_date, 6, 2)), 0, 0, 0)) otherwise null",
+    "in",
+    "    Output"
+  ],
+  "queryGroup": "Functions",
+  "lineageTag": "a7f5231c-f0f9-4833-871a-e81ceee01a88",
+  "annotations": [
+    {
+      "name": "PBI_NavigationStepName",
+      "value": "Navigation"
+    },
+    {
+      "name": "PBI_ResultType",
+      "value": "Function"
+    }
+  ]
+}

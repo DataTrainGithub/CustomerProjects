@@ -1,0 +1,19 @@
+{
+  "name": "Fn_Helper_Table_Combine",
+  "kind": "m",
+  "expression": [
+    "(inputTable as table, field as any) =>",
+    "let",
+    "    Source = Table.AddColumn(inputTable, \"ExtraField\", each field)",
+    "in",
+    "    Source"
+  ],
+  "queryGroup": "Functions",
+  "lineageTag": "4ba1f28b-182f-42e3-a4a1-c81e7991d994",
+  "annotations": [
+    {
+      "name": "PBI_NavigationStepName",
+      "value": "Navigation"
+    }
+  ]
+}

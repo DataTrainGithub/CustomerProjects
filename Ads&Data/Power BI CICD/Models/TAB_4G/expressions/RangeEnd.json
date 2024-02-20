@@ -1,0 +1,13 @@
+{
+  "name": "RangeEnd",
+  "kind": "m",
+  "expression": "#datetime(2023, 1, 1, 0, 0, 0) meta [IsParameterQuery=true, Type=\"Any\", IsParameterQueryRequired=true]",
+  "queryGroup": "Parameters\\Incremental Refresh",
+  "lineageTag": "9cefeda1-f61b-41cd-927f-cb055bc24054",
+  "annotations": [
+    {
+      "name": "PBI_ResultType",
+      "value": "DateTime"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "D_AdvertiserCompany",
+  "lineageTag": "4d813ad8-800e-46c5-9e41-2eb1753ce9cf",
+  "annotations": [
+    {
+      "name": "PBI_ResultType",
+      "value": "Table"
+    }
+  ]
+}

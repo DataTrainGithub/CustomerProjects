@@ -1,0 +1,32 @@
+{
+  "name": "D_AdvertiserCompany-4756a78d-9a92-471d-8fea-b23fe09d6806",
+  "mode": "import",
+  "source": {
+    "type": "m",
+    "expression": [
+      "let",
+      "    StorageAccount = \"sa4data4dip4uat\",",
+      "    Container = \"bronze\",",
+      "    Product = \"campaigninsights_crm_accounts_to_sales\",",
+      "    Source = AzureStorage.DataLake(\"https://\" & StorageAccount & \".dfs.core.windows.net/\" & Container, [HierarchicalNavigation = true]),",
+      "    FilterProduct = Source{[#\"Folder Path\"=\"https://\" & StorageAccount & \".dfs.core.windows.net/\" & Container & \"/\", Name=Product]}[Content],",
+      "    OrderYearsDescending = Table.Sort(FilterProduct,{{\"Name\", Order.Descending}}),",
+      "    KeepLatestYear = Table.FirstN(OrderYearsDescending,1),",
+      "    ExpandYear = Table.Combine(KeepLatestYear[Content]),",
+      "    OrderMonthsDescending = Table.Sort(ExpandYear,{{\"Name\", Order.Descending}}),",
+      "    KeepLatestMonth = Table.FirstN(OrderMonthsDescending,1),",
+      "    ExpandMonth = Table.Combine(KeepLatestMonth[Content]),",
+      "    OrderDaysDescending = Table.Sort(ExpandMonth,{{\"Name\", Order.Descending}}),",
+      "    KeepLatestDay = Table.FirstN(OrderDaysDescending,1),",
+      "    ExpandDay = Table.Combine(KeepLatestDay[Content]),",
+      "    ToParquet = Table.AddColumn(ExpandDay, \"Custom\", each Parquet.Document([Content])),",
+      "    RemovedOtherThanColumns = Table.SelectColumns(ToParquet,{\"Custom\"}),",
+      "    ExpandedCustom = Table.ExpandTableColumn(RemovedOtherThanColumns, \"Custom\", {\"account_id\", \"account_name\", \"salesfunction_code\", \"team_salesfunction_name_L1\", \"team_salesfunction_name_L2\", \"team_salesfunction_name_L3\", \"team_salesfunction_name_L4\", \"team_salesfunction_name_L5\", \"salesperson_name\", \"salesperson_email\", \"salesfunctionassociation_validfrom_utc\", \"salesfunctionassociation_validto_utc\", \"salesfunctionassociation_active\"}, {\"account_id\", \"account_name\", \"salesfunction_code\", \"team_salesfunction_name_L1\", \"team_salesfunction_name_L2\", \"team_salesfunction_name_L3\", \"team_salesfunction_name_L4\", \"team_salesfunction_name_L5\", \"salesperson_name\", \"salesperson_email\", \"salesfunctionassociation_validfrom_utc\", \"salesfunctionassociation_validto_utc\", \"salesfunctionassociation_active\"}),",
+      "    ChangedTypes = Table.TransformColumnTypes(ExpandedCustom,{{\"account_id\", Int64.Type}, {\"account_name\", type text}, {\"salesfunction_code\", type text}, {\"team_salesfunction_name_L1\", type text}, {\"team_salesfunction_name_L2\", type text}, {\"team_salesfunction_name_L3\", type text}, {\"team_salesfunction_name_L4\", type text}, {\"team_salesfunction_name_L5\", type text}, {\"salesperson_name\", type text}, {\"salesperson_email\", type text}, {\"salesfunctionassociation_validfrom_utc\", type datetime}, {\"salesfunctionassociation_validto_utc\", type datetime}, {\"salesfunctionassociation_active\", type logical}}),",
+      "    KeepOnlyAccountInfo = Table.SelectColumns(ChangedTypes,{\"account_id\", \"account_name\"}),",
+      "    RemoveDuplicates = Table.Distinct(KeepOnlyAccountInfo)",
+      "in",
+      "    RemoveDuplicates"
+    ]
+  }
+}

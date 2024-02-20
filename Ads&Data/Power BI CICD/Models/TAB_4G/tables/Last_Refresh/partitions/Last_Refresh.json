@@ -1,0 +1,30 @@
+{
+  "name": "Last_Refresh",
+  "mode": "import",
+  "source": {
+    "type": "m",
+    "expression": [
+      "let",
+      "    CurrentUtcTime = DateTimeZone.FixedUtcNow(),",
+      "    CurrentYear = Date.Year(CurrentUtcTime),",
+      "",
+      "    // Return the DST limit for a given month",
+      "    DstLimit = (month as number) as datetimezone =>",
+      "        let",
+      "            LastDayOfMonth = Date.EndOfMonth(#date(CurrentYear, month, 1)),",
+      "            DayOfWeek = Date.DayOfWeek(LastDayOfMonth, Day.Sunday),",
+      "            LastSunday = Date.AddDays(LastDayOfMonth, -DayOfWeek),",
+      "            DstLimit = DateTime.AddZone(LastSunday & #time(1, 0, 0), 0)",
+      "        in",
+      "            DstLimit,",
+      "",
+      "    // DST starts in March (3) and ends in October (10)",
+      "    IsDst = CurrentUtcTime >= DstLimit(3) and CurrentUtcTime < DstLimit(10),",
+      "",
+      "    BrusselsTime = if IsDst then DateTimeZone.SwitchZone(CurrentUtcTime, 2) else DateTimeZone.SwitchZone(CurrentUtcTime, 1),",
+      "    Table = #table(type table [date_time = DateTime.Type], {{DateTimeZone.RemoveZone(BrusselsTime)}})",
+      "in",
+      "    Table"
+    ]
+  }
+}

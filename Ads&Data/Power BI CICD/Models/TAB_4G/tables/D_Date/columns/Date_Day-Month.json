@@ -1,0 +1,14 @@
+{
+  "name": "Date_Day-Month",
+  "dataType": "int64",
+  "sourceColumn": "Date_Day-Month",
+  "formatString": "0",
+  "lineageTag": "4488e4da-9bbe-49df-9f75-b04496a7c1ef",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "User"
+    }
+  ]
+}

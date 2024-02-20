@@ -1,0 +1,14 @@
+{
+  "name": "D_Date_Shadow-784cf89a-a107-4221-82a0-c11deb19a2c4",
+  "mode": "import",
+  "queryGroup": "Dimensions",
+  "source": {
+    "type": "m",
+    "expression": [
+      "let",
+      "    Source = D_Date",
+      "in",
+      "    Source"
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "fb29521f-266b-4f81-875d-e4cca03f4970",
+  "fromTable": "D_LineItem",
+  "fromColumn": "wave_id",
+  "toTable": "D_Campaigns",
+  "toColumn": "wave_waveid_master"
+}

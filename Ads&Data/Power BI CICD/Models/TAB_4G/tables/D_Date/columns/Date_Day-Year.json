@@ -1,0 +1,14 @@
+{
+  "name": "Date_Day-Year",
+  "dataType": "int64",
+  "sourceColumn": "Date_Day-Year",
+  "formatString": "0",
+  "lineageTag": "9922a5ee-f830-4ad4-8d5d-bf9f222811a6",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "User"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "name": "D_Date-a4764abf-d8ef-44ec-af86-01a2affe817b",
+  "mode": "import",
+  "queryGroup": "Dimensions",
+  "source": {
+    "type": "m",
+    "expression": [
+      "let",
+      "  CurrentYear = Date.Year(DateTime.LocalNow()),",
+      "  StartDate = #date(D_Date_Start_Year,1,1),",
+      "  EndDate = if CurrentYear < D_Date_End_Year then #date(D_Date_End_Year,12,31) else #date(CurrentYear,12,31),",
+      "  NumberOfDays = Duration.Days( EndDate - StartDate ),",
+      "  Dates = List.Dates(StartDate, NumberOfDays+1, #duration(1,0,0,0)),",
+      "  #\"Geconverteerd naar tabel\" = Table.FromList(Dates, Splitter.SplitByNothing(), null, null, ExtraValues.Error),",
+      "  #\"Namen van kolommen gewijzigd\" = Table.RenameColumns(#\"Geconverteerd naar tabel\", {{\"Column1\", \"FullDateAlternateKey\"}}),",
+      "  #\"Type gewijzigd\" = Table.TransformColumnTypes(#\"Namen van kolommen gewijzigd\", {{\"FullDateAlternateKey\", type date}}),",
+      "  #\"Inserted Year\" = Table.AddColumn(#\"Type gewijzigd\", \"Year\", each Date.Year([FullDateAlternateKey]), type number),",
+      "  #\"Inserted Month\" = Table.AddColumn(#\"Inserted Year\", \"Month\", each Date.Month([FullDateAlternateKey]), type number),",
+      "  #\"Inserted Month Name\" = Table.AddColumn(#\"Inserted Month\", \"Month Name\", each Date.MonthName([FullDateAlternateKey]), type text),",
+      "  #\"Inserted Quarter\" = Table.AddColumn(#\"Inserted Month Name\", \"Quarter\", each Date.QuarterOfYear([FullDateAlternateKey]), type number),",
+      "  #\"Inserted Week of Year\" = Table.AddColumn(#\"Inserted Quarter\", \"Week of Year\", each Date.WeekOfYear([FullDateAlternateKey]), type number),",
+      "  #\"Inserted Day\" = Table.AddColumn(#\"Inserted Week of Year\", \"Day\", each Date.Day([FullDateAlternateKey]), type number),",
+      "  #\"Inserted Day of Year\" = Table.AddColumn(#\"Inserted Day\", \"Day of Year\", each Date.DayOfYear([FullDateAlternateKey]), type number),",
+      "  #\"Inserted Day Name\" = Table.AddColumn(#\"Inserted Day of Year\", \"Day Name\", each Date.DayOfWeekName([FullDateAlternateKey]), type text),",
+      "  #\"Inserted Year Month Sort\" = Table.AddColumn(#\"Inserted Day Name\", \"Date_Year-Month_Sort\", each if [Month] < 10 then Number.ToText([Year]) & \"0\" & Number.ToText([Month]) else Number.ToText([Year]) & Number.ToText([Month])),",
+      "  #\"Inserted Year Month\" = Table.AddColumn(#\"Inserted Year Month Sort\", \"Date_Year-Month\", each if [Month] < 10 then Number.ToText([Year]) & \"-0\" & Number.ToText([Month]) else Number.ToText([Year]) & \"-\" & Number.ToText([Month])),",
+      "  #\"Year Month Sort Int64\" = Table.TransformColumnTypes(#\"Inserted Year Month\", {{\"Date_Year-Month_Sort\", Int64.Type}}),",
+      "  #\"Namen van kolommen gewijzigd1\" = Table.RenameColumns(#\"Year Month Sort Int64\", {{\"FullDateAlternateKey\", \"Date_Date\"}, {\"Year\", \"Date_Year\"}, {\"Month\", \"Date_Month\"}, {\"Month Name\", \"Date_Month-Name\"}, {\"Quarter\", \"Date_Quarter\"}, {\"Week of Year\", \"Date_Week\"}, {\"Day\", \"Date_Day-Month\"}, {\"Day of Year\", \"Date_Day-Year\"}, {\"Day Name\", \"Date_Day-Name\"}}),",
+      "  #\"Volgorde van kolommen gewijzigd\" = Table.ReorderColumns(#\"Namen van kolommen gewijzigd1\", {\"Date_Date\", \"Date_Year\", \"Date_Year-Month_Sort\", \"Date_Year-Month\", \"Date_Month\", \"Date_Month-Name\", \"Date_Quarter\", \"Date_Week\", \"Date_Day-Year\", \"Date_Day-Month\", \"Date_Day-Name\"}),",
+      "  #\"Het kolomtype is gewijzigd\" = Table.TransformColumnTypes(#\"Volgorde van kolommen gewijzigd\", {{\"Date_Date\", type date}, {\"Date_Year\", Int64.Type}, {\"Date_Year-Month_Sort\", Int64.Type}, {\"Date_Year-Month\", type text}, {\"Date_Month\", Int64.Type}, {\"Date_Month-Name\", type text}, {\"Date_Quarter\", Int64.Type}, {\"Date_Week\", Int64.Type}, {\"Date_Day-Year\", Int64.Type}, {\"Date_Day-Month\", Int64.Type}}, \"nl-BE\")",
+      "in",
+      "  #\"Het kolomtype is gewijzigd\""
+    ]
+  }
+}

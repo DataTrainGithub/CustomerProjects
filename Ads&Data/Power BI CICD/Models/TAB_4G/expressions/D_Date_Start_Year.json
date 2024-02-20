@@ -1,0 +1,13 @@
+{
+  "name": "D_Date_Start_Year",
+  "kind": "m",
+  "expression": "2016 meta [IsParameterQuery=true, Type=\"Number\", IsParameterQueryRequired=true]",
+  "queryGroup": "Parameters",
+  "lineageTag": "44f2e900-2205-4391-b6ec-9c8b0d4e28e3",
+  "annotations": [
+    {
+      "name": "PBI_ResultType",
+      "value": "Number"
+    }
+  ]
+}

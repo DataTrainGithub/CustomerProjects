@@ -1,0 +1,37 @@
+{
+  "name": "Template_DataLake_Container_Latest",
+  "kind": "m",
+  "expression": [
+    "let",
+    "    StorageAccount = \"...\",",
+    "    Container = \"...\",",
+    "    Product = \"product\",",
+    "    Source = AzureStorage.DataLake(\"https://\" & StorageAccount & \".dfs.core.windows.net/\" & Container, [HierarchicalNavigation = true]),",
+    "    FilterProduct = Source{[#\"Folder Path\"=\"https://\" & StorageAccount & \".dfs.core.windows.net/\" & Container & \"/\", Name=Product]}[Content],",
+    "    OrderYearsDescending = Table.Sort(FilterProduct,{{\"Name\", Order.Descending}}),",
+    "    KeepLatestYear = Table.FirstN(OrderYearsDescending,1),",
+    "    ExpandYear = Table.Combine(KeepLatestYear[Content]),",
+    "    OrderMonthsDescending = Table.Sort(ExpandYear,{{\"Name\", Order.Descending}}),",
+    "    KeepLatestMonth = Table.FirstN(OrderMonthsDescending,1),",
+    "    ExpandMonth = Table.Combine(KeepLatestMonth[Content]),",
+    "    OrderDaysDescending = Table.Sort(ExpandMonth,{{\"Name\", Order.Descending}}),",
+    "    KeepLatestDay = Table.FirstN(OrderDaysDescending,1),",
+    "    ExpandDay = Table.Combine(KeepLatestDay[Content]),",
+    "    ToParquet = Table.AddColumn(ExpandDay, \"Custom\", each Parquet.Document([Content])),",
+    "    KeepCustom = Table.SelectColumns(ToParquet, {\"Custom\"})",
+    "in",
+    "    KeepCustom"
+  ],
+  "queryGroup": "Templates",
+  "lineageTag": "946786c7-557e-44fe-8122-78943acb709a",
+  "annotations": [
+    {
+      "name": "PBI_NavigationStepName",
+      "value": "Navigation"
+    },
+    {
+      "name": "PBI_ResultType",
+      "value": "Exception"
+    }
+  ]
+}

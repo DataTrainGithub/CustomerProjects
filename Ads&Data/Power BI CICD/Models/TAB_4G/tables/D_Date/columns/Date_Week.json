@@ -1,0 +1,14 @@
+{
+  "name": "Date_Week",
+  "dataType": "int64",
+  "sourceColumn": "Date_Week",
+  "formatString": "0",
+  "lineageTag": "5361748b-cb9e-4884-89ee-a4ec967492f3",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "User"
+    }
+  ]
+}

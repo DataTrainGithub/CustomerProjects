@@ -1,0 +1,7 @@
+{
+  "name": "70e88096-7d43-4ad0-9ed5-f7887de58293",
+  "fromTable": "F_GAM_Delivery",
+  "fromColumn": "Date",
+  "toTable": "D_Date",
+  "toColumn": "Date_Date"
+}

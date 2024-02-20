@@ -1,0 +1,7 @@
+{
+  "name": "4b7a6ca7-0709-4acc-8ec7-c2f3cd20e5ee",
+  "fromTable": "F_Segment_Selectivity",
+  "fromColumn": "segment_id",
+  "toTable": "D_Segments",
+  "toColumn": "segment_id"
+}

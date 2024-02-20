@@ -1,0 +1,8 @@
+{
+  "name": "9572dbc6-d929-4a20-9e95-6179804830ad",
+  "toCardinality": "many",
+  "fromTable": "D_LineItem",
+  "fromColumn": "orderid",
+  "toTable": "D_Orders",
+  "toColumn": "id"
+}

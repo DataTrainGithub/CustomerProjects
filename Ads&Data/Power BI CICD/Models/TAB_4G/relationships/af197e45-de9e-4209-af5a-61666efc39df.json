@@ -1,0 +1,7 @@
+{
+  "name": "af197e45-de9e-4209-af5a-61666efc39df",
+  "fromTable": "F_GAM_Delivery",
+  "fromColumn": "LineItemId",
+  "toTable": "D_LineItem",
+  "toColumn": "id"
+}

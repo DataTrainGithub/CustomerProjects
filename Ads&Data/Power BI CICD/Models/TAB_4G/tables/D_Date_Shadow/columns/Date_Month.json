@@ -1,0 +1,19 @@
+{
+  "name": "Date_Month",
+  "dataType": "int64",
+  "isHidden": true,
+  "sourceColumn": "Date_Month",
+  "formatString": "0",
+  "lineageTag": "ed60c726-d473-4f09-8930-e450c1d91c1f",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "User"
+    },
+    {
+      "name": "PBI_ChangedProperties",
+      "value": "[\"IsHidden\"]"
+    }
+  ]
+}

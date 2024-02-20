@@ -1,0 +1,14 @@
+{
+  "name": "Date_Quarter",
+  "dataType": "int64",
+  "sourceColumn": "Date_Quarter",
+  "formatString": "0",
+  "lineageTag": "20d55104-5ee1-481b-a233-64029a39ac26",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "User"
+    }
+  ]
+}

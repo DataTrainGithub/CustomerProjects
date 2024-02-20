@@ -1,0 +1,20 @@
+{
+  "type": "calculatedTableColumn",
+  "name": "Period_Level2",
+  "dataType": "string",
+  "isNameInferred": true,
+  "isDataTypeInferred": true,
+  "sourceColumn": "[Period_Level2]",
+  "lineageTag": "0315fabc-a334-46e6-a8f7-8e17a829d286",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    },
+    {
+      "name": "PBI_ChangedProperties",
+      "value": "[\"FormatString\"]"
+    }
+  ]
+}

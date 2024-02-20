@@ -1,0 +1,15 @@
+{
+  "name": "D_Date_Shadow",
+  "isHidden": true,
+  "lineageTag": "6e2802fe-20f6-460d-8535-d21e8a92a670",
+  "annotations": [
+    {
+      "name": "PBI_ResultType",
+      "value": "Table"
+    },
+    {
+      "name": "PBI_ChangedProperties",
+      "value": "[\"IsHidden\"]"
+    }
+  ]
+}

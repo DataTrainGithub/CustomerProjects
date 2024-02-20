@@ -1,0 +1,7 @@
+{
+  "name": "d2a1212f-b624-4aff-a788-26cc88632294",
+  "fromTable": "F_GAM_Viewability",
+  "fromColumn": "line_item_id",
+  "toTable": "D_LineItem",
+  "toColumn": "id"
+}

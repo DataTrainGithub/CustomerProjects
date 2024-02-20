@@ -1,0 +1,28 @@
+{
+  "name": "F_GAM_Viewability_Completed",
+  "kind": "m",
+  "expression": [
+    "let",
+    "    StorageAccount = \"sa4data4dip4uat\",",
+    "    Container = \"bronze\",",
+    "    FilePrefix = \"line_item_date_completed_\",",
+    "    Source = AzureStorage.DataLake(\"https://\" & StorageAccount & \".dfs.core.windows.net/\" & Container),",
+    "    FilteredRows = Table.SelectRows(Source, each Text.StartsWith([Name], FilePrefix)),",
+    "    CleanUpMetaData = Table.SelectColumns(FilteredRows,{\"Content\", \"Name\"}),",
+    "    ChangeOrderOfColumns = Table.ReorderColumns(CleanUpMetaData,{\"Name\", \"Content\"}),",
+    "    InsertIncrementalDateparameters = Table.SelectRows(ChangeOrderOfColumns, each [Name] >= FilePrefix & DateTime.ToText(RangeStart, \"yyyyMMdd\") & \".parquet\" and [Name] < FilePrefix & DateTime.ToText(RangeEnd, \"yyyyMMdd\") & \".parquet\")",
+    "in",
+    "    InsertIncrementalDateparameters"
+  ],
+  "lineageTag": "e6853208-fa28-45f4-a572-e3359aec7656",
+  "annotations": [
+    {
+      "name": "PBI_NavigationStepName",
+      "value": "Navigation"
+    },
+    {
+      "name": "PBI_ResultType",
+      "value": "Table"
+    }
+  ]
+}

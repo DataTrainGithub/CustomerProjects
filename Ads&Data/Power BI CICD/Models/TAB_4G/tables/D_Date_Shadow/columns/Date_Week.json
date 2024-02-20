@@ -1,0 +1,19 @@
+{
+  "name": "Date_Week",
+  "dataType": "int64",
+  "isHidden": true,
+  "sourceColumn": "Date_Week",
+  "formatString": "0",
+  "lineageTag": "0b0f6493-849f-4733-bc77-a5451e7f66e8",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "User"
+    },
+    {
+      "name": "PBI_ChangedProperties",
+      "value": "[\"IsHidden\"]"
+    }
+  ]
+}

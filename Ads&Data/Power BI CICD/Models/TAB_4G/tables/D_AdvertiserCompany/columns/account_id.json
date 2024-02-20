@@ -1,0 +1,19 @@
+{
+  "name": "account_id",
+  "dataType": "int64",
+  "isHidden": true,
+  "sourceColumn": "account_id",
+  "formatString": "0",
+  "lineageTag": "f57b75ca-59a3-4f70-8a94-3757a69a90de",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    },
+    {
+      "name": "PBI_ChangedProperties",
+      "value": "[\"IsHidden\"]"
+    }
+  ]
+}

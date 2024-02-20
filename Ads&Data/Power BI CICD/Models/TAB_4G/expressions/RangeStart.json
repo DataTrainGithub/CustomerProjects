@@ -1,0 +1,17 @@
+{
+  "name": "RangeStart",
+  "kind": "m",
+  "expression": "#datetime(2021, 1, 1, 0, 0, 0) meta [IsParameterQuery=true, Type=\"DateTime\", IsParameterQueryRequired=true]",
+  "queryGroup": "Parameters\\Incremental Refresh",
+  "lineageTag": "1ff7a2d0-201e-406f-8538-d1dbebb7c82b",
+  "annotations": [
+    {
+      "name": "PBI_ResultType",
+      "value": "DateTime"
+    },
+    {
+      "name": "PBI_NavigationStepName",
+      "value": "Navigation"
+    }
+  ]
+}

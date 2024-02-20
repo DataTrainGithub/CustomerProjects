@@ -1,0 +1,18 @@
+{
+  "name": "Date_Month-Name",
+  "dataType": "string",
+  "isHidden": true,
+  "sourceColumn": "Date_Month-Name",
+  "lineageTag": "2d222f79-8423-419e-93c0-8fcb442b6586",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    },
+    {
+      "name": "PBI_ChangedProperties",
+      "value": "[\"IsHidden\"]"
+    }
+  ]
+}

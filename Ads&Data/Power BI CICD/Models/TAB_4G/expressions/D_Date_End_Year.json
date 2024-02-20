@@ -1,0 +1,13 @@
+{
+  "name": "D_Date_End_Year",
+  "kind": "m",
+  "expression": "2023 meta [IsParameterQuery=true, Type=\"Number\", IsParameterQueryRequired=true]",
+  "queryGroup": "Parameters",
+  "lineageTag": "961f2923-429d-412c-966d-c817a09fe17d",
+  "annotations": [
+    {
+      "name": "PBI_ResultType",
+      "value": "Number"
+    }
+  ]
+}

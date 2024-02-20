@@ -1,0 +1,8 @@
+{
+  "name": "15b4ea52-e757-4e50-9af5-a453b3e8c0fd",
+  "toCardinality": "many",
+  "fromTable": "F_Nativo_Delivery",
+  "fromColumn": "abs_wave_id",
+  "toTable": "D_LineItem",
+  "toColumn": "wave_id"
+}

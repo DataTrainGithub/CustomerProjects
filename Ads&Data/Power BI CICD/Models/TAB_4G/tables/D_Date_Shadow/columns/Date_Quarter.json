@@ -1,0 +1,19 @@
+{
+  "name": "Date_Quarter",
+  "dataType": "int64",
+  "isHidden": true,
+  "sourceColumn": "Date_Quarter",
+  "formatString": "0",
+  "lineageTag": "c139c6c5-a236-442d-ad9e-50ab3a569c81",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "User"
+    },
+    {
+      "name": "PBI_ChangedProperties",
+      "value": "[\"IsHidden\"]"
+    }
+  ]
+}

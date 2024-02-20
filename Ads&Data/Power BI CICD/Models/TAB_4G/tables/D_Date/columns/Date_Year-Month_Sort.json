@@ -1,0 +1,19 @@
+{
+  "name": "Date_Year-Month_Sort",
+  "dataType": "int64",
+  "isHidden": true,
+  "sourceColumn": "Date_Year-Month_Sort",
+  "formatString": "0",
+  "lineageTag": "2f55cc7f-c496-4720-a459-d60da24ab44a",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "User"
+    },
+    {
+      "name": "PBI_ChangedProperties",
+      "value": "[\"IsHidden\"]"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "D_Date",
+  "lineageTag": "d2269358-8204-46de-a653-560a2b8580ef",
+  "annotations": [
+    {
+      "name": "PBI_ResultType",
+      "value": "Exception"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "Last_Refresh",
+  "lineageTag": "d32587de-1330-4514-961d-472455fa2c1a",
+  "annotations": [
+    {
+      "name": "PBI_NavigationStepName",
+      "value": "Navigation"
+    },
+    {
+      "name": "PBI_ResultType",
+      "value": "Table"
+    }
+  ]
+}

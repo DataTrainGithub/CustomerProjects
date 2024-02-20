@@ -1,0 +1,14 @@
+{
+  "name": "date_time",
+  "dataType": "dateTime",
+  "sourceColumn": "date_time",
+  "formatString": "dd/mm/yyyy hh:nn",
+  "lineageTag": "e3003313-202f-4196-8ee4-124329a0a3aa",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    }
+  ]
+}

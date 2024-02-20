@@ -1,0 +1,7 @@
+{
+  "name": "4f42c8f9-3cac-4c23-ab89-77eb7af6fde5",
+  "fromTable": "F_Nativo_Delivery",
+  "fromColumn": "date",
+  "toTable": "D_Date",
+  "toColumn": "Date_Date"
+}

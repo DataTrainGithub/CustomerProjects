@@ -1,0 +1,7 @@
+{
+  "name": "c97f1f8c-02d4-498b-9b73-fa8dafab7d71",
+  "fromTable": "D_Campaigns",
+  "fromColumn": "active_account_advertiserid",
+  "toTable": "D_SalesHierarchy",
+  "toColumn": "account_id"
+}

@@ -1,0 +1,26 @@
+{
+  "name": "Date_Date",
+  "dataType": "dateTime",
+  "sourceColumn": "Date_Date",
+  "formatString": "dd/mm/yyyy",
+  "lineageTag": "9040b6eb-a8d7-4396-a47f-4039398c6f81",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    },
+    {
+      "name": "UnderlyingDateTimeDataType",
+      "value": "Date"
+    },
+    {
+      "name": "PBI_FormatHint",
+      "value": "{\"isCustom\":true}"
+    },
+    {
+      "name": "PBI_ChangedProperties",
+      "value": "[\"FormatString\"]"
+    }
+  ]
+}

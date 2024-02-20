@@ -1,0 +1,7 @@
+{
+  "name": "238766aa-85f7-4814-a4a8-0fa7dae1121a",
+  "fromTable": "D_Campaigns",
+  "fromColumn": "product_ratecardid",
+  "toTable": "D_Rate_Structure",
+  "toColumn": "abs_rate_id"
+}

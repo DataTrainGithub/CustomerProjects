@@ -1,0 +1,21 @@
+{
+  "type": "calculatedTableColumn",
+  "name": "Period",
+  "dataType": "string",
+  "isNameInferred": true,
+  "isDataTypeInferred": true,
+  "sourceColumn": "[Period]",
+  "sortByColumn": "Sorting",
+  "lineageTag": "f160df2b-0cf7-4b48-ad60-9af864579262",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    },
+    {
+      "name": "PBI_ChangedProperties",
+      "value": "[\"FormatString\",\"SortByColumn\"]"
+    }
+  ]
+}

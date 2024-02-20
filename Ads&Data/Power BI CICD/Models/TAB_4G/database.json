@@ -1,0 +1,103 @@
+{
+  "name": "TAB_4G",
+  "compatibilityLevel": 1569,
+  "model": {
+    "culture": "en-US",
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "discourageImplicitMeasures": true,
+    "dataSourceDefaultMaxConnections": 9,
+    "sourceQueryCulture": "nl-NL",
+    "maxParallelismPerRefresh": 9,
+    "queryGroups": [
+      {
+        "folder": "Parameters",
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "1"
+          }
+        ]
+      },
+      {
+        "folder": "Parameters\\Incremental Refresh",
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "0"
+          }
+        ]
+      },
+      {
+        "folder": "Functions",
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "2"
+          }
+        ]
+      },
+      {
+        "folder": "Dimensions",
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "4"
+          }
+        ]
+      },
+      {
+        "folder": "Measures",
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "5"
+          }
+        ]
+      },
+      {
+        "folder": "Parameters\\Data Lake",
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "1"
+          }
+        ]
+      },
+      {
+        "folder": "Templates",
+        "annotations": [
+          {
+            "name": "PBI_QueryGroupOrder",
+            "value": "3"
+          }
+        ]
+      }
+    ],
+    "annotations": [
+      {
+        "name": "PBIDesktopVersion",
+        "value": "2.110.1161.0 (22.10)"
+      },
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"RangeStart\",\"RangeEnd\",\"D_Date\",\"M_Measures\",\"Template_DataLake_Container_Incremental_Refresh\",\"Template_DataLake_Container_Latest\",\"Fn_Helper_Table_Combine\",\"D_Date_Start_Year\",\"D_Date_End_Year\",\"Fn_Date_Helper\",\"D_Date_Shadow\",\"F_Segment_Selectivity\",\"F_Nativo_Delivery\",\"F_GAM_Delivery\",\"F_GAM_Viewability\",\"F_LineItem_DeviceCategory\",\"D_Segments\",\"D_LineItem\",\"D_Campaigns\",\"I_CRM_Source_to_Active\",\"D_AdvertiserCompany\",\"D_SalesHierarchy\"]"
+      },
+      {
+        "name": "__PBI_TimeIntelligenceEnabled",
+        "value": "0"
+      },
+      {
+        "name": "TabularEditor_SerializeOptions",
+        "value": "{\"IgnoreInferredObjects\":true,\"IgnoreInferredProperties\":true,\"IgnoreTimestamps\":true,\"SplitMultilineStrings\":true,\"PrefixFilenames\":false,\"LocalTranslations\":false,\"LocalPerspectives\":false,\"LocalRelationships\":false,\"Levels\":[\"Data Sources\",\"Perspectives\",\"Relationships\",\"Roles\",\"Shared Expressions\",\"Tables\",\"Tables/Calculation Items\",\"Tables/Columns\",\"Tables/Hierarchies\",\"Tables/Measures\",\"Tables/Partitions\",\"Translations\"]}"
+      },
+      {
+        "name": "MappingModel",
+        "value": "TAB_4G"
+      }
+    ]
+  }
+}

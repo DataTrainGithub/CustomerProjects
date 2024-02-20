@@ -1,0 +1,18 @@
+{
+  "name": "_empty",
+  "dataType": "string",
+  "isHidden": true,
+  "sourceColumn": "_empty",
+  "lineageTag": "4bf9707a-e2ed-4c71-bd07-047c56d0dad1",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    },
+    {
+      "name": "PBI_ChangedProperties",
+      "value": "[\"IsHidden\"]"
+    }
+  ]
+}

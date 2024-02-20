@@ -1,0 +1,31 @@
+{
+  "name": "Template_DataLake_Container_Incremental_Refresh",
+  "kind": "m",
+  "expression": [
+    "let",
+    "    StorageAccount = \"...\",",
+    "    Container = \"...\",",
+    "    FilePrefix = \"prefix\",",
+    "    Source = AzureStorage.DataLake(\"https://\" & StorageAccount & \".dfs.core.windows.net/\" & Container),",
+    "    FilteredRows = Table.SelectRows(Source, each Text.StartsWith([Name], FilePrefix)),",
+    "    CleanUpMetaData = Table.SelectColumns(FilteredRows,{\"Content\", \"Name\"}),",
+    "    ChangeOrderOfColumns = Table.ReorderColumns(CleanUpMetaData,{\"Name\", \"Content\"}),",
+    "    InsertIncrementalDateparameters = Table.SelectRows(ChangeOrderOfColumns, each [Name] >= FilePrefix & DateTime.ToText(RangeStart, \"yyyyMMdd\") & \".parquet\" and [Name] < FilePrefix & DateTime.ToText(RangeEnd, \"yyyyMMdd\") & \".parquet\"),",
+    "    ExtractParquetContent = Table.AddColumn(InsertIncrementalDateparameters, \"Custom\", each Parquet.Document([Content])),",
+    "    KeepCustom = Table.SelectColumns(ExtractParquetContent, {\"Custom\"})",
+    "in",
+    "    KeepCustom"
+  ],
+  "queryGroup": "Templates",
+  "lineageTag": "c1218930-3c28-4d81-a17a-1b69f7799ce1",
+  "annotations": [
+    {
+      "name": "PBI_NavigationStepName",
+      "value": "Navigation"
+    },
+    {
+      "name": "PBI_ResultType",
+      "value": "Exception"
+    }
+  ]
+}

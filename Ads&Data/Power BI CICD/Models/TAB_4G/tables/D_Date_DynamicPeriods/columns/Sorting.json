@@ -1,0 +1,26 @@
+{
+  "type": "calculatedTableColumn",
+  "name": "Sorting",
+  "dataType": "int64",
+  "isNameInferred": true,
+  "isDataTypeInferred": true,
+  "isHidden": true,
+  "sourceColumn": "[Sorting]",
+  "formatString": "0",
+  "lineageTag": "e26c876b-7e6c-4ad7-a9d9-033313217961",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "User"
+    },
+    {
+      "name": "PBI_FormatHint",
+      "value": "{\"isCustom\":true}"
+    },
+    {
+      "name": "PBI_ChangedProperties",
+      "value": "[\"FormatString\",\"IsHidden\"]"
+    }
+  ]
+}

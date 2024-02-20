@@ -1,0 +1,7 @@
+{
+  "name": "e161d24f-22fe-4598-b815-ce9925bd67ec",
+  "fromTable": "F_GAM_Viewability",
+  "fromColumn": "date",
+  "toTable": "D_Date",
+  "toColumn": "Date_Date"
+}

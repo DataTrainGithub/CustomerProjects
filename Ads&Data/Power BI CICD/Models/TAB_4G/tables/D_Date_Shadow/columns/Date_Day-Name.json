@@ -1,0 +1,18 @@
+{
+  "name": "Date_Day-Name",
+  "dataType": "string",
+  "isHidden": true,
+  "sourceColumn": "Date_Day-Name",
+  "lineageTag": "6135650f-beb8-46ed-881d-22771e4cb008",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "Automatic"
+    },
+    {
+      "name": "PBI_ChangedProperties",
+      "value": "[\"IsHidden\"]"
+    }
+  ]
+}

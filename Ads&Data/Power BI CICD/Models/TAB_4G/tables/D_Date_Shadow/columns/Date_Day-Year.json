@@ -1,0 +1,19 @@
+{
+  "name": "Date_Day-Year",
+  "dataType": "int64",
+  "isHidden": true,
+  "sourceColumn": "Date_Day-Year",
+  "formatString": "0",
+  "lineageTag": "ac2dadfe-9da7-4edd-9e0f-5de31e8c8208",
+  "summarizeBy": "none",
+  "annotations": [
+    {
+      "name": "SummarizationSetBy",
+      "value": "User"
+    },
+    {
+      "name": "PBI_ChangedProperties",
+      "value": "[\"IsHidden\"]"
+    }
+  ]
+}

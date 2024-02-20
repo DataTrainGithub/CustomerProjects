@@ -1,0 +1,9 @@
+{
+  "name": "85223aba-16f6-4496-a8ad-8759f6d3cd6a",
+  "toCardinality": "many",
+  "fromTable": "D_Date",
+  "fromColumn": "Date_Date",
+  "toTable": "D_Date_DynamicPeriods",
+  "toColumn": "Date",
+  "isActive": false
+}

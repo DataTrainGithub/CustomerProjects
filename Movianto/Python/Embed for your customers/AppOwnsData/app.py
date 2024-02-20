@@ -1,5 +1,7 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT license.
+# Test URL: http://127.0.0.1:5000/?TrackingCode=b2ad91b0-c868-4479-84ba-51692ff5d9a8
+# Test URL - On it's way: http://127.0.0.1:5000/?TrackingCode=d8dc0668-2af1-4472-9a2c-7e683b4e48d7
 
 from services.pbiembedservice import PbiEmbedService
 from utils import Utils
@@ -17,7 +19,7 @@ app.config.from_object('config.BaseConfig')
 def index():
     '''Returns a static HTML page'''
     TrackingCode = request.args.get('TrackingCode')
-    print("HTML Tracking code = " + global_tracking_code)
+    print("HTML Tracking code = " + TrackingCode)
     return render_template('index.html', TrackingCode=TrackingCode)
 
 @app.route('/getembedinfo', methods=['GET'])

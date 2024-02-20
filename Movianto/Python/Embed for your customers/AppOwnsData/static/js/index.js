@@ -60,10 +60,10 @@ $(function () {
                 const newSettings = {
                     panes: {
                       filters :{
-                        visible: false // hide filter pane
+                        visible: true // hide filter pane
                       },
                     pageNavigation: {
-                        visible: false
+                        visible: true
                     }
                     }
                   };

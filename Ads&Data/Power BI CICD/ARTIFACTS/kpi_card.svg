@@ -1,0 +1,20 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 48' overflow='visible'>
+    <rect rx='5' width='95%' height='95%' style='stroke:lightgray; stroke-width:0.3; fill:white;' transform-origin='50% 50%' transform='scale(0.98)' />
+    <path d='M 18 2.0845
+          a 15.9155 15.9155 0 0 1 0 31.831
+          a 15.9155 15.9155 0 0 1 0 -31.831' fill='#F08538' transform='translate(5 6)' />
+    <path d='M 18 2.0845
+        a 15.9155 15.9155 0 0 1 0 31.831
+        a 15.9155 15.9155 0 0 1 0 -31.831' fill='none' stroke='#F6C6A3' stroke-width='4' stroke-dasharray='30.07, 100'
+        transform='translate(5 6) rotate(-180 18 18)' />
+    <text x='18' y='13' fill='white' font-size='6' text-anchor='middle' font-family='tahoma'
+        transform='translate(5 6)'>BY</text>
+    <text x='18' y='22' fill='white' font-size='7' font-weight='bold' text-anchor='middle' font-family='tahoma'
+        transform='translate(5 6)'>30%</text>
+    <text x='40' y='10' fill='black' font-size='6' font-family='tahoma' transform='translate(5 6)'>This
+        Quarter</text>
+    <text x='40' y='17' fill='black' font-size='6' font-weight='bold' font-family='tahoma'
+        transform='translate(5 6)'>115,134,015</text>
+    <text x='40' y='26' fill='#F08538' font-size='6' font-weight='bold' font-family='tahoma'
+        transform='translate(5 6)'>-30% vs Y-1</text>
+</svg>

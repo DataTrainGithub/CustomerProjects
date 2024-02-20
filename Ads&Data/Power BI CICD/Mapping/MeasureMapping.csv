@@ -1,0 +1,956 @@
+Model;Table;Column/Measure;Script;Extra Parameters
+TAB_Programmatic_Insights;F_Programmatic;Clicks;M_Summarization;Numeric
+TAB_Programmatic_Insights;F_Programmatic;Impressions;M_Summarization;Numeric
+TAB_Programmatic_Insights;F_Programmatic;Revenue;M_Summarization;Numeric
+TAB_Programmatic_Insights;F_Programmatic;Date;M_Summarization;Non-Numeric
+TAB_Programmatic_Insights;N/A;CTR;M_Custom;DIVIDE([M_Clicks], [M_Impressions])
+TAB_Programmatic_Insights;N/A;eCPM;M_Custom;DIVIDE([M_Revenue] * 1000, [M_Impressions])
+TAB_Programmatic_Insights;N/A;MIN_Date_All;M_Custom;CALCULATE([M_MIN_Date], ALL(D_Date))^^dd/MM/yyyy
+TAB_Programmatic_Insights;N/A;MAX_Date_All;M_Custom;CALCULATE([M_MAX_Date], ALL(D_Date))^^dd/MM/yyyy
+TAB_Programmatic_Insights;N/A;Revenue_%_TransactionType;M_Custom;DIVIDE( [M_Revenue], CALCULATE ( [M_Revenue], ALL ( F_Programmatic[Transaction Type] )))^^Percent
+TAB_Programmatic_Insights;N/A;Revenue_%_FormatType;M_Custom;DIVIDE( [M_Revenue], CALCULATE ( [M_Revenue], ALL ( F_Programmatic[Format Type] )))^^Percent
+TAB_Programmatic_Insights;N/A;Revenue_%_TransactionType_PY;M_Custom;DIVIDE( [M_Revenue_PY], CALCULATE ( [M_Revenue_PY], ALL ( F_Programmatic[Transaction Type] )))^^Percent
+TAB_Programmatic_Insights;N/A;Revenue_%_FormatType_PY;M_Custom;DIVIDE( [M_Revenue_PY], CALCULATE ( [M_Revenue_PY], ALL ( F_Programmatic[Format Type] )))^^Percent
+TAB_Programmatic_Insights;N/A;Clicks;M_Analytics;
+TAB_Programmatic_Insights;N/A;Impressions;M_Analytics;
+TAB_Programmatic_Insights;N/A;Revenue;M_Analytics;PY
+TAB_Programmatic_Insights;N/A;eCPM;M_Analytics;
+TAB_Programmatic_Insights;N/A;CTR;M_Analytics;
+TAB_Programmatic_Insights;N/A;Date;M_Analytics;
+TAB_Programmatic_Insights;F_Programmatic;M_Revenue;M_Functional;Cards
+TAB_Programmatic_Insights;F_Programmatic;M_Impressions;M_Functional;Button^^Numeric
+TAB_Programmatic_Insights;F_Programmatic;M_Revenue;M_Functional;Button^^Valuta
+TAB_Programmatic_Insights;F_Programmatic;M_CTR;M_Functional;Button^^Percent
+TAB_Programmatic_Insights;F_Programmatic;M_eCPM;M_Functional;Button^^Valuta
+TAB_Inventory_Insights;A_Inventory;Ad_Exchange_Clicks;M_Summarization;Numeric
+TAB_Inventory_Insights;A_Inventory;Ad_Exchange_Impressions;M_Summarization;Numeric
+TAB_Inventory_Insights;A_Inventory;Ad_Server_Clicks;M_Summarization;Numeric
+TAB_Inventory_Insights;A_Inventory;Ad_Server_Impressions;M_Summarization;Numeric
+TAB_Inventory_Insights;A_Inventory;Ad_Requests;M_Summarization;Numeric
+TAB_Inventory_Insights;A_Inventory;Code_Served;M_Summarization;Numeric
+TAB_Inventory_Insights;A_Inventory;Ad_Exchange_Active_View_Viewable_Impressions;M_Summarization;Numeric
+TAB_Inventory_Insights;A_Inventory;Ad_Server_Active_View_Viewable_Impressions;M_Summarization;Numeric
+TAB_Inventory_Insights;A_Inventory_Hourly;Ad_Exchange_Clicks_Hourly;M_Summarization;Numeric
+TAB_Inventory_Insights;A_Inventory_Hourly;Ad_Exchange_Impressions_Hourly;M_Summarization;Numeric
+TAB_Inventory_Insights;A_Inventory_Hourly;Ad_Server_Clicks_Hourly;M_Summarization;Numeric
+TAB_Inventory_Insights;A_Inventory_Hourly;Ad_Server_Impressions_Hourly;M_Summarization;Numeric
+TAB_Inventory_Insights;A_Inventory_Hourly;Impressions_Hourly;M_Summarization;Numeric
+TAB_Inventory_Insights;A_Inventory_Hourly;Clicks_Hourly;M_Summarization;Numeric
+TAB_Inventory_Insights;N/A;Clicks;M_Custom;[M_Ad_Exchange_Clicks] + [M_Ad_Server_Clicks]
+TAB_Inventory_Insights;N/A;Impressions;M_Custom;[M_Ad_Exchange_Impressions] + [M_Ad_Server_Impressions]
+TAB_Inventory_Insights;N/A;Click-Through_Rate;M_Custom;DIVIDE([M_Ad_Exchange_Clicks] + [M_Ad_Server_Clicks], [M_Ad_Exchange_Impressions] + [M_Ad_Server_Impressions])^^Percent
+TAB_Inventory_Insights;N/A;Fill_Rate;M_Custom;DIVIDE([M_Code_Served], [M_Ad_Requests])^^Percent
+TAB_Inventory_Insights;N/A;Render_Rate;M_Custom;DIVIDE([M_Impressions], [M_Code_Served])^^Percent
+TAB_Inventory_Insights;N/A;Delivery_Rate;M_Custom;[M_Fill_Rate] * [M_Render_Rate]^^Percent
+TAB_Inventory_Insights;N/A;Viewable_Impressions;M_Custom;[M_Ad_Exchange_Active_View_Viewable_Impressions] + [M_Ad_Server_Active_View_Viewable_Impressions]
+TAB_Inventory_Insights;N/A;Viewability_Rate;M_Custom;DIVIDE([M_Viewable_Impressions], [M_Impressions])^^Percent
+TAB_Inventory_Insights;N/A;Impressions_Hourly_NoBlank;M_Custom;VAR _MaxHour = CALCULATE(MAX(A_Inventory_Hourly[Hour]), REMOVEFILTERS(D_Time[Hour])) VAR _CurrentHour = MAX(D_Time[Hour]) VAR _LastFactDate = CALCULATE(MAX(A_Inventory_Hourly[Date]), REMOVEFILTERS()) VAR _CurrentDate = MAX(D_DAte[Date_Date]) VAR _DynamicDates = SUMMARIZE(CALCULATETABLE(D_Date, USERELATIONSHIP(D_Date[Date_Date], D_Date_DynamicPeriods[Date])), D_Date[Date_Date]) VAR _ForceZero = _CurrentDate <= _LastFactDate && _CurrentDate in _DynamicDates && IF(_LastFactDate = _CurrentDate, _CurrentHour <= _MaxHour, True) VAR _Result = [M_Impressions_Hourly] + IF(_ForceZero, 0) RETURN _Result
+TAB_Inventory_Insights;N/A;Ad_Exchange_Clicks;M_Analytics;^^SWITCH(TRUE(), AND(ISINSCOPE(A_Inventory[Ad_Unit_1]),ISBLANK(VALUES(A_Inventory[Ad_Unit_1]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_2]),ISBLANK(VALUES(A_Inventory[Ad_Unit_2]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_3]),ISBLANK(VALUES(A_Inventory[Ad_Unit_3]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_4]),ISBLANK(VALUES(A_Inventory[Ad_Unit_4]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_5]),ISBLANK(VALUES(A_Inventory[Ad_Unit_5]))),BLANK(), SELECTEDMEASURE())
+TAB_Inventory_Insights;N/A;Ad_Exchange_Impressions;M_Analytics;^^SWITCH(TRUE(), AND(ISINSCOPE(A_Inventory[Ad_Unit_1]),ISBLANK(VALUES(A_Inventory[Ad_Unit_1]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_2]),ISBLANK(VALUES(A_Inventory[Ad_Unit_2]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_3]),ISBLANK(VALUES(A_Inventory[Ad_Unit_3]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_4]),ISBLANK(VALUES(A_Inventory[Ad_Unit_4]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_5]),ISBLANK(VALUES(A_Inventory[Ad_Unit_5]))),BLANK(), SELECTEDMEASURE())
+TAB_Inventory_Insights;N/A;Ad_Server_Clicks;M_Analytics;^^SWITCH(TRUE(), AND(ISINSCOPE(A_Inventory[Ad_Unit_1]),ISBLANK(VALUES(A_Inventory[Ad_Unit_1]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_2]),ISBLANK(VALUES(A_Inventory[Ad_Unit_2]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_3]),ISBLANK(VALUES(A_Inventory[Ad_Unit_3]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_4]),ISBLANK(VALUES(A_Inventory[Ad_Unit_4]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_5]),ISBLANK(VALUES(A_Inventory[Ad_Unit_5]))),BLANK(), SELECTEDMEASURE())
+TAB_Inventory_Insights;N/A;Ad_Server_Impressions;M_Analytics;^^SWITCH(TRUE(), AND(ISINSCOPE(A_Inventory[Ad_Unit_1]),ISBLANK(VALUES(A_Inventory[Ad_Unit_1]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_2]),ISBLANK(VALUES(A_Inventory[Ad_Unit_2]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_3]),ISBLANK(VALUES(A_Inventory[Ad_Unit_3]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_4]),ISBLANK(VALUES(A_Inventory[Ad_Unit_4]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_5]),ISBLANK(VALUES(A_Inventory[Ad_Unit_5]))),BLANK(), SELECTEDMEASURE())
+TAB_Inventory_Insights;N/A;Ad_Requests;M_Analytics;^^SWITCH(TRUE(), AND(ISINSCOPE(A_Inventory[Ad_Unit_1]),ISBLANK(VALUES(A_Inventory[Ad_Unit_1]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_2]),ISBLANK(VALUES(A_Inventory[Ad_Unit_2]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_3]),ISBLANK(VALUES(A_Inventory[Ad_Unit_3]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_4]),ISBLANK(VALUES(A_Inventory[Ad_Unit_4]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_5]),ISBLANK(VALUES(A_Inventory[Ad_Unit_5]))),BLANK(), SELECTEDMEASURE())
+TAB_Inventory_Insights;N/A;Code_Served;M_Analytics;^^SWITCH(TRUE(), AND(ISINSCOPE(A_Inventory[Ad_Unit_1]),ISBLANK(VALUES(A_Inventory[Ad_Unit_1]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_2]),ISBLANK(VALUES(A_Inventory[Ad_Unit_2]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_3]),ISBLANK(VALUES(A_Inventory[Ad_Unit_3]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_4]),ISBLANK(VALUES(A_Inventory[Ad_Unit_4]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_5]),ISBLANK(VALUES(A_Inventory[Ad_Unit_5]))),BLANK(), SELECTEDMEASURE())
+TAB_Inventory_Insights;N/A;Ad_Exchange_Clicks_Hourly;M_Analytics;^^SWITCH(TRUE(), AND(ISINSCOPE(A_Inventory_Hourly[Ad_Unit_1]),ISBLANK(VALUES(A_Inventory_Hourly[Ad_Unit_1]))),BLANK(), AND(ISINSCOPE(A_Inventory_Hourly[Ad_Unit_2]),ISBLANK(VALUES(A_Inventory_Hourly[Ad_Unit_2]))),BLANK(), AND(ISINSCOPE(A_Inventory_Hourly[Ad_Unit_3]),ISBLANK(VALUES(A_Inventory_Hourly[Ad_Unit_3]))),BLANK(), AND(ISINSCOPE(A_Inventory_Hourly[Ad_Unit_4]),ISBLANK(VALUES(A_Inventory_Hourly[Ad_Unit_4]))),BLANK(), AND(ISINSCOPE(A_Inventory_Hourly[Ad_Unit_5]),ISBLANK(VALUES(A_Inventory_Hourly[Ad_Unit_5]))),BLANK(), SELECTEDMEASURE())
+TAB_Inventory_Insights;N/A;Ad_Exchange_Impressions_Hourly;M_Analytics;^^SWITCH(TRUE(), AND(ISINSCOPE(A_Inventory_Hourly[Ad_Unit_1]),ISBLANK(VALUES(A_Inventory_Hourly[Ad_Unit_1]))),BLANK(), AND(ISINSCOPE(A_Inventory_Hourly[Ad_Unit_2]),ISBLANK(VALUES(A_Inventory_Hourly[Ad_Unit_2]))),BLANK(), AND(ISINSCOPE(A_Inventory_Hourly[Ad_Unit_3]),ISBLANK(VALUES(A_Inventory_Hourly[Ad_Unit_3]))),BLANK(), AND(ISINSCOPE(A_Inventory_Hourly[Ad_Unit_4]),ISBLANK(VALUES(A_Inventory_Hourly[Ad_Unit_4]))),BLANK(), AND(ISINSCOPE(A_Inventory_Hourly[Ad_Unit_5]),ISBLANK(VALUES(A_Inventory_Hourly[Ad_Unit_5]))),BLANK(), SELECTEDMEASURE())
+TAB_Inventory_Insights;N/A;Ad_Server_Clicks_Hourly;M_Analytics;^^SWITCH(TRUE(), AND(ISINSCOPE(A_Inventory_Hourly[Ad_Unit_1]),ISBLANK(VALUES(A_Inventory_Hourly[Ad_Unit_1]))),BLANK(), AND(ISINSCOPE(A_Inventory_Hourly[Ad_Unit_2]),ISBLANK(VALUES(A_Inventory_Hourly[Ad_Unit_2]))),BLANK(), AND(ISINSCOPE(A_Inventory_Hourly[Ad_Unit_3]),ISBLANK(VALUES(A_Inventory_Hourly[Ad_Unit_3]))),BLANK(), AND(ISINSCOPE(A_Inventory_Hourly[Ad_Unit_4]),ISBLANK(VALUES(A_Inventory_Hourly[Ad_Unit_4]))),BLANK(), AND(ISINSCOPE(A_Inventory_Hourly[Ad_Unit_5]),ISBLANK(VALUES(A_Inventory_Hourly[Ad_Unit_5]))),BLANK(), SELECTEDMEASURE())
+TAB_Inventory_Insights;N/A;Ad_Server_Impressions_Hourly;M_Analytics;^^SWITCH(TRUE(), AND(ISINSCOPE(A_Inventory_Hourly[Ad_Unit_1]),ISBLANK(VALUES(A_Inventory_Hourly[Ad_Unit_1]))),BLANK(), AND(ISINSCOPE(A_Inventory_Hourly[Ad_Unit_2]),ISBLANK(VALUES(A_Inventory_Hourly[Ad_Unit_2]))),BLANK(), AND(ISINSCOPE(A_Inventory_Hourly[Ad_Unit_3]),ISBLANK(VALUES(A_Inventory_Hourly[Ad_Unit_3]))),BLANK(), AND(ISINSCOPE(A_Inventory_Hourly[Ad_Unit_4]),ISBLANK(VALUES(A_Inventory_Hourly[Ad_Unit_4]))),BLANK(), AND(ISINSCOPE(A_Inventory_Hourly[Ad_Unit_5]),ISBLANK(VALUES(A_Inventory_Hourly[Ad_Unit_5]))),BLANK(), SELECTEDMEASURE())
+TAB_Inventory_Insights;N/A;Clicks;M_Analytics;^^SWITCH(TRUE(), AND(ISINSCOPE(A_Inventory[Ad_Unit_1]),ISBLANK(VALUES(A_Inventory[Ad_Unit_1]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_2]),ISBLANK(VALUES(A_Inventory[Ad_Unit_2]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_3]),ISBLANK(VALUES(A_Inventory[Ad_Unit_3]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_4]),ISBLANK(VALUES(A_Inventory[Ad_Unit_4]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_5]),ISBLANK(VALUES(A_Inventory[Ad_Unit_5]))),BLANK(), SELECTEDMEASURE())
+TAB_Inventory_Insights;N/A;Impressions;M_Analytics;^^SWITCH(TRUE(), AND(ISINSCOPE(A_Inventory[Ad_Unit_1]),ISBLANK(VALUES(A_Inventory[Ad_Unit_1]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_2]),ISBLANK(VALUES(A_Inventory[Ad_Unit_2]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_3]),ISBLANK(VALUES(A_Inventory[Ad_Unit_3]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_4]),ISBLANK(VALUES(A_Inventory[Ad_Unit_4]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_5]),ISBLANK(VALUES(A_Inventory[Ad_Unit_5]))),BLANK(), SELECTEDMEASURE())
+TAB_Inventory_Insights;N/A;Click-Through_Rate;M_Analytics;^^SWITCH(TRUE(), AND(ISINSCOPE(A_Inventory[Ad_Unit_1]),ISBLANK(VALUES(A_Inventory[Ad_Unit_1]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_2]),ISBLANK(VALUES(A_Inventory[Ad_Unit_2]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_3]),ISBLANK(VALUES(A_Inventory[Ad_Unit_3]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_4]),ISBLANK(VALUES(A_Inventory[Ad_Unit_4]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_5]),ISBLANK(VALUES(A_Inventory[Ad_Unit_5]))),BLANK(), SELECTEDMEASURE())
+TAB_Inventory_Insights;N/A;Fill_Rate;M_Analytics;^^SWITCH(TRUE(), AND(ISINSCOPE(A_Inventory[Ad_Unit_1]),ISBLANK(VALUES(A_Inventory[Ad_Unit_1]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_2]),ISBLANK(VALUES(A_Inventory[Ad_Unit_2]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_3]),ISBLANK(VALUES(A_Inventory[Ad_Unit_3]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_4]),ISBLANK(VALUES(A_Inventory[Ad_Unit_4]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_5]),ISBLANK(VALUES(A_Inventory[Ad_Unit_5]))),BLANK(), SELECTEDMEASURE())
+TAB_Inventory_Insights;N/A;Render_Rate;M_Analytics;^^SWITCH(TRUE(), AND(ISINSCOPE(A_Inventory[Ad_Unit_1]),ISBLANK(VALUES(A_Inventory[Ad_Unit_1]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_2]),ISBLANK(VALUES(A_Inventory[Ad_Unit_2]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_3]),ISBLANK(VALUES(A_Inventory[Ad_Unit_3]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_4]),ISBLANK(VALUES(A_Inventory[Ad_Unit_4]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_5]),ISBLANK(VALUES(A_Inventory[Ad_Unit_5]))),BLANK(), SELECTEDMEASURE())
+TAB_Inventory_Insights;N/A;Delivery_Rate;M_Analytics;^^SWITCH(TRUE(), AND(ISINSCOPE(A_Inventory[Ad_Unit_1]),ISBLANK(VALUES(A_Inventory[Ad_Unit_1]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_2]),ISBLANK(VALUES(A_Inventory[Ad_Unit_2]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_3]),ISBLANK(VALUES(A_Inventory[Ad_Unit_3]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_4]),ISBLANK(VALUES(A_Inventory[Ad_Unit_4]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_5]),ISBLANK(VALUES(A_Inventory[Ad_Unit_5]))),BLANK(), SELECTEDMEASURE())
+TAB_Inventory_Insights;N/A;Viewable_Impressions;M_Analytics;^^SWITCH(TRUE(), AND(ISINSCOPE(A_Inventory[Ad_Unit_1]),ISBLANK(VALUES(A_Inventory[Ad_Unit_1]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_2]),ISBLANK(VALUES(A_Inventory[Ad_Unit_2]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_3]),ISBLANK(VALUES(A_Inventory[Ad_Unit_3]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_4]),ISBLANK(VALUES(A_Inventory[Ad_Unit_4]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_5]),ISBLANK(VALUES(A_Inventory[Ad_Unit_5]))),BLANK(), SELECTEDMEASURE())
+TAB_Inventory_Insights;N/A;Ad_Exchange_Active_View_Viewable_Impressions;M_Analytics;^^SWITCH(TRUE(), AND(ISINSCOPE(A_Inventory[Ad_Unit_1]),ISBLANK(VALUES(A_Inventory[Ad_Unit_1]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_2]),ISBLANK(VALUES(A_Inventory[Ad_Unit_2]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_3]),ISBLANK(VALUES(A_Inventory[Ad_Unit_3]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_4]),ISBLANK(VALUES(A_Inventory[Ad_Unit_4]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_5]),ISBLANK(VALUES(A_Inventory[Ad_Unit_5]))),BLANK(), SELECTEDMEASURE())
+TAB_Inventory_Insights;N/A;Ad_Server_Active_View_Viewable_Impressions;M_Analytics;^^SWITCH(TRUE(), AND(ISINSCOPE(A_Inventory[Ad_Unit_1]),ISBLANK(VALUES(A_Inventory[Ad_Unit_1]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_2]),ISBLANK(VALUES(A_Inventory[Ad_Unit_2]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_3]),ISBLANK(VALUES(A_Inventory[Ad_Unit_3]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_4]),ISBLANK(VALUES(A_Inventory[Ad_Unit_4]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_5]),ISBLANK(VALUES(A_Inventory[Ad_Unit_5]))),BLANK(), SELECTEDMEASURE())
+TAB_Inventory_Insights;N/A;Viewability_Rate;M_Analytics;^^SWITCH(TRUE(), AND(ISINSCOPE(A_Inventory[Ad_Unit_1]),ISBLANK(VALUES(A_Inventory[Ad_Unit_1]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_2]),ISBLANK(VALUES(A_Inventory[Ad_Unit_2]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_3]),ISBLANK(VALUES(A_Inventory[Ad_Unit_3]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_4]),ISBLANK(VALUES(A_Inventory[Ad_Unit_4]))),BLANK(), AND(ISINSCOPE(A_Inventory[Ad_Unit_5]),ISBLANK(VALUES(A_Inventory[Ad_Unit_5]))),BLANK(), SELECTEDMEASURE())
+TAB_Inventory_Insights;A_Inventory;M_Impressions;M_Functional;Button^^Numeric
+TAB_Inventory_Insights;A_Inventory;M_Clicks;M_Functional;Button^^Numeric
+TAB_Inventory_Insights;A_Inventory;M_Ad_Requests;M_Functional;Button^^Numeric
+TAB_Inventory_Insights;A_Inventory;M_Code_Served;M_Functional;Button^^Numeric
+TAB_Inventory_Insights;A_Inventory;M_Fill_Rate;M_Functional;Button^^Percent
+TAB_Inventory_Insights;A_Inventory;M_Click-Through_Rate;M_Functional;Button^^Percent
+TAB_Inventory_Insights;A_Inventory;M_Render_Rate;M_Functional;Button^^Percent
+TAB_Inventory_Insights;A_Inventory;M_Delivery_Rate;M_Functional;Button^^Percent
+TAB_Inventory_Insights;A_Inventory;M_Viewable_Impressions;M_Functional;Button^^Numeric
+TAB_Inventory_Insights;A_Inventory;M_Viewability_Rate;M_Functional;Button^^Percent
+TAB_Inventory_Insights;N/A;Impressions_Hourly;M_Analytics;^^SWITCH(TRUE(), AND(ISINSCOPE(A_Inventory_Hourly[Ad_Unit_1]),ISBLANK(VALUES(A_Inventory_Hourly[Ad_Unit_1]))),BLANK(), AND(ISINSCOPE(A_Inventory_Hourly[Ad_Unit_2]),ISBLANK(VALUES(A_Inventory_Hourly[Ad_Unit_2]))),BLANK(), AND(ISINSCOPE(A_Inventory_Hourly[Ad_Unit_3]),ISBLANK(VALUES(A_Inventory_Hourly[Ad_Unit_3]))),BLANK(), AND(ISINSCOPE(A_Inventory_Hourly[Ad_Unit_4]),ISBLANK(VALUES(A_Inventory_Hourly[Ad_Unit_4]))),BLANK(), AND(ISINSCOPE(A_Inventory_Hourly[Ad_Unit_5]),ISBLANK(VALUES(A_Inventory_Hourly[Ad_Unit_5]))),BLANK(), SELECTEDMEASURE())
+TAB_Inventory_Insights;A_Inventory_Hourly;M_Impressions_Hourly_Base;M_Statistics;1,2,3,4^^1,2,3,4^^Hourly
+TAB_Inventory_Insights;FP_Perspectives;N/A;M_FieldParameters;M_Impressions,M_Viewable_Impressions,M_Clicks,M_Ad_Requests,M_Code_Served,M_Fill_Rate,M_Click-Through_Rate,M_Render_Rate,M_Delivery_Rate,M_Viewability_Rate
+TAB_KeyValues;A_KeyValues;Requests;M_Summarization;Numeric
+TAB_KeyValues;N/A;Requests;M_Analytics;
+TAB_Delivery;F_Delivery;Clicks;M_Summarization;Numeric
+TAB_Delivery;F_Delivery;Impressions;M_Summarization;Numeric
+TAB_Delivery;F_Delivery;Requests;M_Summarization;Numeric
+TAB_Delivery;F_Delivery;Revenue;M_Summarization;Numeric
+TAB_Delivery;N/A;Click-Through_Rate;M_Custom;DIVIDE([M_Clicks],[M_Impressions])
+TAB_Delivery;N/A;Fill-Trough_Rate;M_Custom;DIVIDE([M_Impressions],[M_Requests])
+TAB_Delivery;N/A;Clicks;M_Analytics;
+TAB_Delivery;N/A;Impressions;M_Analytics;
+TAB_Delivery;N/A;Requests;M_Analytics;
+TAB_Delivery;N/A;Revenue;M_Analytics;
+TAB_Delivery;N/A;Click-Through_Rate;M_Analytics;
+TAB_Delivery;N/A;Fill-Trough_Rate;M_Analytics;
+TAB_Pipeline_Delivery;F_Revenue;Revenue;M_Summarization;Numeric
+TAB_Pipeline_Delivery;F_Offertes;Offerte;M_Summarization;Numeric
+TAB_Pipeline_Delivery;F_Targets;Target;M_Summarization;Numeric
+TAB_Pipeline_Delivery;N/A;Pipeline;M_Custom;CALCULATE(SUM(F_Offertes[Pipeline]), LOWER(F_Offertes[Status ]) = "pending")
+TAB_Pipeline_Delivery;N/A;Revenue_+_Pipeline;M_Custom;[M_Revenue] + [M_Pipeline]
+TAB_Pipeline_Delivery;N/A;Result;M_Custom;IF(NOT ISBLANK([M_Target]), [M_Revenue_+_Pipeline] - [M_Target])
+TAB_Pipeline_Delivery;N/A;Revenue;M_Analytics;PY
+TAB_Pipeline_Delivery;N/A;Offerte;M_Analytics;PY
+TAB_Pipeline_Delivery;N/A;Pipeline;M_Analytics;PY
+TAB_Pipeline_Delivery;N/A;Target;M_Analytics;PY
+TAB_Pipeline_Delivery;N/A;Revenue_+_Pipeline;M_Analytics;PY
+TAB_Pipeline_Delivery;N/A;Result;M_Analytics;
+TAB_Pipeline_Delivery;F_Revenue;M_Revenue;M_Functional;Cards
+TAB_Pipeline_Delivery;F_Offertes;M_Offerte;M_Functional;Cards
+TAB_Pipeline_Delivery;F_Offertes;M_Pipeline;M_Functional;Cards
+TAB_Pipeline_Delivery;F_Targets;M_Target;M_Functional;Cards
+TAB_Segment_Insights;F_Traffic_Daily;events_last_1_day;M_Summarization;Numeric
+TAB_Segment_Insights;F_Traffic_Daily;events_last_30_days;M_Summarization;Numeric
+TAB_Segment_Insights;F_Traffic_Daily;events_last_7_days;M_Summarization;Numeric
+TAB_Segment_Insights;F_Traffic_Daily;events_last_90_days;M_Summarization;Numeric
+TAB_Segment_Insights;F_Traffic_Daily;unique_users_last_1_day;M_Summarization;Numeric
+TAB_Segment_Insights;F_Traffic_Daily;unique_users_last_30_days;M_Summarization;Numeric
+TAB_Segment_Insights;F_Traffic_Daily;unique_users_last_7_days;M_Summarization;Numeric
+TAB_Segment_Insights;F_Traffic_Daily;unique_users_last_90_days;M_Summarization;Numeric
+TAB_Segment_Insights;F_Traffic_Monthly;unique_users;M_Summarization;Numeric
+TAB_Segment_Insights;F_Traffic_Monthly;events;M_Summarization;Numeric
+TAB_Segment_Insights;F_Profiles;18-24;M_Summarization;Numeric
+TAB_Segment_Insights;F_Profiles;25-34;M_Summarization;Numeric
+TAB_Segment_Insights;F_Profiles;35-44;M_Summarization;Numeric
+TAB_Segment_Insights;F_Profiles;45-54;M_Summarization;Numeric
+TAB_Segment_Insights;F_Profiles;55-64;M_Summarization;Numeric
+TAB_Segment_Insights;F_Profiles;65+;M_Summarization;Numeric
+TAB_Segment_Insights;F_Profiles;female;M_Summarization;Numeric
+TAB_Segment_Insights;F_Profiles;male;M_Summarization;Numeric
+TAB_Segment_Insights;F_Profiles;segment_size;M_Summarization;Numeric
+TAB_Segment_Insights;F_Profiles;segment_total_size_age;M_Summarization;Numeric
+TAB_Segment_Insights;F_Profiles;segment_total_size_gender;M_Summarization;Numeric
+TAB_Segment_Insights;N/A;current_events_last_1_day;M_Custom;VAR _LastFactDate = CALCULATE ( LASTDATE ( F_Traffic_Daily[current_date]), ALL ( F_Traffic_Daily) ) VAR _Result = CALCULATE ( [M_events_last_1_day], D_Date[Date_Date] = _LastFactDate ) RETURN IF(NOT ISBLANK([M_events_last_1_day]), _Result)
+TAB_Segment_Insights;N/A;current_events_last_30_days;M_Custom;VAR _LastFactDate = CALCULATE ( LASTDATE ( F_Traffic_Daily[current_date]), ALL ( F_Traffic_Daily) ) VAR _Result = CALCULATE ( [M_events_last_30_days], D_Date[Date_Date] = _LastFactDate ) RETURN IF(NOT ISBLANK([M_events_last_30_days]), _Result)
+TAB_Segment_Insights;N/A;current_events_last_7_days;M_Custom;VAR _LastFactDate = CALCULATE ( LASTDATE ( F_Traffic_Daily[current_date]), ALL ( F_Traffic_Daily) ) VAR _Result = CALCULATE ( [M_events_last_7_days], D_Date[Date_Date] = _LastFactDate ) RETURN IF(NOT ISBLANK([M_events_last_7_days]), _Result)
+TAB_Segment_Insights;N/A;current_events_last_90_days;M_Custom;VAR _LastFactDate = CALCULATE ( LASTDATE ( F_Traffic_Daily[current_date]), ALL ( F_Traffic_Daily) ) VAR _Result = CALCULATE ( [M_events_last_90_days], D_Date[Date_Date] = _LastFactDate ) RETURN IF(NOT ISBLANK([M_events_last_90_days]), _Result)
+TAB_Segment_Insights;N/A;current_unique_users_last_1_day;M_Custom;VAR _LastFactDate = CALCULATE ( LASTDATE ( F_Traffic_Daily[current_date]), ALL ( F_Traffic_Daily) ) VAR _Result = CALCULATE ( [M_unique_users_last_1_day], D_Date[Date_Date] = _LastFactDate ) RETURN IF(NOT ISBLANK([M_unique_users_last_1_day]), _Result)
+TAB_Segment_Insights;N/A;current_unique_users_last_30_days;M_Custom;VAR _LastFactDate = CALCULATE ( LASTDATE ( F_Traffic_Daily[current_date]), ALL ( F_Traffic_Daily) ) VAR _Result = CALCULATE ( [M_unique_users_last_30_days], D_Date[Date_Date] = _LastFactDate ) RETURN IF(NOT ISBLANK([M_unique_users_last_30_days]), _Result)
+TAB_Segment_Insights;N/A;current_unique_users_last_7_days;M_Custom;VAR _LastFactDate = CALCULATE ( LASTDATE ( F_Traffic_Daily[current_date]), ALL ( F_Traffic_Daily) ) VAR _Result = CALCULATE ( [M_unique_users_last_7_days], D_Date[Date_Date] = _LastFactDate ) RETURN IF(NOT ISBLANK([M_unique_users_last_7_days]), _Result)
+TAB_Segment_Insights;N/A;current_unique_users_last_90_days;M_Custom;VAR _LastFactDate = CALCULATE ( LASTDATE ( F_Traffic_Daily[current_date]), ALL ( F_Traffic_Daily) ) VAR _Result = CALCULATE ( [M_unique_users_last_90_days], D_Date[Date_Date] = _LastFactDate ) RETURN IF(NOT ISBLANK([M_unique_users_last_90_days]), _Result)
+TAB_Segment_Insights;N/A;profiled_age_18-24;M_Custom;DIVIDE([M_18-24],[M_segment_total_size_age])^^Percent
+TAB_Segment_Insights;N/A;profiled_age_25-34;M_Custom;DIVIDE([M_25-34],[M_segment_total_size_age])^^Percent
+TAB_Segment_Insights;N/A;profiled_age_35-44;M_Custom;DIVIDE([M_35-44],[M_segment_total_size_age])^^Percent
+TAB_Segment_Insights;N/A;profiled_age_45-54;M_Custom;DIVIDE([M_45-54],[M_segment_total_size_age])^^Percent
+TAB_Segment_Insights;N/A;profiled_age_55-64;M_Custom;DIVIDE([M_55-64],[M_segment_total_size_age])^^Percent
+TAB_Segment_Insights;N/A;profiled_age_65+;M_Custom;DIVIDE([M_65+],[M_segment_total_size_age])^^Percent
+TAB_Segment_Insights;N/A;profiled_gender_female;M_Custom;DIVIDE([M_female],[M_segment_total_size_gender])^^Percent
+TAB_Segment_Insights;N/A;profiled_gender_male;M_Custom;DIVIDE([M_male],[M_segment_total_size_gender])^^Percent
+TAB_Segment_Insights;N/A;profiled_gender;M_Custom;DIVIDE([M_segment_total_size_gender],[M_segment_size])^^Percent
+TAB_Segment_Insights;N/A;profiled_age;M_Custom;DIVIDE([M_segment_total_size_age],[M_segment_size])^^Percent
+TAB_Segment_Insights;N/A;current_segment_size;M_Custom;VAR _LastFactDate = CALCULATE ( LASTDATE ( F_Profiles[Date]), ALL ( F_Profiles ) ) VAR _Result = CALCULATE ( [M_segment_size], D_Date[Date_Date] = _LastFactDate ) RETURN IF(NOT ISBLANK([M_segment_size]), _Result)
+TAB_Segment_Insights;N/A;current_segment_total_size_age;M_Custom;VAR _LastFactDate = CALCULATE ( LASTDATE ( F_Profiles[Date]), ALL ( F_Profiles ) ) VAR _Result = CALCULATE ( [M_segment_total_size_age], D_Date[Date_Date] = _LastFactDate ) RETURN IF(NOT ISBLANK([M_segment_total_size_age]), _Result)
+TAB_Segment_Insights;N/A;current_segment_total_size_gender;M_Custom;VAR _LastFactDate = CALCULATE ( LASTDATE ( F_Profiles[Date]), ALL ( F_Profiles ) ) VAR _Result = CALCULATE ( [M_segment_total_size_gender], D_Date[Date_Date] = _LastFactDate ) RETURN IF(NOT ISBLANK([M_segment_total_size_gender]), _Result)
+TAB_Segment_Insights;N/A;current_profiled_age_18-24;M_Custom;VAR _LastFactDate = CALCULATE ( LASTDATE ( F_Profiles[Date]), ALL ( F_Profiles ) ) VAR _Result = CALCULATE ( [M_profiled_age_18-24], D_Date[Date_Date] = _LastFactDate ) RETURN IF(NOT ISBLANK([M_profiled_age_18-24]), _Result)^^Percent
+TAB_Segment_Insights;N/A;current_profiled_age_25-34;M_Custom;VAR _LastFactDate = CALCULATE ( LASTDATE ( F_Profiles[Date]), ALL ( F_Profiles ) ) VAR _Result = CALCULATE ( [M_profiled_age_25-34], D_Date[Date_Date] = _LastFactDate ) RETURN IF(NOT ISBLANK([M_profiled_age_25-34]), _Result)^^Percent
+TAB_Segment_Insights;N/A;current_profiled_age_35-44;M_Custom;VAR _LastFactDate = CALCULATE ( LASTDATE ( F_Profiles[Date]), ALL ( F_Profiles ) ) VAR _Result = CALCULATE ( [M_profiled_age_35-44], D_Date[Date_Date] = _LastFactDate ) RETURN IF(NOT ISBLANK([M_profiled_age_35-44]), _Result)^^Percent
+TAB_Segment_Insights;N/A;current_profiled_age_45-54;M_Custom;VAR _LastFactDate = CALCULATE ( LASTDATE ( F_Profiles[Date]), ALL ( F_Profiles ) ) VAR _Result = CALCULATE ( [M_profiled_age_45-54], D_Date[Date_Date] = _LastFactDate ) RETURN IF(NOT ISBLANK([M_profiled_age_45-54]), _Result)^^Percent
+TAB_Segment_Insights;N/A;current_profiled_age_55-64;M_Custom;VAR _LastFactDate = CALCULATE ( LASTDATE ( F_Profiles[Date]), ALL ( F_Profiles ) ) VAR _Result = CALCULATE ( [M_profiled_age_55-64], D_Date[Date_Date] = _LastFactDate ) RETURN IF(NOT ISBLANK([M_profiled_age_55-64]), _Result)^^Percent
+TAB_Segment_Insights;N/A;current_profiled_age_65+;M_Custom;VAR _LastFactDate = CALCULATE ( LASTDATE ( F_Profiles[Date]), ALL ( F_Profiles ) ) VAR _Result = CALCULATE ( [M_profiled_age_65+], D_Date[Date_Date] = _LastFactDate ) RETURN IF(NOT ISBLANK([M_profiled_age_65+]), _Result)^^Percent
+TAB_Segment_Insights;N/A;current_profiled_gender_female;M_Custom;VAR _LastFactDate = CALCULATE ( LASTDATE ( F_Profiles[Date]), ALL ( F_Profiles ) ) VAR _Result = CALCULATE ( [M_profiled_gender_female], D_Date[Date_Date] = _LastFactDate ) RETURN IF(NOT ISBLANK([M_profiled_gender_female]), _Result)^^Percent
+TAB_Segment_Insights;N/A;current_profiled_gender_male;M_Custom;VAR _LastFactDate = CALCULATE ( LASTDATE ( F_Profiles[Date]), ALL ( F_Profiles ) ) VAR _Result = CALCULATE ( [M_profiled_gender_male], D_Date[Date_Date] = _LastFactDate ) RETURN IF(NOT ISBLANK([M_profiled_gender_male]), _Result)^^Percent
+TAB_Segment_Insights;N/A;current_profiled_gender;M_Custom;VAR _LastFactDate = CALCULATE ( LASTDATE ( F_Profiles[Date]), ALL ( F_Profiles ) ) VAR _Result = CALCULATE ( [M_profiled_gender], D_Date[Date_Date] = _LastFactDate ) RETURN IF(NOT ISBLANK([M_profiled_gender]), _Result)^^Percent
+TAB_Segment_Insights;N/A;current_profiled_age;M_Custom;VAR _LastFactDate = CALCULATE ( LASTDATE ( F_Profiles[Date]), ALL ( F_Profiles ) ) VAR _Result = CALCULATE ( [M_profiled_age], D_Date[Date_Date] = _LastFactDate ) RETURN IF(NOT ISBLANK([M_profiled_age]), _Result)^^Percent
+TAB_Segment_Insights;N/A;events_last_1_day;M_Analytics;
+TAB_Segment_Insights;N/A;events_last_30_days;M_Analytics;
+TAB_Segment_Insights;N/A;events_last_7_days;M_Analytics;
+TAB_Segment_Insights;N/A;events_last_90_days;M_Analytics;
+TAB_Segment_Insights;N/A;unique_users_last_1_day;M_Analytics;
+TAB_Segment_Insights;N/A;unique_users_last_30_days;M_Analytics;
+TAB_Segment_Insights;N/A;unique_users_last_7_days;M_Analytics;
+TAB_Segment_Insights;N/A;unique_users_last_90_days;M_Analytics;
+TAB_Segment_Insights;N/A;current_events_last_1_day;M_Analytics;
+TAB_Segment_Insights;N/A;current_events_last_30_days;M_Analytics;
+TAB_Segment_Insights;N/A;current_events_last_7_days;M_Analytics;
+TAB_Segment_Insights;N/A;current_events_last_90_days;M_Analytics;
+TAB_Segment_Insights;N/A;current_unique_users_last_1_day;M_Analytics;
+TAB_Segment_Insights;N/A;current_unique_users_last_30_days;M_Analytics;
+TAB_Segment_Insights;N/A;current_unique_users_last_7_days;M_Analytics;
+TAB_Segment_Insights;N/A;current_unique_users_last_90_days;M_Analytics;
+TAB_Segment_Insights;N/A;18-24;M_Analytics;
+TAB_Segment_Insights;N/A;25-34;M_Analytics;
+TAB_Segment_Insights;N/A;35-44;M_Analytics;
+TAB_Segment_Insights;N/A;45-54;M_Analytics;
+TAB_Segment_Insights;N/A;45-54;M_Analytics;
+TAB_Segment_Insights;N/A;55-64;M_Analytics;
+TAB_Segment_Insights;N/A;65+;M_Analytics;
+TAB_Segment_Insights;N/A;female;M_Analytics;
+TAB_Segment_Insights;N/A;male;M_Analytics;
+TAB_Segment_Insights;N/A;segment_size;M_Analytics;
+TAB_Segment_Insights;N/A;segment_total_size_age;M_Analytics;
+TAB_Segment_Insights;N/A;segment_total_size_gender;M_Analytics;
+TAB_Segment_Insights;N/A;profiled_age_18-24;M_Analytics;
+TAB_Segment_Insights;N/A;profiled_age_25-34;M_Analytics;
+TAB_Segment_Insights;N/A;profiled_age_35-44;M_Analytics;
+TAB_Segment_Insights;N/A;profiled_age_45-54;M_Analytics;
+TAB_Segment_Insights;N/A;profiled_age_55-64;M_Analytics;
+TAB_Segment_Insights;N/A;profiled_age_65+;M_Analytics;
+TAB_Segment_Insights;N/A;profiled_gender_female;M_Analytics;
+TAB_Segment_Insights;N/A;profiled_gender_male;M_Analytics;
+TAB_Segment_Insights;N/A;profiled_gender;M_Analytics;
+TAB_Segment_Insights;N/A;profiled_age;M_Analytics;
+TAB_Segment_Insights;N/A;current_segment_size;M_Analytics;
+TAB_Segment_Insights;N/A;current_segment_total_size_age;M_Analytics;
+TAB_Segment_Insights;N/A;current_segment_total_size_gender;M_Analytics;
+TAB_Segment_Insights;N/A;current_profiled_age_18-24;M_Analytics;
+TAB_Segment_Insights;N/A;current_profiled_age_25-34;M_Analytics;
+TAB_Segment_Insights;N/A;current_profiled_age_35-44;M_Analytics;
+TAB_Segment_Insights;N/A;current_profiled_age_45-54;M_Analytics;
+TAB_Segment_Insights;N/A;current_profiled_age_55-64;M_Analytics;
+TAB_Segment_Insights;N/A;current_profiled_age_65+;M_Analytics;
+TAB_Segment_Insights;N/A;current_profiled_gender_female;M_Analytics;
+TAB_Segment_Insights;N/A;current_profiled_gender_male;M_Analytics;
+TAB_Segment_Insights;N/A;current_profiled_gender;M_Analytics;
+TAB_Segment_Insights;N/A;current_profiled_age;M_Analytics;
+TAB_Estimates;F_Estimates;Estimate;M_Summarization;Numeric
+TAB_Estimates;N/A;Estimate;M_Analytics;
+TAB_Warner_Insights;F_Warner_Delivery;delivery_clicks;M_Summarization;Numeric
+TAB_Warner_Insights;F_Warner_Delivery;delivery_impressions_1stquartile;M_Summarization;Numeric
+TAB_Warner_Insights;F_Warner_Delivery;delivery_impressions_2ndquartile;M_Summarization;Numeric
+TAB_Warner_Insights;F_Warner_Delivery;delivery_impressions_3rdquartile;M_Summarization;Numeric
+TAB_Warner_Insights;F_Warner_Delivery;delivery_impressions_4thquartile;M_Summarization;Numeric
+TAB_Warner_Insights;F_Warner_Delivery;delivery_impressions_paid;M_Summarization;Numeric
+TAB_Warner_Insights;F_Warner_Delivery;lineitem_quantity;M_Summarization;Numeric 
+TAB_Warner_Insights;F_Warner_Delivery;lineitem_tarif_adsanddata;M_Summarization;Numeric
+TAB_Warner_Insights;F_Warner_Delivery;lineitem_tarif_warner;M_Summarization;Numeric
+TAB_Warner_Insights;N/A;revenue_warner;M_Custom;SUMX(F_Warner_Delivery, F_Warner_Delivery[lineitem_tarif_warner] * F_Warner_Delivery[delivery_impressions_paid] / 1000)
+TAB_Warner_Insights;N/A;revenue_adsanddata;M_Custom;SUMX(F_Warner_Delivery, F_Warner_Delivery[lineitem_tarif_adsanddata] * F_Warner_Delivery[delivery_impressions_paid] / 1000)
+TAB_Warner_Insights;N/A;delivery_clicks;M_Analytics;
+TAB_Warner_Insights;N/A;delivery_impressions_1stquartile;M_Analytics;
+TAB_Warner_Insights;N/A;delivery_impressions_2ndquartile;M_Analytics;
+TAB_Warner_Insights;N/A;delivery_impressions_3rdquartile;M_Analytics;
+TAB_Warner_Insights;N/A;delivery_impressions_4thquartile;M_Analytics;
+TAB_Warner_Insights;N/A;delivery_impressions_paid;M_Analytics;
+TAB_Warner_Insights;N/A;lineitem_quantity;M_Analytics;
+TAB_Warner_Insights;N/A;revenue_adsanddata;M_Analytics;
+TAB_Warner_Insights;N/A;revenue_warner;M_Analytics;
+TAB_Warner_Insights;N/A;lineitem_tarif_adsanddata;M_Analytics;
+TAB_Warner_Insights;N/A;lineitem_tarif_warner;M_Analytics;
+TAB_Warner_Insights;F_Warner_Delivery;M_revenue_adsanddata;M_Functional;Cards
+TAB_Warner_Insights;F_Warner_Delivery;M_revenue_warner;M_Functional;Cards
+TAB_Campaign_Insights;F_Digital_Campaigns;product_ratecardtarif;M_Summarization;Numeric
+TAB_Campaign_Insights;F_Digital_Campaigns;wave_budget_discount;M_Summarization;Numeric
+TAB_Campaign_Insights;F_Digital_Campaigns;wave_budget_gross;M_Summarization;Numeric
+TAB_Campaign_Insights;F_Digital_Campaigns;wave_budget_net;M_Summarization;Numeric
+TAB_Campaign_Insights;F_Digital_Campaigns;wave_quantity;M_Summarization;Numeric
+TAB_Campaign_Insights;F_Digital_Campaigns_Masterwave;mw_product_ratecarddatatarif;M_Summarization;Numeric
+TAB_Campaign_Insights;F_Digital_Campaigns_Masterwave;mw_product_ratecardmediatarif;M_Summarization;Numeric
+TAB_Campaign_Insights;F_Digital_Campaigns_Masterwave;mw_tarif_gross;M_Summarization;Numeric
+TAB_Campaign_Insights;F_Digital_Campaigns_Masterwave;mw_tarif_net;M_Summarization;Numeric
+TAB_Campaign_Insights;F_Digital_Campaigns_Masterwave;mw_wave_budget_discount;M_Summarization;Numeric
+TAB_Campaign_Insights;F_Digital_Campaigns_Masterwave;mw_wave_budget_gross;M_Summarization;Numeric
+TAB_Campaign_Insights;F_Digital_Campaigns_Masterwave;mw_wave_budget_net;M_Summarization;Numeric
+TAB_Campaign_Insights;F_Digital_Campaigns_Masterwave;mw_wave_quantity;M_Summarization;Numeric
+TAB_Campaign_Insights;F_Digital_Delivery;delivery_clicks;M_Summarization;Numeric
+TAB_Campaign_Insights;F_Digital_Delivery;delivery_impressions;M_Summarization;Numeric
+TAB_Campaign_Insights;F_Digital_Delivery;delivery_revenueaftercommission;M_Summarization;Numeric
+TAB_Campaign_Insights;F_Digital_Delivery;forecast_revenueaftercommission;M_Summarization;Numeric
+TAB_Campaign_Insights;N/A;product_ratecardtarif;M_Analytics;
+TAB_Campaign_Insights;N/A;wave_budget_discount;M_Analytics;
+TAB_Campaign_Insights;N/A;wave_budget_gross;M_Analytics;
+TAB_Campaign_Insights;N/A;wave_budget_net;M_Analytics;
+TAB_Campaign_Insights;N/A;wave_quantity;M_Analytics;
+TAB_Campaign_Insights;N/A;mw_product_ratecarddatatarif;M_Analytics;
+TAB_Campaign_Insights;N/A;mw_product_ratecardmediatarif;M_Analytics;
+TAB_Campaign_Insights;N/A;mw_tarif_gross;M_Analytics;
+TAB_Campaign_Insights;N/A;mw_tarif_net;M_Analytics;
+TAB_Campaign_Insights;N/A;mw_wave_budget_discount;M_Analytics;
+TAB_Campaign_Insights;N/A;mw_wave_budget_gross;M_Analytics;
+TAB_Campaign_Insights;N/A;mw_wave_budget_net;M_Analytics;
+TAB_Campaign_Insights;N/A;mw_wave_quantity;M_Analytics;
+TAB_Campaign_Insights;N/A;delivery_clicks;M_Analytics;
+TAB_Campaign_Insights;N/A;delivery_impressions;M_Analytics;
+TAB_Campaign_Insights;N/A;delivery_revenueaftercommission;M_Analytics;
+TAB_Campaign_Insights;N/A;forecast_revenueaftercommission;M_Analytics;
+TAB_Campaign_Insights;N/A;delivery_revenueaftercommission_completed;M_Custom;CALCULATE([M_delivery_revenueaftercommission], F_Digital_Campaigns_Masterwave[mw_campaign_status] = "COMPLETED ADOPS")
+TAB_Campaign_Insights;N/A;delivery_revenueaftercommission_live;M_Custom;CALCULATE([M_delivery_revenueaftercommission], F_Digital_Campaigns_Masterwave[mw_campaign_status] = "LIVE")
+TAB_Campaign_Insights;N/A;delivery_revenueaftercommission_confirmed;M_Custom;CALCULATE([M_delivery_revenueaftercommission], F_Digital_Campaigns_Masterwave[mw_campaign_status] = "CONFIRMED")
+TAB_Campaign_Insights;N/A;delivery_revenueaftercommission_option;M_Custom;CALCULATE([M_delivery_revenueaftercommission], F_Digital_Campaigns_Masterwave[mw_campaign_status] = "OPTION")
+TAB_Campaign_Insights;N/A;forecast_revenueaftercommission_completed;M_Custom;CALCULATE([M_forecast_revenueaftercommission], F_Digital_Campaigns_Masterwave[mw_campaign_status] = "COMPLETED ADOPS")
+TAB_Campaign_Insights;N/A;forecast_revenueaftercommission_live;M_Custom;CALCULATE([M_forecast_revenueaftercommission], F_Digital_Campaigns_Masterwave[mw_campaign_status] = "LIVE")
+TAB_Campaign_Insights;N/A;forecast_revenueaftercommission_confirmed;M_Custom;CALCULATE([M_forecast_revenueaftercommission], F_Digital_Campaigns_Masterwave[mw_campaign_status] = "CONFIRMED")
+TAB_Campaign_Insights;N/A;forecast_revenueaftercommission_option;M_Custom;CALCULATE([M_forecast_revenueaftercommission], F_Digital_Campaigns_Masterwave[mw_campaign_status] = "OPTION")
+TAB_Campaign_Insights;N/A;delivery_revenueaftercommission_completed;M_Analytics;
+TAB_Campaign_Insights;N/A;delivery_revenueaftercommission_live;M_Analytics;
+TAB_Campaign_Insights;N/A;delivery_revenueaftercommission_confirmed;M_Analytics;
+TAB_Campaign_Insights;N/A;delivery_revenueaftercommission_option;M_Analytics;
+TAB_Campaign_Insights;N/A;forecast_revenueaftercommission_completed;M_Analytics;
+TAB_Campaign_Insights;N/A;forecast_revenueaftercommission_live;M_Analytics;
+TAB_Campaign_Insights;N/A;forecast_revenueaftercommission_confirmed;M_Analytics;
+TAB_Campaign_Insights;N/A;forecast_revenueaftercommission_option;M_Analytics;
+TAB_Campaign_Insights;F_Digital_Delivery;M_delivery_revenueaftercommission;M_Functional;Cards
+TAB_Campaign_Insights;F_Digital_Delivery;M_forecast_revenueaftercommission;M_Functional;Cards
+TAB_Campaign_Insights;F_Digital_Delivery;M_forecast_revenueaftercommission;M_Functional;Button^^ValutaNoDecimals^^ALL
+TAB_Campaign_Insights;F_Digital_Delivery;M_forecast_revenueaftercommission_completed;M_Functional;Button^^ValutaNoDecimals^^Completed
+TAB_Campaign_Insights;F_Digital_Delivery;M_forecast_revenueaftercommission_live;M_Functional;Button^^ValutaNoDecimals^^Live
+TAB_Campaign_Insights;F_Digital_Delivery;M_forecast_revenueaftercommission_confirmed;M_Functional;Button^^ValutaNoDecimals^^Confirmed
+TAB_Campaign_Insights;F_Digital_Delivery;M_forecast_revenueaftercommission_option;M_Functional;Button^^ValutaNoDecimals^^Option
+TAB_Campaign_Insights;N/A;N/A;M_Functional;Comparative_Button^^Valuta^^ALL^^M_delivery_revenueaftercommission,M_forecast_revenueaftercommission
+TAB_Campaign_Insights;N/A;N/A;M_Functional;Comparative_Button^^Valuta^^Completed^^M_delivery_revenueaftercommission_completed,M_forecast_revenueaftercommission_completed
+TAB_Campaign_Insights;N/A;N/A;M_Functional;Comparative_Button^^Valuta^^Live^^M_delivery_revenueaftercommission_live,M_forecast_revenueaftercommission_live
+TAB_Campaign_Insights;N/A;N/A;M_Functional;Comparative_Button^^Valuta^^Confirmed^^M_delivery_revenueaftercommission_confirmed,M_forecast_revenueaftercommission_confirmed
+TAB_Campaign_Insights;N/A;N/A;M_Functional;Comparative_Button^^Valuta^^Option^^M_delivery_revenueaftercommission_option,M_forecast_revenueaftercommission_option
+TAB_Campaign_Insights;M_Perspectives;N/A;M_FieldParameters;D_Date[Date_Year-Month],F_Digital_Campaigns_Masterwave[mw_campaign_type]^^Date,Campaign_Type
+TAB_Commercial_Insights;F_Revenue;potential_netaftercommission;M_Summarization;Numeric
+TAB_Commercial_Insights;F_Budget;Amount;M_Summarization;Numeric^^^^budget_amount
+TAB_Commercial_Insights;F_Targets;Target;M_Summarization;Numeric^^^^target_wo_scope
+TAB_Commercial_Insights;N/A;target_wo_scope;M_Analytics;
+TAB_Commercial_Insights;N/A;budget_amount;M_Analytics;
+TAB_Commercial_Insights;N/A;budgetaftercomission;M_Custom;SWITCH(TRUE(), ISINSCOPE(D_RateProductStructure[kpi_product_sub_cat_name]),BLANK(), ISINSCOPE(D_PubMediaAssets[pub_brand_name]),BLANK(), ISINSCOPE(D_RateProductStructure[abs_rate_d1_name]),BLANK(), ISINSCOPE(D_AdvertiserSalesHierarchy[salesperson_name]),BLANK(), ISINSCOPE(D_AdvertiserSalesHierarchy[team_salesfunction_code_L1]),BLANK(), ISINSCOPE(D_AdvertiserSalesHierarchy[team_salesfunction_name_L2]),BLANK(), SELECTEDVALUE(D_PubMediaAssets[fin_ma_code])="ZTP",BLANK(), ISINSCOPE(D_RateProductStructure[abs_rate_national_product_d10]),BLANK(), ISINSCOPE(D_AdvertiserCompany[account_holding_name]),BLANK(), ISFILTERED(D_RateProductStructure[abs_rate_national_product_d10]),BLANK(), ISFILTERED(D_RateProductStructure[kpi_product_sub_cat_name]),BLANK(), ISFILTERED(D_PubMediaAssets[pub_brand_name]),BLANK(), ISFILTERED(D_RateProductStructure[abs_rate_d1_name]),BLANK(), ISFILTERED(D_AdvertiserSalesHierarchy[salesperson_name]),BLANK(), ISFILTERED(D_AdvertiserSalesHierarchy[team_salesfunction_code_L1]),BLANK(), ISFILTERED(D_AdvertiserSalesHierarchy[team_salesfunction_name_L2]),BLANK(), ISFILTERED(D_PubMediaAssets[pub_ma_name]),BLANK(), ISFILTERED(D_AdvertiserCompany[account_holding_name]),BLANK(),[M_budget_amount])
+TAB_Commercial_Insights;N/A;budgetaftercomission;M_Analytics;
+TAB_Commercial_Insights;N/A;budget_comparison;M_Custom;DIVIDE([M_potential_netaftercommission],[M_budgetaftercomission])^^PERCENT
+TAB_Commercial_Insights;N/A;budget_comparison;M_Analytics;
+TAB_Commercial_Insights;N/A;prev_year_comparison;M_Custom;DIVIDE([M_potential_netaftercommission],[M_potential_netaftercommission_PY])^^PERCENT
+TAB_Commercial_Insights;N/A;prev_year_comparison;M_Analytics;^^^^False
+TAB_Commercial_Insights;N/A;potential_netaftercommission;M_Analytics;MTD,MTDPY,PM,PMTD,PPY,PQ,PQTD,PY,QTD,QTDPY,Y,YC,YCPY,YTD,YTDPY,TM_MTD,TM_MTDPY,TM_PM,TM_PMTD,TM_Y,TQ_MTD,TQ_MTDPY,TQ_PM,TQ_PMTD,TQ_PPY,TQ_PQ,TQ_PQTD,TQ_PY,TQ_QTD,TQ_QTDPY,TQ_Y,TY_MTD,TY_MTDPY,TY_PM,TY_PMTD,TY_PPY,TY_PQ,TY_PQTD,TY_PY,TY_QTD,TY_QTDPY,TY_Y,TY_YTD,TY_YTDPY
+TAB_Commercial_Insights;N/A;potential_netaftercommission_running_total;M_Custom;VAR _MaxDate = MAX ( D_Date[Date_Date] ) VAR _Return = CALCULATE ([M_potential_netaftercommission], D_Date[Date_Date] <= _MaxDate) RETURN _Return
+TAB_Commercial_Insights;N/A;potential_netaftercommission_running_total;M_Analytics;
+TAB_Commercial_Insights;N/A;potential_netaftercommission_running_total_PY;M_Custom;VAR _MaxDate = MAX ( D_Date[Date_Date] ) VAR _MaxDateDP = MAX ( D_Date_DynamicPeriods[Date] ) VAR _Return = CALCULATE ([M_potential_netaftercommission_PY], D_Date[Date_Date] <= _MaxDate) RETURN IF ( _MaxDate <= _MaxDateDP, _Return )
+TAB_Commercial_Insights;N/A;potential_netaftercommission_running_total_PY;M_Analytics;^^^^False
+TAB_Commercial_Insights;N/A;budgetaftercomission_running_total;M_Custom;VAR LastVisibleDate=MAX(D_Date[Date_Date]) VAR Result=CALCULATE([M_budgetaftercomission],D_Date[Date_Date]<=LastVisibleDate) RETURN Result
+TAB_Commercial_Insights;N/A;budgetaftercomission_running_total;M_Analytics;
+TAB_Commercial_Insights;N/A;budget_comparison_cumul;M_Custom;DIVIDE([M_potential_netaftercommission_running_total],[M_budgetaftercomission_running_total])^^PERCENT
+TAB_Commercial_Insights;N/A;budget_comparison_cumul;M_Analytics;
+TAB_Commercial_Insights;N/A;prev_year_comparison_cumul;M_Custom;DIVIDE([M_potential_netaftercommission_running_total],[M_potential_netaftercommission_running_total_PY])^^PERCENT
+TAB_Commercial_Insights;N/A;prev_year_comparison_cumul;M_Analytics;^^^^False
+TAB_Commercial_Insights;N/A;target;M_Custom;SWITCH(TRUE(),  ISINSCOPE(D_RateProductStructure[kpi_product_sub_cat_name]),BLANK(),  ISINSCOPE(D_PubMediaAssets[pub_brand_name]),BLANK(),  ISINSCOPE(D_RateProductStructure[abs_rate_d1_name]),BLANK(),  ISINSCOPE(D_PubMediaAssets[fin_mh_name]),BLANK(), ISINSCOPE(D_PubMediaAssets[fin_mhg_name]),BLANK(),  ISINSCOPE(D_RateProductStructure[abs_rate_national_product_d10]),BLANK(), ISINSCOPE(D_RateProductStructure[kpi_product_cat_name]),BLANK(),  ISINSCOPE(D_AdvertiserCompany[account_holding_name]),BLANK(),  ISINSCOPE(D_OrderCompany[account_mediagroup_name]),BLANK(),  ISINSCOPE(D_Date[Date_Month]),BLANK(), ISINSCOPE(D_RateProductStructure[abs_rate_d2_name]),BLANK(), ISINSCOPE(D_RateProductStructure[abs_rate_d1_name]),BLANK(), ISINSCOPE(D_Campaigns[is_content_orion]),BLANK(), ISINSCOPE(D_AdvertiserCompany[account_sector_name]),BLANK(), ISINSCOPE(D_PubMediaAssets[pub_brand_name]),BLANK(), ISFILTERED(D_RateProductStructure[abs_rate_national_product_d10]),BLANK(),  ISFILTERED(D_RateProductStructure[kpi_product_cat_name]),BLANK(),  ISFILTERED(D_RateProductStructure[kpi_product_sub_cat_name]),BLANK(),  ISFILTERED(D_PubMediaAssets[pub_brand_name]),BLANK(),  ISFILTERED(D_RateProductStructure[abs_rate_d1_name]),BLANK(),  ISFILTERED(D_PubMediaAssets[fin_mh_name]),BLANK(), ISFILTERED(D_PubMediaAssets[fin_mhg_name]),BLANK(), ISFILTERED(D_PubMediaAssets[pub_ma_name]),BLANK(),  ISFILTERED(D_AdvertiserCompany[account_holding_name]),BLANK(), ISFILTERED(D_OrderCompany[account_mediagroup_name]),BLANK(),  ISFILTERED(D_Date[Date_Month]),BLANK(), ISFILTERED(D_RateProductStructure[abs_rate_d2_name]),BLANK(), ISFILTERED(D_RateProductStructure[abs_rate_d1_name]),BLANK(), ISFILTERED(D_Campaigns[is_content_orion]),BLANK(), ISFILTERED(D_AdvertiserCompany[account_sector_name]),BLANK(), ISFILTERED(D_PubMediaAssets[pub_brand_name]),BLANK(), [M_target_wo_scope] )
+TAB_Commercial_Insights;N/A;target;M_Analytics;^^^^False
+TAB_Commercial_Insights;F_Revenue;m_potential_netaftercommission;M_Functional;Cards
+TAB_Commercial_Insights;N/A;alert_period;M_Custom;IF(YEAR(max(D_Date_DynamicPeriods[Sorting_Level2]))<>YEAR(Today()),YEAR(max(D_Date_DynamicPeriods[Sorting_Level2])))
+TAB_Commercial_Insights;N/A;alert_period_cf;M_Custom; VAR _alertcolor = "#DE6A73" VAR _defaultcolor ="#FFFFFF" VAR _alert_period = [M_alert_period_Custom] VAR _result = if(_alert_period>0, _alertcolor,_defaultcolor) RETURN _result
+TAB_Commercial_Insights;N/A;alert_period_text;M_Custom;VAR _year = [M_alert_period_Custom] VAR _yearminusone = (_year)-1 VAR _alerttxt = IF(_year>0,"Opgelet! Geselecteerde periode valt buiten het huidige jaar. Waarde Y = "&_year&" Waarde Y-1 = "&_yearminusone) RETURN _alerttxt
+TAB_Commercial_Insights;N/A;m_potential_netaftercommission;M_HTML;m_budgetaftercomission^^html_card
+TAB_Commercial_Insights;N/A;m_potential_netaftercommission;M_HTML;m_potential_netaftercommission_PY^^html_table^^compared_to_py
+TAB_Commercial_Insights;N/A;m_potential_netaftercommission;M_HTML;m_budgetaftercomission^^html_table^^compared_to_budget
+TAB_Commercial_Insights;N/A;m_potential_netaftercommission_running_total;M_HTML;m_potential_netaftercommission_running_total_py^^html_table^^compared_to_py_running_total
+TAB_Commercial_Insights;N/A;m_potential_netaftercommission_running_total;M_HTML;m_budgetaftercomission_running_total^^html_table^^compared_to_budget_running_total
+TAB_Commercial_Insights;FP_Perspectives;N/A;M_FieldParameters;M_potential_netaftercommission,M_potential_netaftercommission_PY,HTML_Table_compared_to_py,M_budgetaftercomission,HTML_Table_compared_to_budget,M_potential_netaftercommission_running_total,M_potential_netaftercommission_running_total_PY,HTML_Table_compared_to_py_running_total,M_budgetaftercomission_running_total,HTML_Table_compared_to_budget_running_total^^Y,Y-1,% Y-1,BY,% BY,Y,Y-1,% Y-1,BY,% BY^^Non-Cumul,Non-Cumul,Non-Cumul,Non-Cumul,Non-Cumul,Cumul,Cumul,Cumul,Cumul,Cumul
+TAB_Commercial_Insights;FP_Perspectives_Graphs;N/A;M_FieldParameters;M_potential_netaftercommission,M_potential_netaftercommission_PY,M_prev_year_comparison,M_budgetaftercomission,M_budget_comparison,M_potential_netaftercommission_running_total,M_potential_netaftercommission_running_total_PY,M_prev_year_comparison_cumul,M_budgetaftercomission_running_total,M_budget_comparison_cumul^^Y,Y-1,% Y-1,BY,% BY,Y,Y-1,% Y-1,BY,% BY^^Non-Cumul,Non-Cumul,Non-Cumul,Non-Cumul,Non-Cumul,Cumul,Cumul,Cumul,Cumul,Cumul
+TAB_Commercial_Insights_Programmatic;F_Revenue;potential_netaftercommission;M_Summarization;Numeric
+TAB_Commercial_Insights_Programmatic;F_Budget;Amount;M_Summarization;Numeric^^^^budget_amount
+TAB_Commercial_Insights_Programmatic;F_Targets;Target;M_Summarization;Numeric^^^^target_wo_scope
+TAB_Commercial_Insights_Programmatic;N/A;target_wo_scope;M_Analytics;
+TAB_Commercial_Insights_Programmatic;N/A;budget_amount;M_Analytics;
+TAB_Commercial_Insights_Programmatic;N/A;budgetaftercomission;M_Custom;SWITCH(TRUE(), ISINSCOPE(D_RateProductStructure[kpi_product_sub_cat_name]),BLANK(), ISINSCOPE(D_PubMediaAssets[pub_brand_name]),BLANK(), ISINSCOPE(D_RateProductStructure[abs_rate_d1_name]),BLANK(), ISINSCOPE(D_AdvertiserSalesHierarchy[salesperson_name]),BLANK(), ISINSCOPE(D_AdvertiserSalesHierarchy[team_salesfunction_code_L1]),BLANK(), ISINSCOPE(D_AdvertiserSalesHierarchy[team_salesfunction_name_L2]),BLANK(), SELECTEDVALUE(D_PubMediaAssets[fin_ma_code])="ZTP",BLANK(), ISINSCOPE(D_RateProductStructure[abs_rate_national_product_d10]),BLANK(), ISINSCOPE(D_AdvertiserCompany[account_holding_name]),BLANK(), ISFILTERED(D_RateProductStructure[abs_rate_national_product_d10]),BLANK(), ISFILTERED(D_RateProductStructure[kpi_product_sub_cat_name]),BLANK(), ISFILTERED(D_PubMediaAssets[pub_brand_name]),BLANK(), ISFILTERED(D_RateProductStructure[abs_rate_d1_name]),BLANK(), ISFILTERED(D_AdvertiserSalesHierarchy[salesperson_name]),BLANK(), ISFILTERED(D_AdvertiserSalesHierarchy[team_salesfunction_code_L1]),BLANK(), ISFILTERED(D_AdvertiserSalesHierarchy[team_salesfunction_name_L2]),BLANK(), ISFILTERED(D_PubMediaAssets[pub_ma_name]),BLANK(), ISFILTERED(D_AdvertiserCompany[account_holding_name]),BLANK(),[M_budget_amount])
+TAB_Commercial_Insights_Programmatic;N/A;budgetaftercomission;M_Analytics;
+TAB_Commercial_Insights_Programmatic;N/A;budget_comparison;M_Custom;DIVIDE([M_potential_netaftercommission],[M_budgetaftercomission])^^PERCENT
+TAB_Commercial_Insights_Programmatic;N/A;budget_comparison;M_Analytics;
+TAB_Commercial_Insights_Programmatic;N/A;prev_year_comparison;M_Custom;DIVIDE([M_potential_netaftercommission],[M_potential_netaftercommission_PY])^^PERCENT
+TAB_Commercial_Insights_Programmatic;N/A;prev_year_comparison;M_Analytics;^^^^False
+TAB_Commercial_Insights_Programmatic;N/A;potential_netaftercommission;M_Analytics;MTD,MTDPY,PM,PMTD,PPY,PQ,PQTD,PY,QTD,QTDPY,Y,YC,YCPY,YTD,YTDPY,TM_MTD,TM_MTDPY,TM_PM,TM_PMTD,TM_Y,TQ_MTD,TQ_MTDPY,TQ_PM,TQ_PMTD,TQ_PPY,TQ_PQ,TQ_PQTD,TQ_PY,TQ_QTD,TQ_QTDPY,TQ_Y,TY_MTD,TY_MTDPY,TY_PM,TY_PMTD,TY_PPY,TY_PQ,TY_PQTD,TY_PY,TY_QTD,TY_QTDPY,TY_Y,TY_YTD,TY_YTDPY
+TAB_Commercial_Insights_Programmatic;N/A;potential_netaftercommission_running_total;M_Custom;VAR _MaxDate = MAX ( D_Date[Date_Date] ) VAR _Return = CALCULATE ([M_potential_netaftercommission], D_Date[Date_Date] <= _MaxDate) RETURN _Return
+TAB_Commercial_Insights_Programmatic;N/A;potential_netaftercommission_running_total;M_Analytics;
+TAB_Commercial_Insights_Programmatic;N/A;potential_netaftercommission_running_total_PY;M_Custom;VAR _MaxDate = MAX ( D_Date[Date_Date] ) VAR _MaxDateDP = MAX ( D_Date_DynamicPeriods[Date] ) VAR _Return = CALCULATE ([M_potential_netaftercommission_PY], D_Date[Date_Date] <= _MaxDate) RETURN IF ( _MaxDate <= _MaxDateDP, _Return )
+TAB_Commercial_Insights_Programmatic;N/A;potential_netaftercommission_running_total_PY;M_Analytics;^^^^False
+TAB_Commercial_Insights_Programmatic;N/A;budgetaftercomission_running_total;M_Custom;VAR LastVisibleDate=MAX(D_Date[Date_Date]) VAR Result=CALCULATE([M_budgetaftercomission],D_Date[Date_Date]<=LastVisibleDate) RETURN Result
+TAB_Commercial_Insights_Programmatic;N/A;budgetaftercomission_running_total;M_Analytics;
+TAB_Commercial_Insights_Programmatic;N/A;budget_comparison_cumul;M_Custom;DIVIDE([M_potential_netaftercommission_running_total],[M_budgetaftercomission_running_total])^^PERCENT
+TAB_Commercial_Insights_Programmatic;N/A;budget_comparison_cumul;M_Analytics;
+TAB_Commercial_Insights_Programmatic;N/A;prev_year_comparison_cumul;M_Custom;DIVIDE([M_potential_netaftercommission_running_total],[M_potential_netaftercommission_running_total_PY])^^PERCENT
+TAB_Commercial_Insights_Programmatic;N/A;prev_year_comparison_cumul;M_Analytics;^^^^False
+TAB_Commercial_Insights_Programmatic;N/A;target;M_Custom;SWITCH(TRUE(),  ISINSCOPE(D_RateProductStructure[kpi_product_sub_cat_name]),BLANK(),  ISINSCOPE(D_PubMediaAssets[pub_brand_name]),BLANK(),  ISINSCOPE(D_RateProductStructure[abs_rate_d1_name]),BLANK(),  ISINSCOPE(D_PubMediaAssets[fin_mh_name]),BLANK(), ISINSCOPE(D_PubMediaAssets[fin_mhg_name]),BLANK(),  ISINSCOPE(D_RateProductStructure[abs_rate_national_product_d10]),BLANK(), ISINSCOPE(D_RateProductStructure[kpi_product_cat_name]),BLANK(),  ISINSCOPE(D_AdvertiserCompany[account_holding_name]),BLANK(),  ISINSCOPE(D_OrderCompany[account_mediagroup_name]),BLANK(),  ISINSCOPE(D_Date[Date_Month]),BLANK(), ISINSCOPE(D_RateProductStructure[abs_rate_d2_name]),BLANK(), ISINSCOPE(D_RateProductStructure[abs_rate_d1_name]),BLANK(), ISINSCOPE(D_Campaigns[is_content_orion]),BLANK(), ISINSCOPE(D_AdvertiserCompany[account_sector_name]),BLANK(), ISINSCOPE(D_PubMediaAssets[pub_brand_name]),BLANK(), ISFILTERED(D_RateProductStructure[abs_rate_national_product_d10]),BLANK(),  ISFILTERED(D_RateProductStructure[kpi_product_cat_name]),BLANK(),  ISFILTERED(D_RateProductStructure[kpi_product_sub_cat_name]),BLANK(),  ISFILTERED(D_PubMediaAssets[pub_brand_name]),BLANK(),  ISFILTERED(D_RateProductStructure[abs_rate_d1_name]),BLANK(),  ISFILTERED(D_PubMediaAssets[fin_mh_name]),BLANK(), ISFILTERED(D_PubMediaAssets[fin_mhg_name]),BLANK(), ISFILTERED(D_PubMediaAssets[pub_ma_name]),BLANK(),  ISFILTERED(D_AdvertiserCompany[account_holding_name]),BLANK(), ISFILTERED(D_OrderCompany[account_mediagroup_name]),BLANK(),  ISFILTERED(D_Date[Date_Month]),BLANK(), ISFILTERED(D_RateProductStructure[abs_rate_d2_name]),BLANK(), ISFILTERED(D_RateProductStructure[abs_rate_d1_name]),BLANK(), ISFILTERED(D_Campaigns[is_content_orion]),BLANK(), ISFILTERED(D_AdvertiserCompany[account_sector_name]),BLANK(), ISFILTERED(D_PubMediaAssets[pub_brand_name]),BLANK(), [M_target_wo_scope] )
+TAB_Commercial_Insights_Programmatic;N/A;target;M_Analytics;^^^^False
+TAB_Commercial_Insights_Programmatic;F_Revenue;m_potential_netaftercommission;M_Functional;Cards
+TAB_Commercial_Insights_Programmatic;N/A;alert_period;M_Custom;IF(YEAR(max(D_Date_DynamicPeriods[Sorting_Level2]))<>YEAR(Today()),YEAR(max(D_Date_DynamicPeriods[Sorting_Level2])))
+TAB_Commercial_Insights_Programmatic;N/A;alert_period_cf;M_Custom; VAR _alertcolor = "#DE6A73" VAR _defaultcolor ="#FFFFFF" VAR _alert_period = [M_alert_period_Custom] VAR _result = if(_alert_period>0, _alertcolor,_defaultcolor) RETURN _result
+TAB_Commercial_Insights_Programmatic;N/A;alert_period_text;M_Custom;VAR _year = [M_alert_period_Custom] VAR _yearminusone = (_year)-1 VAR _alerttxt = IF(_year>0,"Opgelet! Geselecteerde periode valt buiten het huidige jaar. Waarde Y = "&_year&" Waarde Y-1 = "&_yearminusone) RETURN _alerttxt
+TAB_Commercial_Insights_Programmatic;N/A;m_potential_netaftercommission;M_HTML;m_budgetaftercomission^^html_card
+TAB_Commercial_Insights_Programmatic;N/A;m_potential_netaftercommission;M_HTML;m_potential_netaftercommission_PY^^html_table^^compared_to_py
+TAB_Commercial_Insights_Programmatic;N/A;m_potential_netaftercommission;M_HTML;m_budgetaftercomission^^html_table^^compared_to_budget
+TAB_Commercial_Insights_Programmatic;N/A;m_potential_netaftercommission_running_total;M_HTML;m_potential_netaftercommission_running_total_py^^html_table^^compared_to_py_running_total
+TAB_Commercial_Insights_Programmatic;N/A;m_potential_netaftercommission_running_total;M_HTML;m_budgetaftercomission_running_total^^html_table^^compared_to_budget_running_total
+TAB_Commercial_Insights_Programmatic;FP_Perspectives;N/A;M_FieldParameters;M_potential_netaftercommission,M_potential_netaftercommission_PY,HTML_Table_compared_to_py,M_budgetaftercomission,HTML_Table_compared_to_budget,M_potential_netaftercommission_running_total,M_potential_netaftercommission_running_total_PY,HTML_Table_compared_to_py_running_total,M_budgetaftercomission_running_total,HTML_Table_compared_to_budget_running_total^^Y,Y-1,% Y-1,BY,% BY,Y,Y-1,% Y-1,BY,% BY^^Non-Cumul,Non-Cumul,Non-Cumul,Non-Cumul,Non-Cumul,Cumul,Cumul,Cumul,Cumul,Cumul
+TAB_Commercial_Insights_Programmatic;FP_Perspectives_Graphs;N/A;M_FieldParameters;M_potential_netaftercommission,M_potential_netaftercommission_PY,M_prev_year_comparison,M_budgetaftercomission,M_budget_comparison,M_potential_netaftercommission_running_total,M_potential_netaftercommission_running_total_PY,M_prev_year_comparison_cumul,M_budgetaftercomission_running_total,M_budget_comparison_cumul^^Y,Y-1,% Y-1,BY,% BY,Y,Y-1,% Y-1,BY,% BY^^Non-Cumul,Non-Cumul,Non-Cumul,Non-Cumul,Non-Cumul,Cumul,Cumul,Cumul,Cumul,Cumul
+TAB_Commercial_Insights_Freezed_2023;F_Revenue;potential_netaftercommission;M_Summarization;Numeric
+TAB_Commercial_Insights_Freezed_2023;F_Budget;Amount;M_Summarization;Numeric^^^^budget_amount
+TAB_Commercial_Insights_Freezed_2023;F_Targets;Target;M_Summarization;Numeric^^^^target_wo_scope
+TAB_Commercial_Insights_Freezed_2023;N/A;target_wo_scope;M_Analytics;
+TAB_Commercial_Insights_Freezed_2023;N/A;budget_amount;M_Analytics;
+TAB_Commercial_Insights_Freezed_2023;N/A;budgetaftercomission;M_Custom;SWITCH(TRUE(), ISINSCOPE(D_RateProductStructure[kpi_product_sub_cat_name]),BLANK(), ISINSCOPE(D_PubMediaAssets[pub_brand_name]),BLANK(), ISINSCOPE(D_RateProductStructure[abs_rate_d1_name]),BLANK(), ISINSCOPE(D_AdvertiserSalesHierarchy[salesperson_name]),BLANK(), ISINSCOPE(D_AdvertiserSalesHierarchy[team_salesfunction_code_L1]),BLANK(), ISINSCOPE(D_AdvertiserSalesHierarchy[team_salesfunction_name_L2]),BLANK(), SELECTEDVALUE(D_PubMediaAssets[fin_ma_code])="ZTP",BLANK(), ISINSCOPE(D_RateProductStructure[abs_rate_national_product_d10]),BLANK(), ISINSCOPE(D_AdvertiserCompany[account_holding_name]),BLANK(), ISFILTERED(D_RateProductStructure[abs_rate_national_product_d10]),BLANK(), ISFILTERED(D_RateProductStructure[kpi_product_sub_cat_name]),BLANK(), ISFILTERED(D_PubMediaAssets[pub_brand_name]),BLANK(), ISFILTERED(D_RateProductStructure[abs_rate_d1_name]),BLANK(), ISFILTERED(D_AdvertiserSalesHierarchy[salesperson_name]),BLANK(), ISFILTERED(D_AdvertiserSalesHierarchy[team_salesfunction_code_L1]),BLANK(), ISFILTERED(D_AdvertiserSalesHierarchy[team_salesfunction_name_L2]),BLANK(), ISFILTERED(D_PubMediaAssets[pub_ma_name]),BLANK(), ISFILTERED(D_AdvertiserCompany[account_holding_name]),BLANK(),[M_budget_amount])
+TAB_Commercial_Insights_Freezed_2023;N/A;budgetaftercomission;M_Analytics;
+TAB_Commercial_Insights_Freezed_2023;N/A;budget_comparison;M_Custom;DIVIDE([M_potential_netaftercommission],[M_budgetaftercomission])^^PERCENT
+TAB_Commercial_Insights_Freezed_2023;N/A;budget_comparison;M_Analytics;
+TAB_Commercial_Insights_Freezed_2023;N/A;prev_year_comparison;M_Custom;DIVIDE([M_potential_netaftercommission],[M_potential_netaftercommission_PY])^^PERCENT
+TAB_Commercial_Insights_Freezed_2023;N/A;prev_year_comparison;M_Analytics;^^^^False
+TAB_Commercial_Insights_Freezed_2023;N/A;potential_netaftercommission;M_Analytics;MTD,MTDPY,PM,PMTD,PPY,PQ,PQTD,PY,QTD,QTDPY,Y,YC,YCPY,YTD,YTDPY,TM_MTD,TM_MTDPY,TM_PM,TM_PMTD,TM_Y,TQ_MTD,TQ_MTDPY,TQ_PM,TQ_PMTD,TQ_PPY,TQ_PQ,TQ_PQTD,TQ_PY,TQ_QTD,TQ_QTDPY,TQ_Y,TY_MTD,TY_MTDPY,TY_PM,TY_PMTD,TY_PPY,TY_PQ,TY_PQTD,TY_PY,TY_QTD,TY_QTDPY,TY_Y,TY_YTD,TY_YTDPY
+TAB_Commercial_Insights_Freezed_2023;N/A;potential_netaftercommission_running_total;M_Custom;VAR _MaxDate = MAX ( D_Date[Date_Date] ) VAR _Return = CALCULATE ([M_potential_netaftercommission], D_Date[Date_Date] <= _MaxDate) RETURN _Return
+TAB_Commercial_Insights_Freezed_2023;N/A;potential_netaftercommission_running_total;M_Analytics;
+TAB_Commercial_Insights_Freezed_2023;N/A;potential_netaftercommission_running_total_PY;M_Custom;VAR _MaxDate = MAX ( D_Date[Date_Date] ) VAR _MaxDateDP = MAX ( D_Date_DynamicPeriods[Date] ) VAR _Return = CALCULATE ([M_potential_netaftercommission_PY], D_Date[Date_Date] <= _MaxDate) RETURN IF ( _MaxDate <= _MaxDateDP, _Return )
+TAB_Commercial_Insights_Freezed_2023;N/A;potential_netaftercommission_running_total_PY;M_Analytics;^^^^False
+TAB_Commercial_Insights_Freezed_2023;N/A;budgetaftercomission_running_total;M_Custom;VAR LastVisibleDate=MAX(D_Date[Date_Date]) VAR Result=CALCULATE([M_budgetaftercomission],D_Date[Date_Date]<=LastVisibleDate) RETURN Result
+TAB_Commercial_Insights_Freezed_2023;N/A;budgetaftercomission_running_total;M_Analytics;
+TAB_Commercial_Insights_Freezed_2023;N/A;budget_comparison_cumul;M_Custom;DIVIDE([M_potential_netaftercommission_running_total],[M_budgetaftercomission_running_total])^^PERCENT
+TAB_Commercial_Insights_Freezed_2023;N/A;budget_comparison_cumul;M_Analytics;
+TAB_Commercial_Insights_Freezed_2023;N/A;prev_year_comparison_cumul;M_Custom;DIVIDE([M_potential_netaftercommission_running_total],[M_potential_netaftercommission_running_total_PY])^^PERCENT
+TAB_Commercial_Insights_Freezed_2023;N/A;prev_year_comparison_cumul;M_Analytics;^^^^False
+TAB_Commercial_Insights_Freezed_2023;N/A;target;M_Custom;SWITCH(TRUE(),  ISINSCOPE(D_RateProductStructure[kpi_product_sub_cat_name]),BLANK(),  ISINSCOPE(D_PubMediaAssets[pub_brand_name]),BLANK(),  ISINSCOPE(D_RateProductStructure[abs_rate_d1_name]),BLANK(),  ISINSCOPE(D_PubMediaAssets[fin_mh_name]),BLANK(), ISINSCOPE(D_PubMediaAssets[fin_mhg_name]),BLANK(),  ISINSCOPE(D_RateProductStructure[abs_rate_national_product_d10]),BLANK(), ISINSCOPE(D_RateProductStructure[kpi_product_cat_name]),BLANK(),  ISINSCOPE(D_AdvertiserCompany[account_holding_name]),BLANK(),  ISINSCOPE(D_OrderCompany[account_mediagroup_name]),BLANK(),  ISINSCOPE(D_Date[Date_Month]),BLANK(), ISINSCOPE(D_RateProductStructure[abs_rate_d2_name]),BLANK(), ISINSCOPE(D_RateProductStructure[abs_rate_d1_name]),BLANK(), ISINSCOPE(D_Campaigns[is_content_orion]),BLANK(), ISINSCOPE(D_AdvertiserCompany[account_sector_name]),BLANK(), ISINSCOPE(D_PubMediaAssets[pub_brand_name]),BLANK(), ISFILTERED(D_RateProductStructure[abs_rate_national_product_d10]),BLANK(),  ISFILTERED(D_RateProductStructure[kpi_product_cat_name]),BLANK(),  ISFILTERED(D_RateProductStructure[kpi_product_sub_cat_name]),BLANK(),  ISFILTERED(D_PubMediaAssets[pub_brand_name]),BLANK(),  ISFILTERED(D_RateProductStructure[abs_rate_d1_name]),BLANK(),  ISFILTERED(D_PubMediaAssets[fin_mh_name]),BLANK(), ISFILTERED(D_PubMediaAssets[fin_mhg_name]),BLANK(), ISFILTERED(D_PubMediaAssets[pub_ma_name]),BLANK(),  ISFILTERED(D_AdvertiserCompany[account_holding_name]),BLANK(), ISFILTERED(D_OrderCompany[account_mediagroup_name]),BLANK(),  ISFILTERED(D_Date[Date_Month]),BLANK(), ISFILTERED(D_RateProductStructure[abs_rate_d2_name]),BLANK(), ISFILTERED(D_RateProductStructure[abs_rate_d1_name]),BLANK(), ISFILTERED(D_Campaigns[is_content_orion]),BLANK(), ISFILTERED(D_AdvertiserCompany[account_sector_name]),BLANK(), ISFILTERED(D_PubMediaAssets[pub_brand_name]),BLANK(), [M_target_wo_scope] )
+TAB_Commercial_Insights_Freezed_2023;N/A;target;M_Analytics;^^^^False
+TAB_Commercial_Insights_Freezed_2023;F_Revenue;m_potential_netaftercommission;M_Functional;Cards
+TAB_Commercial_Insights_Freezed_2023;N/A;alert_period;M_Custom;IF(YEAR(max(D_Date_DynamicPeriods[Sorting_Level2]))<>YEAR(Today()),YEAR(max(D_Date_DynamicPeriods[Sorting_Level2])))
+TAB_Commercial_Insights_Freezed_2023;N/A;alert_period_cf;M_Custom; VAR _alertcolor = "#DE6A73" VAR _defaultcolor ="#FFFFFF" VAR _alert_period = [M_alert_period_Custom] VAR _result = if(_alert_period>0, _alertcolor,_defaultcolor) RETURN _result
+TAB_Commercial_Insights_Freezed_2023;N/A;alert_period_text;M_Custom;VAR _year = [M_alert_period_Custom] VAR _yearminusone = (_year)-1 VAR _alerttxt = IF(_year>0,"Opgelet! Geselecteerde periode valt buiten het huidige jaar. Waarde Y = "&_year&" Waarde Y-1 = "&_yearminusone) RETURN _alerttxt
+TAB_Commercial_Insights_Freezed_2023;N/A;m_potential_netaftercommission;M_HTML;m_budgetaftercomission^^html_card
+TAB_Commercial_Insights_Freezed_2023;N/A;m_potential_netaftercommission;M_HTML;m_potential_netaftercommission_PY^^html_table^^compared_to_py
+TAB_Commercial_Insights_Freezed_2023;N/A;m_potential_netaftercommission;M_HTML;m_budgetaftercomission^^html_table^^compared_to_budget
+TAB_Commercial_Insights_Freezed_2023;N/A;m_potential_netaftercommission_running_total;M_HTML;m_potential_netaftercommission_running_total_py^^html_table^^compared_to_py_running_total
+TAB_Commercial_Insights_Freezed_2023;N/A;m_potential_netaftercommission_running_total;M_HTML;m_budgetaftercomission_running_total^^html_table^^compared_to_budget_running_total
+TAB_Commercial_Insights_Freezed_2023;FP_Perspectives;N/A;M_FieldParameters;M_potential_netaftercommission,M_potential_netaftercommission_PY,HTML_Table_compared_to_py,M_budgetaftercomission,HTML_Table_compared_to_budget,M_potential_netaftercommission_running_total,M_potential_netaftercommission_running_total_PY,HTML_Table_compared_to_py_running_total,M_budgetaftercomission_running_total,HTML_Table_compared_to_budget_running_total^^Y,Y-1,% Y-1,BY,% BY,Y,Y-1,% Y-1,BY,% BY^^Non-Cumul,Non-Cumul,Non-Cumul,Non-Cumul,Non-Cumul,Cumul,Cumul,Cumul,Cumul,Cumul
+TAB_Commercial_Insights_Freezed_2023;FP_Perspectives_Graphs;N/A;M_FieldParameters;M_potential_netaftercommission,M_potential_netaftercommission_PY,M_prev_year_comparison,M_budgetaftercomission,M_budget_comparison,M_potential_netaftercommission_running_total,M_potential_netaftercommission_running_total_PY,M_prev_year_comparison_cumul,M_budgetaftercomission_running_total,M_budget_comparison_cumul^^Y,Y-1,% Y-1,BY,% BY,Y,Y-1,% Y-1,BY,% BY^^Non-Cumul,Non-Cumul,Non-Cumul,Non-Cumul,Non-Cumul,Cumul,Cumul,Cumul,Cumul,Cumul
+TAB_4G;F_GAM_Delivery;AdImpressions;M_Summarization;Numeric
+TAB_4G;F_GAM_Delivery;Clicks;M_Summarization;Numeric
+TAB_4G;F_GAM_Viewability;total_active_view_eligible_impressions;M_Summarization;Numeric
+TAB_4G;F_GAM_Viewability;total_active_view_measurable_impressions;M_Summarization;Numeric
+TAB_4G;F_GAM_Viewability;total_active_view_viewable_impressions;M_Summarization;Numeric
+TAB_4G;F_GAM_Viewability;total_active_view_average_viewable_time;M_Summarization;Numeric
+TAB_4G;F_GAM_Viewability;total_line_item_level_clicks;M_Summarization;Numeric
+TAB_4G;F_GAM_Viewability;total_line_item_level_impressions;M_Summarization;Numeric
+TAB_4G;F_GAM_Viewability;video_viewership_complete;M_Summarization;Numeric
+TAB_4G;F_GAM_Viewability;video_viewership_start;M_Summarization;Numeric
+TAB_4G;F_GAM_Viewability;video_viewership_midpoint;M_Summarization;Numeric
+TAB_4G;F_GAM_Viewability;video_viewership_first_quartile;M_Summarization;Numeric
+TAB_4G;F_GAM_Viewability;video_viewership_third_quartile;M_Summarization;Numeric
+TAB_4G;N/A;video_viewership_third_quartile;M_Analytics;
+TAB_4G;F_Segment_Selectivity;line_item_segment_impressions;M_Summarization;Numeric
+TAB_4G;F_Segment_Selectivity;line_item_segment_impressions_weighted_percentage;M_Summarization;Numeric^^Percent
+TAB_4G;F_Segment_Selectivity;line_item_age_segment_impressions_weighted_percentage;M_Summarization;Numeric^^Percent
+TAB_4G;F_Segment_Selectivity;line_item_segment_clicks;M_Summarization;Numeric
+TAB_4G;F_Segment_Selectivity;line_item_segment_clicks_weighted_percentage;M_Summarization;Numeric^^Percent
+TAB_4G;F_Segment_Selectivity;line_item_age_segment_clicks_weighted_percentage;M_Summarization;Numeric^^Percent
+TAB_4G;F_Segment_Selectivity;piano_age_users_average__percentage;M_Summarization;Numeric^^Percent
+TAB_4G;F_Segment_Selectivity;piano_all_users_average_percentage;M_Summarization;Numeric^^Percent
+TAB_4G;F_Segment_Selectivity;piano_behavioral_users_average__percentage;M_Summarization;Numeric^^Percent
+TAB_4G;F_Segment_Selectivity;piano_segmented_users_average_percentage;M_Summarization;Numeric^^Percent
+TAB_4G;F_Nativo_Delivery;#_quality_reads;M_Summarization;Numeric
+TAB_4G;F_Nativo_Delivery;cta;M_Summarization;Numeric
+TAB_4G;F_Nativo_Delivery;engagements_15_seconds;M_Summarization;Numeric
+TAB_4G;F_Nativo_Delivery;page_views;M_Summarization;Numeric
+TAB_4G;F_Nativo_Delivery;time_on_content;M_Summarization;Numeric
+TAB_4G;F_Nativo_Delivery;video_views;M_Summarization;Numeric
+TAB_4G;F_Nativo_Delivery;video_views_to_100%;M_Summarization;Numeric
+TAB_4G;F_Nativo_Delivery;video_views_to_25%;M_Summarization;Numeric
+TAB_4G;F_Nativo_Delivery;video_views_to_50%;M_Summarization;Numeric
+TAB_4G;F_Nativo_Delivery;video_views_to_75%;M_Summarization;Numeric
+TAB_4G;F_Nativo_Delivery;views_to_100%;M_Summarization;Numeric
+TAB_4G;F_Nativo_Delivery;views_to_15_seconds;M_Summarization;Numeric
+TAB_4G;F_Nativo_Delivery;views_to_25%;M_Summarization;Numeric
+TAB_4G;F_Nativo_Delivery;views_to_50%;M_Summarization;Numeric
+TAB_4G;F_Nativo_Delivery;views_to_75%;M_Summarization;Numeric
+TAB_4G;F_Nativo_Delivery;views_to_75%;M_Summarization;Numeric
+TAB_4G;F_Nativo_Delivery;scroll_initiation_rate;M_Summarization;Numeric
+TAB_4G;F_Nativo_Delivery;scroll_depth_rate;M_Summarization;Numeric^^Percent
+TAB_4G;F_Nativo_Delivery;#_scroll_depths;M_Summarization;Numeric^^^^scroll_depth
+TAB_4G;F_Nativo_Delivery;#_scroll_initiations;M_Summarization;Numeric^^^^initiated_scrolls
+TAB_4G;N/A;AVG_time_on_content;M_Custom;DIVIDE([M_time_on_content], [M_page_views])
+TAB_4G;N/A;scroll_initiation_rate_calc;M_Custom;DIVIDE([M_initiated_scrolls],[M_page_views])^^Percent
+TAB_4G;N/A;scrolls_initiated;M_Custom;[M_AVG_scroll_initiation_rate_Base]*[M_page_views]
+TAB_4G;N/A;scroll_depth_rate_calc;M_Custom; DIVIDE([M_scroll_depth],[M_page_views])^^Percent
+TAB_4G;N/A;cta_rate;M_Custom;DIVIDE([M_cta], [M_page_views])^^Percent
+TAB_4G;N/A;100%_view_rate;M_Custom;DIVIDE([M_views_to_100%], [M_page_views])^^Percent
+TAB_4G;N/A;engaged_view_rate;M_Custom;DIVIDE([M_engagements_15_seconds], [M_page_views])^^Percent
+TAB_4G;N/A;click_through_rate;M_Custom;DIVIDE([M_total_line_item_level_clicks], [M_total_line_item_level_impressions])^^Percent
+TAB_4G;N/A;viewability_rate;M_Custom;DIVIDE([M_total_active_view_viewable_impressions], [M_total_line_item_level_impressions])^^Percent
+TAB_4G;N/A;completion_rate;M_Custom;DIVIDE([M_video_viewership_complete], [M_video_viewership_start])^^Percent
+TAB_4G;N/A;line_item_segment_impressions_male_percent;M_Custom;DIVIDE(CALCULATE([M_line_item_segment_impressions], D_Segments[segment_name_short] = "MALE"), CALCULATE([M_line_item_segment_impressions], D_Segments[piano_group_name] = "GENDER"))^^0%
+TAB_4G;N/A;line_item_segment_impressions_female_percent;M_Custom;DIVIDE(CALCULATE([M_line_item_segment_impressions], D_Segments[segment_name_short] = "FEMALE"), CALCULATE([M_line_item_segment_impressions], D_Segments[piano_group_name] = "GENDER"))^^0%
+TAB_4G;N/A;AdImpressions_phone_percent;M_Custom;DIVIDE(CALCULATE([M_AdImpressions], F_GAM_Delivery[DeviceCategory] = "Phone"), [M_AdImpressions])^^0%
+TAB_4G;N/A;AdImpressions_desktop_percent;M_Custom;DIVIDE(CALCULATE([M_AdImpressions], F_GAM_Delivery[DeviceCategory] in {"Desktop", "Tablet", "Connected TV"}), [M_AdImpressions])^^0%
+TAB_4G;N/A;AdImpressions_unknown_percent;M_Custom;DIVIDE(CALCULATE([M_AdImpressions], F_GAM_Delivery[DeviceCategory] = "Unknown"), [M_AdImpressions])^^0%
+TAB_4G;N/A;selectivity_piano_all_users_impressions;M_Custom;DIVIDE([M_line_item_segment_impressions_weighted_percentage], [M_piano_all_users_average_percentage])*100
+TAB_4G;N/A;selectivity_piano_behavioral_users_impressions;M_Custom;DIVIDE([M_line_item_segment_impressions_weighted_percentage], [M_piano_behavioral_users_average__percentage])*100
+TAB_4G;N/A;selectivity_piano_age_users_impressions;M_Custom;DIVIDE([M_line_item_age_segment_impressions_weighted_percentage], [M_piano_age_users_average__percentage])*100
+TAB_4G;N/A;selectivity_piano_all_users_clicks;M_Custom;DIVIDE([M_line_item_segment_clicks_weighted_percentage], [M_piano_all_users_average_percentage])*100
+TAB_4G;N/A;selectivity_piano_behavioral_users_clicks;M_Custom;DIVIDE([M_line_item_segment_clicks_weighted_percentage], [M_piano_behavioral_users_average__percentage])*100
+TAB_4G;N/A;selectivity_piano_age_users_clicks;M_Custom;DIVIDE([M_line_item_age_segment_clicks_weighted_percentage], [M_piano_age_users_average__percentage])*100
+TAB_4G;N/A;click_through_rate_text;M_Custom;FORMAT([M_click_through_rate], "Percent") & " " & "Click-Through Rate"
+TAB_4G;N/A;completion_rate_text;M_Custom;FORMAT([M_completion_rate], "Percent") & " " & "Completion Rate"
+TAB_4G;N/A;cta_rate_text;M_Custom;FORMAT([M_cta_rate], "Percent") & " " & "CTA Rate"
+TAB_4G;N/A;engaged_view_rate_text;M_Custom;FORMAT([M_engaged_view_rate], "Percent") & " " & "Engaged View Rate"
+TAB_4G;N/A;100%_view_rate_text;M_Custom;FORMAT([M_100%_view_rate], "Percent") & " " & "Scroll Depth Rate"
+TAB_4G;N/A;viewability_rate_text;M_Custom;FORMAT([M_viewability_rate], "Percent") & " " & "Viewability Rate"
+TAB_4G;N/A;kpi_card_cost_type;M_Custom;VAR _SelectedType = SELECTEDVALUE(D_Campaigns[product_costtype]) VAR _Symbol = SWITCH(TRUE(), _SelectedType = "CPM", "👓", _SelectedType = "CPC", "🖰", _SelectedType = "CPR", "📖") RETURN _Symbol
+TAB_4G;N/A;wave_period_text;M_Custom;IF(HASONEVALUE(D_Campaigns[campaign_campaignid]), FORMAT(MIN(D_Campaigns[wave_waveid_startdate]), "dd/mm/yyyy") & " - " & FORMAT(MAX(D_Campaigns[wave_waveid_enddate]), "dd/mm/yyyy"))
+TAB_4G;N/A;campaign_text;M_Custom;SELECTEDVALUE(D_Campaigns[campaign_campaignname], "campaign_campaignname not filtered!")
+TAB_4G;N/A;wave_text;M_Custom;FORMAT(SELECTEDVALUE(D_Campaigns[wave_waveid_master], "wave_waveid_master not filtered!"), "")
+TAB_4G;N/A;AdImpressions;M_Analytics;
+TAB_4G;N/A;Clicks;M_Analytics;
+TAB_4G;N/A;total_active_view_eligible_impressions;M_Analytics;
+TAB_4G;N/A;total_active_view_measurable_impressions;M_Analytics;
+TAB_4G;N/A;total_active_view_viewable_impressions;M_Analytics;
+TAB_4G;N/A;total_line_item_level_clicks;M_Analytics;
+TAB_4G;N/A;total_line_item_level_impressions;M_Analytics;
+TAB_4G;N/A;total_active_view_average_viewable_time;M_Analytics;
+TAB_4G;N/A;video_viewership_complete;M_Analytics;
+TAB_4G;N/A;video_viewership_start;M_Analytics;
+TAB_4G;N/A;line_item_segment_impressions;M_Analytics;
+TAB_4G;N/A;line_item_segment_clicks;M_Analytics;
+TAB_4G;N/A;line_item_segment_impressions_weighted_percentage;M_Analytics;
+TAB_4G;N/A;line_item_segment_clicks_weighted_percentage;M_Analytics;
+TAB_4G;N/A;line_item_age_segment_impressions_weighted_percentage;M_Analytics;
+TAB_4G;N/A;line_item_age_segment_clicks_weighted_percentage;M_Analytics;
+TAB_4G;N/A;piano_all_users_average_percentage;M_Analytics;
+TAB_4G;N/A;piano_segmented_users_average_percentage;M_Analytics;
+TAB_4G;N/A;piano_age_users_average__percentage;M_Analytics;
+TAB_4G;N/A;piano_behavioral_users_average__percentage;M_Analytics;
+TAB_4G;N/A;#_quality_reads;M_Analytics;
+TAB_4G;N/A;cta;M_Analytics;
+TAB_4G;N/A;engagements_15_seconds;M_Analytics;
+TAB_4G;N/A;page_views;M_Analytics;
+TAB_4G;N/A;time_on_content;M_Analytics;
+TAB_4G;N/A;video_views;M_Analytics;
+TAB_4G;N/A;video_views_to_100%;M_Analytics;
+TAB_4G;N/A;video_views_to_25%;M_Analytics;
+TAB_4G;N/A;video_views_to_50%;M_Analytics;
+TAB_4G;N/A;video_views_to_75%;M_Analytics;
+TAB_4G;N/A;views_to_100%;M_Analytics;
+TAB_4G;N/A;views_to_15_seconds;M_Analytics;
+TAB_4G;N/A;views_to_25%;M_Analytics;
+TAB_4G;N/A;views_to_50%;M_Analytics;
+TAB_4G;N/A;views_to_75%;M_Analytics;
+TAB_4G;N/A;views_to_75%;M_Analytics;
+TAB_4G;N/A;scroll_initiation_rate;M_Analytics;
+TAB_4G;N/A;scroll_depth_rate;M_Analytics;
+TAB_4G;N/A;AVG_time_on_content;M_Analytics;
+TAB_4G;N/A;initiated_scrolls;M_Analytics;
+TAB_4G;N/A;scroll_initiation_rate_calc;M_Analytics;
+TAB_4G;N/A;scrolls_initiated;M_Analytics;
+TAB_4G;N/A;scroll_depth;M_Analytics;
+TAB_4G;N/A;scroll_depth_rate_calc;M_Analytics;
+TAB_4G;N/A;cta_rate;M_Analytics;
+TAB_4G;N/A;100%_view_rate;M_Analytics;
+TAB_4G;N/A;engaged_view_rate;M_Analytics;
+TAB_4G;N/A;click_through_rate;M_Analytics;
+TAB_4G;N/A;viewability_rate;M_Analytics;
+TAB_4G;N/A;completion_rate;M_Analytics;
+TAB_4G;N/A;line_item_segment_impressions_male_percent;M_Analytics;
+TAB_4G;N/A;line_item_segment_impressions_female_percent;M_Analytics;
+TAB_4G;N/A;AdImpressions_phone_percent;M_Analytics;
+TAB_4G;N/A;AdImpressions_desktop_percent;M_Analytics;
+TAB_4G;N/A;AdImpressions_unknown_percent;M_Analytics;
+TAB_4G;N/A;selectivity_piano_all_users_impressions;M_Analytics;
+TAB_4G;N/A;selectivity_piano_behavioral_users_impressions;M_Analytics;
+TAB_4G;N/A;selectivity_piano_age_users_impressions;M_Analytics;
+TAB_4G;N/A;selectivity_piano_all_users_clicks;M_Analytics;
+TAB_4G;N/A;selectivity_piano_behavioral_users_clicks;M_Analytics;
+TAB_4G;N/A;selectivity_piano_age_users_clicks;M_Analytics;
+TAB_4G;N/A;engaged_views_text;M_Custom;FORMAT([M_engagements_15_seconds], "#,0") & " " & "Engaged 15s Views"
+TAB_4G;N/A;views_100%_text;M_Custom;FORMAT([M_views_to_100%], "#,0") & " " & "100% Views"
+TAB_4G;N/A;ctas_text;M_Custom;FORMAT([M_cta], "#,0") & " " & "CTAs"
+TAB_4G;N/A;time_on_content_text;M_Custom;FORMAT([M_AVG_time_on_content], "#,0") & "s" & " " & "Average Time on Content"
+TAB_4G;N/A;clicks_text;M_Custom;FORMAT([M_total_line_item_level_clicks], "#,0") & " " & "Clicks"
+TAB_4G;N/A;viewable_impressions_text;M_Custom;FORMAT([M_total_active_view_viewable_impressions], "#,0") & " " & "Viewable Impressions"
+TAB_4G;N/A;completed_impressions_text;M_Custom;FORMAT([M_video_viewership_complete], "#,0") & " " & "Completed Impressions"
+TAB_4G;N/A;kpi_card_cost_type_2;M_Custom;VAR _SelectedType = SELECTEDVALUE(D_Campaigns[product_costtype]) VAR _Symbol = SWITCH(TRUE(), _SelectedType in {"CPM", "CPP", "CPP_W", "CPP_D", "CPR", "vCPM"}, "Seeing 👓", _SelectedType = "CPC", "Clicking 🖰", _SelectedType = "CPQR", "Reading 📖") RETURN _Symbol
+TAB_4G;N/A;impressions;M_Custom;VAR _SelectedType = SELECTEDVALUE(D_Campaigns[product_costtype]) RETURN IF (_SelectedType = "vCPM", [M_total_active_view_viewable_impressions], [M_total_line_item_level_impressions])
+TAB_4G;N/A;impressions;M_Analytics;
+TAB_4G;N/A;impressions_text;M_Custom;VAR _SelectedType = SELECTEDVALUE(D_Campaigns[product_costtype]) RETURN IF (_SelectedType = "vCPM", "Viewable Impressions", "Impressions")
+TAB_4G;N/A;impressions_text;M_Analytics;
+TAB_4G;N/A;top_interest_clicks;M_Custom;VAR _Segment = SELECTEDVALUE(D_Segments[segment_name_short]) VAR _Group = SELECTEDVALUE(D_Segments[piano_group_name]) VAR _Table = FILTER(SUMMARIZE(FILTER(ALL(D_Segments), D_Segments[piano_group_name] = _Group), D_Segments[segment_name_short], "A", [M_selectivity_piano_behavioral_users_clicks], "B", [M_piano_behavioral_users_average__percentage] >= 0.01), [B]) VAR _Top5 = TOPN(5, _Table, [A], DESC) VAR _Result = IF (_Segment in SELECTCOLUMNS(_Top5, D_Segments[segment_name_short]), [M_selectivity_piano_behavioral_users_clicks]) RETURN _Result
+TAB_4G;N/A;top_interest_impressions;M_Custom;VAR _Segment = SELECTEDVALUE(D_Segments[segment_name_short]) VAR _Group = SELECTEDVALUE(D_Segments[piano_group_name]) VAR _Table = FILTER(SUMMARIZE(FILTER(ALL(D_Segments), D_Segments[piano_group_name] = _Group), D_Segments[segment_name_short], "A", [M_selectivity_piano_behavioral_users_impressions], "B", [M_piano_behavioral_users_average__percentage] >= 0.01), [B]) VAR _Top5 = TOPN(5, _Table, [A], DESC) VAR _Result = IF (_Segment in SELECTCOLUMNS(_Top5, D_Segments[segment_name_short]), [M_selectivity_piano_behavioral_users_impressions]) RETURN _Result
+TAB_4G;N/A;top_interest_impressions;M_Analytics;
+TAB_4G;N/A;top_interest_clicks;M_Analytics;
+TAB_4G;N/A;top_interest_impressions_5%;M_Custom;VAR _Segment = SELECTEDVALUE(D_Segments[segment_name_short]) VAR _Group = SELECTEDVALUE(D_Segments[piano_group_name]) VAR _Table = FILTER(SUMMARIZE(FILTER(ALL(D_Segments), D_Segments[piano_group_name] = _Group), D_Segments[segment_name_short], "A", [M_selectivity_piano_behavioral_users_impressions], "B", [M_piano_behavioral_users_average__percentage] >= 0.05), [B]) VAR _Top5 = TOPN(5, _Table, [A], DESC) VAR _Result = IF (_Segment in SELECTCOLUMNS(_Top5, D_Segments[segment_name_short]), [M_selectivity_piano_behavioral_users_impressions]) RETURN _Result
+TAB_4G;N/A;top_interest_impressions_5%;M_Analytics;
+TAB_4G;N/A;line_item_segment_clicks_male_percent;M_Custom;DIVIDE(CALCULATE([M_line_item_segment_clicks], D_Segments[segment_name_short] = "MALE"), CALCULATE([M_line_item_segment_clicks], D_Segments[piano_group_name] = "GENDER"))^^0%
+TAB_4G;N/A;line_item_segment_clicks_female_percent;M_Custom;DIVIDE(CALCULATE([M_line_item_segment_clicks], D_Segments[segment_name_short] = "FEMALE"), CALCULATE([M_line_item_segment_clicks], D_Segments[piano_group_name] = "GENDER"))^^0%
+TAB_4G;N/A;Clicks_phone_percent;M_Custom;DIVIDE(CALCULATE([M_Clicks], F_GAM_Delivery[DeviceCategory] = "Phone"), [M_Clicks])^^0%
+TAB_4G;N/A;Clicks_desktop_percent;M_Custom;DIVIDE(CALCULATE([M_Clicks], F_GAM_Delivery[DeviceCategory] in {"Desktop", "Tablet", "Connected TV"}), [M_Clicks])^^0%
+TAB_4G;N/A;line_item_segment_clicks_male_percent;M_Analytics;
+TAB_4G;N/A;line_item_segment_clicks_female_percent;M_Analytics;
+TAB_4G;N/A;Clicks_phone_percent;M_Analytics;
+TAB_4G;N/A;Clicks_desktop_percent;M_Analytics;
+TAB_4G;N/A;click_through_rate_video;M_Custom;CALCULATE(DIVIDE([M_total_line_item_level_clicks],[M_total_line_item_level_impressions]), F_GAM_Viewability[device_platform] in {"app", "web", "(not applicable)"} && NOT(F_GAM_Viewability[device_platform] in {"Connected TV"}))^^PERCENT
+TAB_4G;N/A;click_through_rate_video;M_Analytics;
+TAB_4G;N/A;viewable_impressions_stb;M_Custom;CALCULATE([M_total_active_view_viewable_impressions], F_GAM_Viewability[device_platform] in {"eos", "sipadan"})
+TAB_4G;N/A;viewable_impressions_stb;M_Analytics;
+TAB_4G;N/A;viewable_impressions_stb_text;M_Custom;FORMAT([M_viewable_impressions_stb], "#,0") & " " & "Viewable Impressions"
+TAB_4G;N/A;viewable_rate_stb_text;M_Custom;FORMAT([M_viewability_rate_video_stb], "Percent") & " " & "Viewability Rate"
+TAB_4G;N/A;viewability_rate_video_stb;M_Custom;CALCULATE(DIVIDE([M_total_active_view_viewable_impressions], [M_total_line_item_level_impressions]), F_GAM_Viewability[device_platform] in {"eos", "sipadan"})^^0%
+TAB_4G;N/A;viewability_rate_video_stb;M_Analytics;
+TAB_4G;N/A;viewable_impressions_online;M_Custom;CALCULATE([M_total_active_view_viewable_impressions], F_GAM_Viewability[device_platform] in {"app", "web", "hgo", "not applicable"})^^0%
+TAB_4G;N/A;viewable_impressions_online;M_Analytics;
+TAB_4G;N/A;viewable_impressions_online_text;M_Custom;FORMAT([M_viewable_impressions_online], "#,0") & " " & "Viewable Impressions"
+TAB_4G;N/A;viewability_rate_video_online;M_Custom;CALCULATE(DIVIDE([M_total_active_view_viewable_impressions], [M_total_line_item_level_impressions]), F_GAM_Viewability[device_platform] in {"web", "app", "hgo", "not applicable"})^^0%
+TAB_4G;N/A;viewability_rate_video_online;M_Analytics;
+TAB_4G;N/A;quality_read_rate;M_Custom;DIVIDE([M_#_quality_reads], [M_page_views])^^Percent
+TAB_4G;N/A;quality_read_rate;M_Analytics;
+TAB_4G;D_Campaigns;wave_quantity;M_Summarization;Numeric
+TAB_4G;N/A;wave_quantity;M_Analytics;
+TAB_4G;N/A;goal_quantity_text;M_Custom;"Goal:" & " " & FORMAT([M_wave_quantity], "#,0")
+TAB_4G;N/A;delivered_quality_reads_text;M_Custom;"Delivered:" & " " & FORMAT([M_#_quality_reads], "#,0")
+TAB_4G;N/A;delivered_impressions_text;M_Custom;"Delivered:" & " " & FORMAT([M_total_line_item_level_impressions], "#,0")
+TAB_4G;N/A;Navigation;M_Custom;VAR _Filtered = HASONEVALUE(D_Campaigns[campaign_campaignid]) && HASONEVALUE(D_Campaigns[wave_waveid_startdate]) && HASONEVALUE(D_Campaigns[wave_waveid_enddate]) VAR _SelectedCostType = SELECTEDVALUE(D_Campaigns[product_costtype]) VAR _SelectedProductType = SELECTEDVALUE(D_Rate_Structure[kpi_product_sub_cat_name]) VAR _Target = SWITCH(TRUE(),_SelectedCostType = "CPR", "Seeing",_SelectedCostType = "CPQR", "Reading",(_SelectedCostType = "CPM") && (_SelectedProductType = "Display"), "Seeing_display",(_SelectedCostType = "CPM") && (_SelectedProductType = "Video"), "Seeing_video",(_SelectedCostType = "CPP") && (_SelectedProductType = "Display"), "Seeing_display",(_SelectedCostType = "CPP") && (_SelectedProductType = "Video"), "Seeing_video",(_SelectedCostType = "CPP_D") && (_SelectedProductType = "Display"), "Seeing_display",(_SelectedCostType = "CPP_D") && (_SelectedProductType = "Video"), "Seeing_video",(_SelectedCostType = "CPP_W") && (_SelectedProductType = "Display"), "Seeing_display",(_SelectedCostType = "CPP_W") && (_SelectedProductType = "Video"), "Seeing_video",(_SelectedCostType = "vCPM") && (_SelectedProductType = "Display"), "Seeing_display",(_SelectedCostType = "vCPM") && (_SelectedProductType = "Video"), "Seeing_video",_SelectedCostType = "CPC", "Clicking",TRUE(), "") RETURN _Target
+TAB_4G;N/A;Selected Wave;M_Custom;IF (HASONEVALUE(D_Campaigns[campaign_campaignid]) && HASONEVALUE(D_Campaigns[wave_waveid_startdate]) && HASONEVALUE(D_Campaigns[wave_waveid_enddate]), "Go to report", "Disabled")
+TAB_4G;N/A;impressions_icon_bigscreen;M_Custom;CALCULATE([M_total_line_item_level_impressions], F_GAM_Viewability[device_category_name] = "Connected TV" || F_GAM_Viewability[device_platform] in {"eos", "sipadan"})^^0%
+TAB_4G;N/A;impressions_icon_bigscreen;M_Analytics;
+TAB_4G;N/A;impressions_icon_bigscreen_percent;M_Custom;DIVIDE([M_impressions_icon_bigscreen], [M_total_line_item_level_impressions])^^0%
+TAB_4G;N/A;impressions_icon_bigscreen_percent;M_Analytics;
+TAB_4G;N/A;impressions_icon_desktop;M_Custom;CALCULATE([M_total_line_item_level_impressions], F_GAM_Viewability[device_category_name] = "Desktop" && NOT(F_GAM_Viewability[device_platform] in {"hgo"}))^^0%
+TAB_4G;N/A;impressions_icon_desktop;M_Analytics;
+TAB_4G;N/A;impressions_icon_desktop_percent;M_Custom;DIVIDE([M_impressions_icon_desktop], [M_total_line_item_level_impressions])^^0%
+TAB_4G;N/A;impressions_icon_desktop_percent;M_Analytics;
+TAB_4G;N/A;impressions_icon_mobile;M_Custom;CALCULATE([M_total_line_item_level_impressions], F_GAM_Viewability[device_category_name] in {"Feature phone", "Smartphone", "Tablet"} || F_GAM_Viewability[device_platform] in {"hgo"})^^0%
+TAB_4G;N/A;impressions_icon_mobile;M_Analytics;
+TAB_4G;N/A;impressions_icon_desktop_mobile;M_Custom;DIVIDE([M_impressions_icon_mobile], [M_total_line_item_level_impressions])^^0%
+TAB_4G;N/A;impressions_icon_desktop_mobile;M_Analytics;
+TAB_Pipeline_Insights;F_Revenue;potential_netaftercommission;M_Summarization;Numeric^^^^revenue
+TAB_Pipeline_Insights;F_RollingEstimates_Monthly;estimate;M_Summarization;Numeric
+TAB_Pipeline_Insights;F_RollingEstimates_Yearly;jaarinschatting;M_Summarization;Numeric
+TAB_Pipeline_Insights;F_RollingEstimates_Yearly;target;M_Summarization;Numeric
+TAB_Pipeline_Insights;F_Opportunity;weighted_amount;M_Summarization;Numeric
+TAB_Pipeline_Insights;F_Opportunity;amount;M_Summarization;Numeric
+TAB_Pipeline_Insights;F_Yearcontract;target;M_Summarization;Numeric^^Fixed^^jaarcontract_overig_target
+TAB_Pipeline_Insights;F_Project;target;M_Summarization;Numeric^^^^project_target
+TAB_Pipeline_Insights;F_Targets;Target;M_Summarization;Numeric^^^^sales_target
+TAB_Pipeline_Insights;N/A;revenue_to_remove_helper;M_Custom;CALCULATE(SUM(F_Revenue[potential_netaftercommission]), D_RateProductStructure[kpi_product_sub_cat_name] in {"Spot", "Billboard", "TV Branded Content"}, D_PubMediaAssets[pub_ma_name] in {"Play Sports Open", "Play247", "Play4", "Play5", "Play6", "Play7"})
+TAB_Pipeline_Insights;N/A;revenue_to_remove;M_Custom;VAR _Table = SUMMARIZE( D_Accounts, D_Accounts[account_holding_name], "A", [M_estimate_Base], "B", [M_revenue_to_remove_helper_Custom]) VAR _AddColumn = FILTER(_Table, [A] > 0) VAR _Result = SUMX(_AddColumn, [B]) RETURN _Result
+TAB_Pipeline_Insights;N/A;jaarcontract_nationale_tv_not_booked_helper;M_Custom;IF ( NOT ( ISBLANK ( [M_estimate] ) ), IF ( [M_estimate] - [M_revenue_to_remove] > 0, [M_estimate] - [M_revenue_to_remove], 0 ) )
+TAB_Pipeline_Insights;N/A;jaarcontract_nationale_tv_not_booked;M_Custom;IF(ISINSCOPE( D_Date[Date_Month] ),[M_jaarcontract_nationale_tv_not_booked_helper_Custom], SUMX (SUMMARIZE (D_Date,[Date_Month],"_Value", [M_jaarcontract_nationale_tv_not_booked_helper_Custom]),[_Value]))
+TAB_Pipeline_Insights;N/A;jaarcontract_overig_not_booked;M_Custom;CALCULATE([M_weighted_amount], F_Opportunity[statecode] = "Open", ISBLANK(F_Opportunity[yearcontractid]) = FALSE, USERELATIONSHIP(D_Yearcontract[id], F_Opportunity[yearcontractid]))
+TAB_Pipeline_Insights;N/A;jaarcontract_overig_not_booked_target_based;M_Custom;VAR YearContract = CALCULATETABLE ( SUMMARIZE ( 'D_Yearcontract', 'D_Yearcontract'[id], "target", SUM ( 'F_Yearcontract'[target] ), "amount", SUM ( 'F_Opportunity'[amount] ) ), USERELATIONSHIP ( 'D_Yearcontract'[id], 'F_Opportunity'[yearcontractid] ), 'F_Opportunity'[statecode] = "Won" ) VAR YearContractNotBookedTargetBased = SUMX ( YearContract, IF ( NOT ( ISBLANK ( [target] ) ), IF ( [target] - [amount] > 0, [target] - [amount], 0 ) ) ) VAR Result = IF ( OR ( ISFILTERED(D_KpiProduct), ISFILTERED(D_Medium) ), [M_jaarcontract_overig_not_booked], YearContractNotBookedTargetBased ) RETURN Result
+TAB_Pipeline_Insights;N/A;project_not_booked;M_Custom;CALCULATE([M_weighted_amount], F_Opportunity[statecode] = "Open", ISBLANK(F_Opportunity[projectid]) = FALSE)
+TAB_Pipeline_Insights;N/A;pipeline;M_Custom;VAR _table1 = FILTER(F_Opportunity, RELATED(D_Opportunity[excludenationaltvamountfrompipeline]) = TRUE && F_Opportunity[medium_label] <> "National TV") VAR _table2 = FILTER(F_Opportunity, RELATED(D_Opportunity[excludenationaltvamountfrompipeline]) = FALSE) VAR _result = CALCULATE ([M_weighted_amount], F_Opportunity[statecode] = "Open", ISBLANK(F_Opportunity[yearcontractid]), UNION(_table1, _table2)) RETURN _result
+TAB_Pipeline_Insights;N/A;jaarcontract_overig_signed;M_Custom;CALCULATE([M_amount], F_Opportunity[statecode] = "Won", ISBLANK(F_Opportunity[yearcontractid]) = FALSE, USERELATIONSHIP(D_Yearcontract[id], F_Opportunity[yearcontractid]))
+TAB_Pipeline_Insights;N/A;project_signed;M_Custom;CALCULATE([M_amount], F_Opportunity[statecode] = "Won", ISBLANK(F_Opportunity[projectid]) = FALSE)
+TAB_Pipeline_Insights;N/A;expected_revenue;M_Custom;[M_pipeline] + [M_jaarcontract_overig_not_booked_target_based] + [M_jaarcontract_nationale_tv_not_booked]
+TAB_Pipeline_Insights;N/A;project_signed_running_total;M_Custom;VAR LastVisibleDate=MAX(D_Date[Date_Date]) VAR FirstVisibleDate=MIN(D_Date[Date_Date]) VAR Result=CALCULATE([M_project_signed],D_Date[Date_Date]<=LastVisibleDate) RETURN Result
+TAB_Pipeline_Insights;N/A;total_revenue;M_Custom;[M_revenue] + [M_expected_revenue]
+TAB_Pipeline_Insights;N/A;opportunity_count;M_Custom;DISTINCTCOUNT(F_Opportunity[opportunityid])
+TAB_Pipeline_Insights;N/A;#_open_opportunities;M_Custom;CALCULATE(DISTINCTCOUNT(F_Opportunity[opportunityid]), F_Opportunity[statecode] = "Open")
+TAB_Pipeline_Insights;N/A;#_lost_opportunities;M_Custom;CALCULATE(DISTINCTCOUNT(F_Opportunity[opportunityid]), F_Opportunity[statecode] = "Lost")
+TAB_Pipeline_Insights;N/A;#_won_opportunities;M_Custom;CALCULATE(DISTINCTCOUNT(F_Opportunity[opportunityid]), F_Opportunity[statecode] = "Won")
+TAB_Pipeline_Insights;N/A;#_lead_opportunities;M_Custom;CALCULATE(DISTINCTCOUNT(F_Opportunity[opportunityid]), F_Opportunity[salesstage] = "1. Lead")
+TAB_Pipeline_Insights;N/A;#_opp_opportunities;M_Custom;CALCULATE(DISTINCTCOUNT(F_Opportunity[opportunityid]), F_Opportunity[salesstage] = "2. Opportunity")
+TAB_Pipeline_Insights;N/A;#_offer_opportunities;M_Custom;CALCULATE(DISTINCTCOUNT(F_Opportunity[opportunityid]), F_Opportunity[salesstage] = "3. Offer")
+TAB_Pipeline_Insights;N/A;#_close_opportunities;M_Custom;CALCULATE(DISTINCTCOUNT(F_Opportunity[opportunityid]), F_Opportunity[salesstage] = "4. Close")
+TAB_Pipeline_Insights;N/A;sl_#_opportunities;M_Custom;CALCULATE (DISTINCTCOUNT ( H_Opportunity[id] ))
+TAB_Pipeline_Insights;N/A;sl_#_open_opportunities;M_Custom;CALCULATE (DISTINCTCOUNT ( H_Opportunity[id] ),H_Opportunity[statecode] = "Open")
+TAB_Pipeline_Insights;N/A;sl_#_lost_opportunities;M_Custom;CALCULATE (DISTINCTCOUNT ( H_Opportunity[id] ),H_Opportunity[statecode] = "Lost")
+TAB_Pipeline_Insights;N/A;sl_#_won_opportunities;M_Custom;CALCULATE (DISTINCTCOUNT ( H_Opportunity[id] ),H_Opportunity[statecode] = "Won")
+TAB_Pipeline_Insights;N/A;sl_#_lead_opportunities;M_Custom;CALCULATE (DISTINCTCOUNT ( H_Opportunity[id] ),H_Opportunity[salesstage] = "1. Lead")
+TAB_Pipeline_Insights;N/A;sl_#_opp_opportunities;M_Custom;CALCULATE (DISTINCTCOUNT ( H_Opportunity[id] ),H_Opportunity[salesstage] = "2. Opportunity")
+TAB_Pipeline_Insights;N/A;sl_#_offer_opportunities;M_Custom;CALCULATE (DISTINCTCOUNT ( H_Opportunity[id] ),H_Opportunity[salesstage] = "3. Offer")
+TAB_Pipeline_Insights;N/A;sl_#_close_opportunities;M_Custom;CALCULATE (DISTINCTCOUNT ( H_Opportunity[id] ),H_Opportunity[salesstage] = "4. Close")
+TAB_Pipeline_Insights;N/A;sl_post_conv;M_Custom;DIVIDE ( [M_sl_#_won_opportunities], [M_sl_#_opportunities] )^^PERCENT
+TAB_Pipeline_Insights;N/A;sl_neg_conv;M_Custom;DIVIDE ( [M_sl_#_lost_opportunities], [M_sl_#_opportunities] )^^PERCENT
+TAB_Pipeline_Insights;N/A;sales_target_not_filtered;M_Custom;IF( NOT( ISFILTERED(D_KpiProduct) || ISFILTERED(D_Medium) || ISFILTERED(D_Accounts) ), [M_sales_target_Base] )
+TAB_Pipeline_Insights;N/A;revenue_diff;M_Custom;[M_sales_target] - [M_expected_revenue]
+TAB_Pipeline_Insights;N/A;jaarcontract_overig_target_remaining;M_Custom;[M_jaarcontract_overig_target] - ([M_jaarcontract_overig_signed] + [M_jaarcontract_overig_not_booked])
+TAB_Pipeline_Insights;N/A;project_target_remaining;M_Custom;[M_project_target] - ([M_project_signed] + [M_project_not_booked])
+TAB_Pipeline_Insights;N/A;sl_#_opportunities;M_Analytics;
+TAB_Pipeline_Insights;N/A;sl_#_open_opportunities;M_Analytics;
+TAB_Pipeline_Insights;N/A;#_open_opportunities;M_Analytics;
+TAB_Pipeline_Insights;N/A;sl_#_lost_opportunities;M_Analytics;
+TAB_Pipeline_Insights;N/A;#_lost_opportunities;M_Analytics;
+TAB_Pipeline_Insights;N/A;sl_#_won_opportunities;M_Analytics;
+TAB_Pipeline_Insights;N/A;#_won_opportunities;M_Analytics;
+TAB_Pipeline_Insights;N/A;sl_#_lead_opportunities;M_Analytics;
+TAB_Pipeline_Insights;N/A;#_lead_opportunities;M_Analytics;
+TAB_Pipeline_Insights;N/A;sl_#_opp_opportunities;M_Analytics;
+TAB_Pipeline_Insights;N/A;#_opp_opportunities;M_Analytics;
+TAB_Pipeline_Insights;N/A;sl_#_offer_opportunities;M_Analytics;
+TAB_Pipeline_Insights;N/A;#_offer_opportunities;M_Analytics;
+TAB_Pipeline_Insights;N/A;sl_#_close_opportunities;M_Analytics;
+TAB_Pipeline_Insights;N/A;#_close_opportunities;M_Analytics;
+TAB_Pipeline_Insights;N/A;sl_post_conv;M_Analytics;
+TAB_Pipeline_Insights;N/A;sl_neg_conv;M_Analytics;
+TAB_Pipeline_Insights;N/A;weighted_amount;M_Analytics;
+TAB_Pipeline_Insights;N/A;amount;M_Analytics;
+TAB_Pipeline_Insights;N/A;successrate;M_Analytics;
+TAB_Pipeline_Insights;N/A;revenue;M_Analytics;PY
+TAB_Pipeline_Insights;N/A;estimate;M_Analytics;PY
+TAB_Pipeline_Insights;N/A;jaarinschatting;M_Analytics;PY
+TAB_Pipeline_Insights;N/A;target;M_Analytics;PY
+TAB_Pipeline_Insights;N/A;revenue_to_remove;M_Analytics;PY
+TAB_Pipeline_Insights;N/A;jaarcontract_nationale_tv_not_booked;M_Analytics;PY
+TAB_Pipeline_Insights;N/A;jaarcontract_overig_not_booked;M_Analytics;PY
+TAB_Pipeline_Insights;N/A;jaarcontract_overig_not_booked_target_based;M_Analytics;PY
+TAB_Pipeline_Insights;N/A;jaarcontract_overig_signed;M_Analytics;PY
+TAB_Pipeline_Insights;N/A;pipeline;M_Analytics;PY
+TAB_Pipeline_Insights;N/A;expected_revenue;M_Analytics;PY
+TAB_Pipeline_Insights;N/A;jaarcontract_overig_target;M_Analytics;
+TAB_Pipeline_Insights;N/A;jaarcontract_overig_quarterly_target;M_Analytics;
+TAB_Pipeline_Insights;N/A;project_not_booked;M_Analytics;
+TAB_Pipeline_Insights;N/A;project_signed;M_Analytics;
+TAB_Pipeline_Insights;N/A;project_target;M_Analytics;
+TAB_Pipeline_Insights;N/A;project_signed_running_total;M_Analytics;
+TAB_Pipeline_Insights;N/A;opportunity_count;M_Analytics;
+TAB_Pipeline_Insights;N/A;total_revenue;M_Analytics;PY
+TAB_Pipeline_Insights;N/A;sales_target;M_Analytics;
+TAB_Pipeline_Insights;N/A;sales_target_not_filtered;M_Analytics;
+TAB_Pipeline_Insights;N/A;revenue_diff;M_Analytics;
+TAB_Pipeline_Insights;N/A;jaarcontract_overig_target_remaining;M_Analytics;
+TAB_Pipeline_Insights;F_Revenue;M_revenue;M_Functional;Cards
+TAB_Pipeline_Insights;F_Revenue;M_expected_revenue;M_Functional;Cards
+TAB_Nielsen;L_Nielsen;actual;M_Summarization;Numeric^^Fixed
+TAB_Nielsen;L_Nielsen;predicted;M_Summarization;Numeric^^Fixed
+TAB_Nielsen;L_GRP_scores;grp_actual;M_Summarization;Numeric^^Fixed
+TAB_Nielsen;L_GRP_scores;grp_score;M_Summarization;Numeric^^Fixed
+TAB_Nielsen;L_GRP_scores;grp_target;M_Summarization;Numeric^^Fixed
+TAB_Nielsen;N/A;actual;M_Analytics;
+TAB_Nielsen;N/A;predicted;M_Analytics;
+TAB_Nielsen;N/A;grp_actual;M_Analytics;
+TAB_Nielsen;N/A;grp_score;M_Analytics;
+TAB_Nielsen;N/A;grp_target;M_Analytics;
+TAB_Nielsen;N/A;diff_percent;M_Custom;DIVIDE([M_predicted] - [M_actual], [M_actual])^^Fixed
+TAB_Nielsen;N/A;diff%;M_Custom;VAR _actual_filtered = CALCULATE([M_actual], FILTER(ALLSELECTED(L_Nielsen), L_Nielsen[L] == "L7" )) RETURN DIVIDE([M_predicted] - _actual_filtered, [M_predicted])^^Fixed
+TAB_Nielsen;N/A;difference;M_Custom;[M_actual] - [M_predicted]^^Fixed
+TAB_Nielsen;N/A;difference_L7;M_Custom;VAR _actual_filtered = CALCULATE([m_actual], FILTER(ALLSELECTED(L_Nielsen), L_Nielsen[L] == "L7")) RETURN _actual_filtered - [m_predicted]^^Fixed
+TAB_Nielsen;N/A;difference_percent;M_Custom;DIVIDE([M_predicted] - [M_actual], [M_actual])^^Percent
+TAB_Nielsen;N/A;needed_%;M_Custom;VAR _actual_filtered = CALCULATE([m_actual], FILTER(ALLSELECTED(L_Nielsen), L_Nielsen[L] == "L7")) RETURN DIVIDE(_actual_filtered - [M_actual], [M_actual])^^Percent
+TAB_Nielsen;N/A;needed_diff_%;M_Custom;[m_needed_%] - [m_diff_percent]^^Percent
+TAB_Nielsen;N/A;value_L7;M_Custom;CALCULATE([m_actual], FILTER(ALLSELECTED(L_Nielsen), L_Nielsen[L] == "L7"))^^Fixed
+TAB_Nielsen;N/A;actual_group;M_Custom;CALCULATE(SUM(L_Nielsen[actual]), FILTER(L_Nielsen, L_Nielsen[TARGET_GROUP] in VALUES((L_GRP_scores[target_group]))), FILTER(L_Nielsen, L_Nielsen[CHANNELNAME] in VALUES((L_GRP_scores[channel_name]))))^^Fixed
+TAB_Nielsen;N/A;actual_totals;M_Custom;SUMX(VALUES(L_Nielsen[order_id__import_source]), [m_actual_group])^^Fixed
+TAB_Nielsen;N/A;predicted_group;M_Custom;CALCULATE(SUM(L_Nielsen[predicted]), FILTER(L_Nielsen, L_Nielsen[TARGET_GROUP] in VALUES((L_GRP_scores[target_group]))), FILTER(L_Nielsen, L_Nielsen[CHANNELNAME] in VALUES((L_GRP_scores[channel_name]))))^^Fixed
+TAB_Nielsen;N/A;grp_score_predicted;M_Custom;[m_predicted_group] + ([m_grp_score] - [m_grp_actual])^^Fixed
+TAB_Nielsen;N/A;predicted_grp_score_total;M_Custom;SUMX(VALUES(L_Nielsen[order_id__import_source]), [m_grp_score_predicted])^^Fixed
+TAB_Nielsen;N/A;predicted_totals;M_Custom;SUMX(VALUES(L_Nielsen[order_id__import_source]), [m_predicted_group])^^Fixed
+TAB_Nielsen;N/A;diff_predicted_actual;M_Custom;[m_predicted_totals] - [m_actual_totals]^^Fixed
+TAB_Nielsen;N/A;diff_percent;M_Analytics;
+TAB_Nielsen;N/A;diff%;M_Analytics;
+TAB_Nielsen;N/A;difference;M_Analytics;
+TAB_Nielsen;N/A;difference_L7;M_Analytics;
+TAB_Nielsen;N/A;difference_percent;M_Analytics;
+TAB_Nielsen;N/A;needed_%;M_Analytics;
+TAB_Nielsen;N/A;needed_diff_%;M_Analytics;
+TAB_Nielsen;N/A;value_L7;M_Analytics;
+TAB_Nielsen;N/A;actual_group;M_Analytics;
+TAB_Nielsen;N/A;actual_totals;M_Analytics;
+TAB_Nielsen;N/A;predicted_group;M_Analytics;
+TAB_Nielsen;N/A;grp_score_predicted;M_Analytics;
+TAB_Nielsen;N/A;predicted_grp_score_total;M_Analytics;
+TAB_Nielsen;N/A;predicted_totals;M_Analytics;
+TAB_Nielsen;N/A;diff_predicted_actual;M_Analytics;
+TAB_MH_Inventory;F_GAM_Delivery;AdImpressions;M_Summarization;Numeric
+TAB_MH_Inventory;F_GAM_Delivery;Clicks;M_Summarization;Numeric
+TAB_MH_Inventory;F_Digital_Delivery;delivery_clicks;M_Summarization;Numeric
+TAB_MH_Inventory;F_Digital_Delivery;delivery_impressions;M_Summarization;Numeric
+TAB_MH_Inventory;F_Digital_Delivery;delivery_revenueaftercommission;M_Summarization;Numeric
+TAB_MH_Inventory;F_Digital_Delivery;forecast_revenueaftercommission;M_Summarization;Numeric
+TAB_MH_Inventory;N/A;AdImpressions;M_Analytics;
+TAB_MH_Inventory;N/A;Clicks;M_Analytics;
+TAB_MH_Inventory;N/A;delivery_clicks;M_Analytics;
+TAB_MH_Inventory;N/A;delivery_impressions;M_Analytics;
+TAB_MH_Inventory;N/A;delivery_revenueaftercommission;M_Analytics;
+TAB_MH_Inventory;N/A;forecast_revenueaftercommission;M_Analytics;
+TAB_KGRP_Net;F_MP_KGRP_Net;channel_target_rating;M_Summarization;Numeric^^^^^^^^false
+TAB_KGRP_Net;F_MP_KGRP_Net;individual_spot_index;M_Summarization;Numeric^^^^^^^^false
+TAB_KGRP_Net;F_MP_KGRP_Net;kgrp_net_individual_spot_index_100;M_Summarization;Numeric^^^^^^^^false
+TAB_KGRP_Net;F_MP_KGRP_Net;kgrp_net_individual_spot_month_index_100;M_Summarization;Numeric^^^^^^^^false
+TAB_KGRP_Net;F_MP_KGRP_Net;kgrp_net_spot_index_100;M_Summarization;Numeric^^^^^^^^false
+TAB_KGRP_Net;F_MP_KGRP_Net;kgrp_net_spot_month_index_100;M_Summarization;Numeric^^^^^^^^false
+TAB_KGRP_Net;F_MP_KGRP_Net;recalc_net;M_Summarization;Numeric^^^^^^^^false
+TAB_KGRP_Net;F_MP_KGRP_Net;recalc_net_individual_spot_index_100;M_Summarization;Numeric^^^^^^^^false
+TAB_KGRP_Net;F_MP_KGRP_Net;recalc_net_individual_spot_month_index_100;M_Summarization;Numeric^^^^^^^^false
+TAB_KGRP_Net;F_MP_KGRP_Net;recalc_net_spot_index_100;M_Summarization;Numeric^^^^^^^^false
+TAB_KGRP_Net;F_MP_KGRP_Net;recalc_net_spot_month_index_100;M_Summarization;Numeric^^^^^^^^false
+TAB_KGRP_Net;F_MP_KGRP_Net;spot_index;M_Summarization;Numeric^^^^^^^^false
+TAB_KGRP_Net;F_MP_KGRP_Net;spot_index_perc;M_Summarization;Numeric^^^^^^^^false
+TAB_KGRP_Net;F_MP_KGRP_Net;spot_length;M_Summarization;Numeric^^^^^^^^false
+TAB_MDB;F_Revenue;delivery_netaftercommission;M_Summarization;Numeric
+TAB_MDB;F_MDB;Spend;M_Summarization;Numeric
+TAB_MDB;N/A;delivery_netaftercommission;M_Analytics;PM,M,PPPY,PPY,PY,Y,YTD,YTDPY
+TAB_MDB;N/A;Spend;M_Analytics;PM,M,PPPY,PPY,PY,Y,YTD,YTDPY
+TAB_MDB;N/A;Spend_A&D;M_Analytics;PM,M,PPPY,PPY,PY,Y,YTD,YTDPY
+TAB_MDB;N/A;Spend_A&D;M_Custom;CALCULATE([M_Spend_Base],I_Publisher[Publisher] = "ADS & DATA")^^#,0
+TAB_MDB;N/A;Spend_Share_A&D;M_Analytics;PM,M,PPPY,PPY,PY,Y,YTD,YTDPY
+TAB_MDB;N/A;Spend_Share_A&D;M_Custom;DIVIDE([M_Spend_A&D_Custom],[M_Spend_Base])^^Percent
+TAB_MDB;N/A;Spend_Delta_Y_PY;M_Custom;IF(NOT(ISBLANK([M_Spend_PY])), [M_Spend_Y] - [M_Spend_PY])^^#,0^^YoY\Delta\Spend
+TAB_MDB;N/A;Spend_Delta_PY_PPY;M_Custom;IF(NOT(ISBLANK([M_Spend_PPY])), [M_Spend_PY] - [M_Spend_PPY])^^#,0^^YoY\Delta\Spend
+TAB_MDB;N/A;Spend_Delta_PPY_PPPY;M_Custom;IF(NOT(ISBLANK([M_Spend_PPPY])), [M_Spend_PPY] - [M_Spend_PPPY])^^#,0^^YoY\Delta\Spend
+TAB_MDB;N/A;Spend_Delta_YTD_YTDPY;M_Custom;IF(NOT(ISBLANK([M_Spend_YTDPY])), [M_Spend_YTD] - [M_Spend_YTDPY])^^#,0^^YoY\Delta\Spend
+TAB_MDB;N/A;Delivery_Netaftercommission_Delta_Y_PY;M_Custom;IF(NOT(ISBLANK([M_delivery_netaftercommission_PY])), [M_delivery_netaftercommission_Y] - [M_delivery_netaftercommission_PY])^^#,0^^YoY\Delta\delivery_netaftercommission
+TAB_MDB;N/A;Delivery_Netaftercommission_Delta_PY_PPY;M_Custom;IF(NOT(ISBLANK([M_delivery_netaftercommission_PPY])), [M_delivery_netaftercommission_PY] - [M_delivery_netaftercommission_PPY])^^#,0^^YoY\Delta\delivery_netaftercommission
+TAB_MDB;N/A;Delivery_Netaftercommission_Delta_PPY_PPPY;M_Custom;IF(NOT(ISBLANK([M_delivery_netaftercommission_PPPY])), [M_delivery_netaftercommission_PPY] - [M_delivery_netaftercommission_PPPY])^^#,0^^YoY\Delta\delivery_netaftercommission
+TAB_MDB;N/A;Delivery_Netaftercommission_Delta_YTD_YTDPY;M_Custom;IF(NOT(ISBLANK([M_delivery_netaftercommission_YTDPY])), [M_delivery_netaftercommission_YTD] - [M_delivery_netaftercommission_YTDPY])^^#,0^^YoY\Delta\delivery_netaftercommission
+TAB_MDB;N/A;Spend_A&D_Delta_Y_PY;M_Custom;IF(NOT(ISBLANK([M_spend_A&D_PY])), [M_spend_A&D_Y] - [M_spend_A&D_PY])^^#,0^^YoY\Delta\Spend
+TAB_MDB;N/A;Spend_A&D_Delta_PY_PPY;M_Custom;IF(NOT(ISBLANK([M_spend_A&D_PPY])), [M_spend_A&D_PY] - [M_spend_A&D_PPY])^^#,0^^YoY\Delta\Spend
+TAB_MDB;N/A;Spend_A&D_Delta_PPY_PPPY;M_Custom;IF(NOT(ISBLANK([M_spend_A&D_PPPY])), [M_spend_A&D_PPY] - [M_spend_A&D_PPPY])^^#,0^^YoY\Delta\Spend
+TAB_MDB;N/A;Spend_A&D_Delta_YTD_YTDPY;M_Custom;IF(NOT(ISBLANK([M_spend_A&D_YTDPY])), [M_spend_A&D_YTD] - [M_spend_A&D_YTDPY])^^#,0^^YoY\Delta\Spend
+TAB_MDB;N/A;Spend_Share_A&D_Delta_Y_PY;M_Custom;IF(NOT(ISBLANK([M_spend_share_A&D_PY])), [M_spend_share_A&D_Y] - [M_spend_share_A&D_PY])^^Percent^^YoY\Delta\Spend
+TAB_MDB;N/A;Spend_Share_A&D_Delta_PY_PPY;M_Custom;IF(NOT(ISBLANK([M_spend_share_A&D_PPY])), [M_spend_share_A&D_PY] - [M_spend_share_A&D_PPY])^^Percent^^YoY\Delta\Spend
+TAB_MDB;N/A;Spend_Share_A&D_Delta_PPY_PPPY;M_Custom;IF(NOT(ISBLANK([M_spend_share_A&D_PPPY])), [M_spend_share_A&D_PPY] - [M_spend_share_A&D_PPPY])^^Percent^^YoY\Delta\Spend
+TAB_MDB;N/A;Spend_Share_A&D_Delta_YTD_YTDPY;M_Custom;IF(NOT(ISBLANK([M_spend_share_A&D_YTDPY])), [M_spend_share_A&D_YTD] - [M_spend_share_A&D_YTDPY])^^Percent^^YoY\Delta\Spend
+TAB_MDB;N/A;Spend_Growth_Y_PY;M_Custom;VAR v_Spend_Growth_Y_PY =  DIVIDE([M_Spend_Delta_Y_PY],[M_Spend_PY]) RETURN SWITCH(TRUE(),v_Spend_Growth_Y_PY > 5, ">500 %",v_Spend_Growth_Y_PY)^^Percent^^YoY\Growth\Spend
+TAB_MDB;N/A;Spend_Growth_PY_PPY;M_Custom;VAR v_Spend_Growth_PY_PPY =  DIVIDE([M_Spend_Delta_PY_PPY],[M_Spend_PPY]) RETURN SWITCH(TRUE(),v_Spend_Growth_PY_PPY > 5, ">500 %",v_Spend_Growth_PY_PPY)^^Percent^^YoY\Growth\Spend
+TAB_MDB;N/A;Spend_Growth_PPY_PPPY;M_Custom;VAR v_Spend_Growth_PPY_PPPY =  DIVIDE([M_Spend_Delta_PPY_PPPY],[M_Spend_PPPY]) RETURN SWITCH(TRUE(),v_Spend_Growth_PPY_PPPY > 5, ">500 %",v_Spend_Growth_PPY_PPPY)^^Percent^^YoY\Growth\Spend
+TAB_MDB;N/A;Spend_Growth_YTD_YTDPY;M_Custom;VAR v_Spend_Growth_YTD_YTDPY =  DIVIDE([M_Spend_Delta_YTD_YTDPY],[M_Spend_YTDPY]) RETURN SWITCH(TRUE(),v_Spend_Growth_YTD_YTDPY > 5, ">500 %",v_Spend_Growth_YTD_YTDPY)^^Percent^^YoY\Growth\Spend
+TAB_MDB;N/A;Delivery_netaftercommission_Growth_Y_PY;M_Custom;VAR v_Delivery_netaftercommission_Growth_Y_PY =  DIVIDE([M_delivery_netaftercommission_Delta_Y_PY],[M_delivery_netaftercommission_PY]) RETURN SWITCH(TRUE(),v_Delivery_netaftercommission_Growth_Y_PY > 5, ">500 %",v_Delivery_netaftercommission_Growth_Y_PY)^^Percent^^YoY\Growth\delivery_netaftercommission
+TAB_MDB;N/A;Delivery_netaftercommission_Growth_PY_PPY;M_Custom;VAR v_Delivery_netaftercommission_Growth_PY_PPY =  DIVIDE([M_delivery_netaftercommission_Delta_PY_PPY],[M_delivery_netaftercommission_PPY]) RETURN SWITCH(TRUE(),v_Delivery_netaftercommission_Growth_PY_PPY > 5, ">500 %",v_Delivery_netaftercommission_Growth_PY_PPY)^^Percent^^YoY\Growth\delivery_netaftercommission
+TAB_MDB;N/A;Delivery_netaftercommission_Growth_PPY_PPPY;M_Custom;VAR v_Delivery_netaftercommission_Growth_PPY_PPPY =  DIVIDE([M_delivery_netaftercommission_Delta_PPY_PPPY],[M_delivery_netaftercommission_PPPY]) RETURN SWITCH(TRUE(),v_Delivery_netaftercommission_Growth_PPY_PPPY > 5, ">500 %",v_Delivery_netaftercommission_Growth_PPY_PPPY)^^Percent^^YoY\Growth\delivery_netaftercommission
+TAB_MDB;N/A;Delivery_netaftercommission_Growth_YTD_YTDPY;M_Custom;VAR v_Delivery_netaftercommission_Growth_YTD_YTDPY =  DIVIDE([M_delivery_netaftercommission_Delta_YTD_YTDPY],[M_delivery_netaftercommission_YTDPY]) RETURN SWITCH(TRUE(),v_Delivery_netaftercommission_Growth_YTD_YTDPY > 5, ">500 %",v_Delivery_netaftercommission_Growth_YTD_YTDPY)^^Percent^^YoY\Growth\delivery_netaftercommission
+TAB_MDB;N/A;Spend_A&D_Growth_Y_PY;M_Custom;VAR v_Spend_AD_Growth_Y_PY =  DIVIDE([M_spend_A&D_Delta_Y_PY],[M_spend_A&D_PY]) RETURN SWITCH(TRUE(),v_Spend_AD_Growth_Y_PY > 5, ">500 %",v_Spend_AD_Growth_Y_PY)^^Percent^^YoY\Growth\Spend
+TAB_MDB;N/A;Spend_A&D_Growth_PY_PPY;M_Custom;VAR v_Spend_AD_Growth_PY_PPY =  DIVIDE([M_spend_A&D_Delta_PY_PPY],[M_spend_A&D_PPY]) RETURN SWITCH(TRUE(),v_Spend_AD_Growth_PY_PPY > 5, ">500 %",v_Spend_AD_Growth_PY_PPY)^^Percent^^YoY\Growth\Spend
+TAB_MDB;N/A;Spend_A&D_Growth_PPY_PPPY;M_Custom;VAR v_Spend_AD_Growth_PPY_PPPY =  DIVIDE([M_spend_A&D_Delta_PPY_PPPY],[M_spend_A&D_PPPY]) RETURN SWITCH(TRUE(),v_Spend_AD_Growth_PPY_PPPY > 5, ">500 %",v_Spend_AD_Growth_PPY_PPPY)^^Percent^^YoY\Growth\Spend
+TAB_MDB;N/A;Spend_A&D_Growth_YTD_YTDPY;M_Custom;VAR v_Spend_AD_Growth_YTD_YTDPY =  DIVIDE([M_spend_A&D_Delta_YTD_YTDPY],[M_spend_A&D_YTDPY]) RETURN SWITCH(TRUE(),v_Spend_AD_Growth_YTD_YTDPY > 5, ">500 %",v_Spend_AD_Growth_YTD_YTDPY)^^Percent^^YoY\Growth\Spend
+TAB_MDB;N/A;Spend_Share_A&D_Growth_Y_PY;M_Custom;VAR v_Spend_Share_AD_Growth_Y_PY =  DIVIDE([M_spend_share_A&D_Delta_Y_PY],[M_spend_share_A&D_PY]) RETURN SWITCH(TRUE(),v_Spend_Share_AD_Growth_Y_PY > 5, ">500 %",v_Spend_Share_AD_Growth_Y_PY)^^Percent^^YoY\Growth\Spend
+TAB_MDB;N/A;Spend_Share_A&D_Growth_PY_PPY;M_Custom;VAR v_Spend_Share_AD_Growth_PY_PPY =  DIVIDE([M_spend_share_A&D_Delta_PY_PPY],[M_spend_share_A&D_PPY]) RETURN SWITCH(TRUE(),v_Spend_Share_AD_Growth_PY_PPY > 5, ">500 %",v_Spend_Share_AD_Growth_PY_PPY)^^Percent^^YoY\Growth\Spend
+TAB_MDB;N/A;Spend_Share_A&D_Growth_PPY_PPPY;M_Custom;VAR v_Spend_Share_AD_Growth_PPY_PPPY =  DIVIDE([M_spend_share_A&D_Delta_PPY_PPPY],[M_spend_share_A&D_PPPY]) RETURN SWITCH(TRUE(),v_Spend_Share_AD_Growth_PPY_PPPY > 5, ">500 %",v_Spend_Share_AD_Growth_PPY_PPPY)^^Percent^^YoY\Growth\Spend
+TAB_MDB;N/A;Spend_Share_A&D_Growth_YTD_YTDPY;M_Custom;VAR v_Spend_Share_AD_Growth_YTD_YTDPY =  DIVIDE([M_spend_share_A&D_Delta_YTD_YTDPY],[M_spend_share_A&D_YTDPY]) RETURN SWITCH(TRUE(),v_Spend_Share_AD_Growth_YTD_YTDPY > 5, ">500 %",v_Spend_Share_AD_Growth_YTD_YTDPY)^^Percent^^YoY\Growth\Spend
+TAB_Frequency;F_Frequency;ad_count;M_Summarization;Numeric
+TAB_Frequency;F_Frequency;video_count;M_Summarization;Numeric
+TAB_Frequency;F_Frequency;event_count;M_Summarization;Numeric
+TAB_Frequency;N/A;ad_count;M_Analytics;
+TAB_Frequency;N/A;video_count;M_Analytics;
+TAB_Frequency;N/A;event_count;M_Analytics;
+TAB_Sales_Activity;N/A;new_opportunities;M_Custom;CALCULATE ( DISTINCTCOUNT ( 'F_Opportunity_Lifecycle'[id] ), USERELATIONSHIP ( 'F_Opportunity_Lifecycle'[lifecycle_start], 'D_Date'[date] ) )^^#,0
+TAB_Sales_Activity;N/A;new_opportunities_outbound;M_Custom;CALCULATE ( [M_new_opportunities_Custom], 'F_Opportunity_Lifecycle'[opportunitysource] = "Prospectie/Outbound" )^^#,0
+TAB_Sales_Activity;N/A;outbound_rate;M_Custom;DIVIDE ( [M_new_opportunities_outbound_Custom], [M_new_opportunities] )^^0%
+TAB_Sales_Activity;N/A;closed_opportunities;M_Custom;CALCULATE ( DISTINCTCOUNT ( 'F_Opportunity_Lifecycle'[id] ), USERELATIONSHIP ( 'F_Opportunity_Lifecycle'[lifecycle_end], 'D_Date'[date] ), NOT ( ISBLANK ( 'F_Opportunity_Lifecycle'[lifecycle_end] ) ) )^^#,0
+TAB_Sales_Activity;N/A;data_until;M_Custom;SELECTEDVALUE ( 'Data_Until'[data_until] )^^dd/mm/yyyy
+TAB_Sales_Activity;N/A;date_period;M_Custom;FORMAT ( MIN ( 'D_Date'[date] ), "dd/mm/yyyy" ) & " – " & FORMAT ( MAX ( 'D_Date'[date] ), "dd/mm/yyyy" )
+TAB_Sales_Activity;N/A;opportunities;M_Custom;[M_open_opportunities_Custom] + [M_closed_opportunities_custom]^^#,0
+TAB_Sales_Activity;N/A;open_opportunities;M_Custom;CALCULATE ( DISTINCTCOUNT ( 'F_Opportunity_Lifecycle'[id] ), FILTER ( 'F_Opportunity_Lifecycle', 'F_Opportunity_Lifecycle'[lifecycle_start] <= MAX ( 'D_Date'[date] ) && OR ( 'F_Opportunity_Lifecycle'[lifecycle_end] > MAX ( 'D_Date'[date] ), ISBLANK ( 'F_Opportunity_Lifecycle'[lifecycle_end] ) ) ) )^^#,0
+TAB_Sales_Activity;N/A;closed_opportunities_won;M_Custom;CALCULATE ( [M_closed_opportunities_Custom], 'F_Opportunity_Lifecycle'[end_state] = "Won" )^^#,0
+TAB_Sales_Activity;N/A;closed_opportunities_lost;M_Custom;CALCULATE ( [M_closed_opportunities_Custom], 'F_Opportunity_Lifecycle'[end_state] = "Lost" )^^#,0
+TAB_Sales_Activity;N/A;conversion_rate;M_Custom;CALCULATE ( DIVIDE ( [M_closed_opportunities_won_Custom], [M_closed_opportunities_Custom] ), KEEPFILTERS ( NOT ( 'F_Opportunity_Lifecycle'[statuscode] IN { "Exclusive opportunity (interested but not available)", "Invalid Imported Lead", "Other Won Opportunity A&D" } ) ) )^^0%
+TAB_Sales_Activity;N/A;next_stage_status_green;M_Custom;VAR DataUntil = [M_data_until_Custom] VAR Result = CALCULATE ( [M_open_opportunities_Custom], NOT ( ISBLANK ( 'F_Opportunity_Lifecycle'[nextstagedeadline] ) ), 'F_Opportunity_Lifecycle'[nextstagedeadline] >= DataUntil + 7 ) RETURN Result^^#,0
+TAB_Sales_Activity;N/A;next_stage_status_orange;M_Custom;VAR DataUntil = [M_data_until_Custom] VAR Result = CALCULATE ( [M_open_opportunities_Custom], NOT ( ISBLANK ( 'F_Opportunity_Lifecycle'[nextstagedeadline] ) ), 'F_Opportunity_Lifecycle'[nextstagedeadline] >= DataUntil && 'F_Opportunity_Lifecycle'[nextstagedeadline] < DataUntil + 7 ) RETURN Result^^#,0
+TAB_Sales_Activity;N/A;next_stage_status_red;M_Custom;VAR DataUntil = [M_data_until_Custom] VAR Result = CALCULATE ( [M_open_opportunities_Custom], NOT ( ISBLANK ( 'F_Opportunity_Lifecycle'[nextstagedeadline] ) ), 'F_Opportunity_Lifecycle'[nextstagedeadline] < DataUntil ) RETURN Result^^#,0
+TAB_Sales_Activity;N/A;next_stage_status_gray;M_Custom;CALCULATE ( [M_open_opportunities_Custom], ISBLANK ( 'F_Opportunity_Lifecycle'[nextstagedeadline] ) )^^#,0
+TAB_Sales_Activity;N/A;next_stage_status;M_Custom;SWITCH ( TRUE(), [M_next_stage_status_green_Custom] = 1, 2, [M_next_stage_status_orange_Custom] = 1, 1, [M_next_stage_status_red_Custom] = 1, 0, [M_next_stage_status_gray_Custom] = 1, -1 )
+TAB_Sales_Activity;N/A;flows;M_Custom;CALCULATE ( SUM ( 'F_Opportunity_Lifecycle'[flows] ), FILTER ( 'F_Opportunity_Lifecycle', NOT ( ISBLANK ( [M_closed_opportunities_Custom] ) ) ) )^^#,0
+TAB_Sales_Activity;N/A;normal_flows;M_Custom;CALCULATE ( SUM ( 'F_Opportunity_Lifecycle'[normal_flows] ), FILTER ( 'F_Opportunity_Lifecycle', NOT ( ISBLANK ( [M_closed_opportunities_Custom] ) ) ) )^^#,0
+TAB_Sales_Activity;N/A;changed_flows;M_Custom;[M_flows_Custom] - [M_normal_flows_Custom]^^#,0
+TAB_Sales_Activity;N/A;normal_flow_rate;M_Custom;FLOOR ( DIVIDE ( [M_normal_flows_Custom], [M_flows_Custom] ), .01 )^^0%
+TAB_Sales_Activity;N/A;new_opportunities;M_Analytics;^^^^false
+TAB_Sales_Activity;N/A;new_opportunities_outbound;M_Analytics;^^^^false
+TAB_Sales_Activity;N/A;outbound_rate;M_Analytics;^^^^false
+TAB_Sales_Activity;N/A;closed_opportunities;M_Analytics;^^^^false
+TAB_Sales_Activity;N/A;data_until;M_Analytics;^^^^false
+TAB_Sales_Activity;N/A;date_period;M_Analytics;^^^^false
+TAB_Sales_Activity;N/A;opportunities;M_Analytics;^^^^false
+TAB_Sales_Activity;N/A;open_opportunities;M_Analytics;^^^^false
+TAB_Sales_Activity;N/A;closed_opportunities_won;M_Analytics;^^^^false
+TAB_Sales_Activity;N/A;closed_opportunities_lost;M_Analytics;^^^^false
+TAB_Sales_Activity;N/A;conversion_rate;M_Analytics;^^^^false
+TAB_Sales_Activity;N/A;next_stage_status_green;M_Analytics;^^^^false
+TAB_Sales_Activity;N/A;next_stage_status_orange;M_Analytics;^^^^false
+TAB_Sales_Activity;N/A;next_stage_status_red;M_Analytics;^^^^false
+TAB_Sales_Activity;N/A;next_stage_status_gray;M_Analytics;^^^^false
+TAB_Sales_Activity;N/A;next_stage_status;M_Analytics;^^^^false
+TAB_Sales_Activity;N/A;flows;M_Analytics;^^^^false
+TAB_Sales_Activity;N/A;normal_flows;M_Analytics;^^^^false
+TAB_Sales_Activity;N/A;changed_flows;M_Analytics;^^^^false
+TAB_Sales_Activity;N/A;normal_flow_rate;M_Analytics;^^^^false
+TAB_Finance_Reporting;N/A;actuals_amount;M_Custom;VAR Revenues = SWITCH ( SELECTEDVALUE ( 'D_PNL'[PNL Niv 2] ), "Owned", CALCULATE ( - SUM ( 'F_Actuals'[Amount] ), 'F_Actuals'[Ownership] = "Owned" ), "Third Party", CALCULATE ( - SUM ( 'F_Actuals'[Amount] ), 'F_Actuals'[Ownership] = "Third Party" ), - SUM ( 'F_Actuals'[Amount] ) ) VAR EBITDA = CALCULATE ( - SUM ( 'F_Actuals'[Amount] ), FILTER ( ALL ( 'D_PNL' ), 'D_PNL'[PNL Niv 1] IN { "Revenues", "Operating Costs" } ) ) VAR DA = CALCULATE ( - SUM ( 'F_Actuals'[Amount] ), FILTER ( ALL ( 'D_PNL' ), 'D_PNL'[PNL Niv 1] = "EBITDA" ) ) VAR IT = CALCULATE ( - SUM ( 'F_Actuals'[Amount] ), FILTER ( ALL ( 'D_PNL' ), 'D_PNL'[PNL Niv 1] = "EBIT" ) ) VAR Result = IF ( ISINSCOPE ( 'D_PNL'[PNL Niv 1] ) || ISINSCOPE ( 'D_PNL'[PNL Niv 2] ), SWITCH ( SELECTEDVALUE ( 'D_PNL'[PNL Niv 1] ), "Revenues", Revenues, "Operating Costs", SUM ( 'F_Actuals'[Amount] ), "EBITDA", IF ( ISINSCOPE ( 'D_PNL'[PNL Niv 2] ), SUM ( 'F_Actuals'[Amount] ), EBITDA ), "EBIT", IF ( ISINSCOPE ( 'D_PNL'[PNL Niv 2] ), SUM ( 'F_Actuals'[Amount] ), EBITDA + DA ), "Net Result", EBITDA + DA + IT ), - SUM ( 'F_Actuals'[Amount] ) ) RETURN Result
+TAB_Finance_Reporting;N/A;cy;M_Custom;VAR LastDate_ = CALCULATE ( MAX ( 'F_Actuals'[Accounting Period] ), ALL ( 'D_PNL' ) ) VAR Result = CALCULATE ( ROUND ( [M_actuals_amount_Custom], 2 ), FILTER ( ALL ( 'D_Date'[Year] ), 'D_Date'[Year] = YEAR ( LastDate_ ) ) ) RETURN Result^^#,0.00
+TAB_Finance_Reporting;N/A;cy_ytd;M_Custom;VAR LastDate_ = MAX ( 'F_Actuals'[Accounting Period] ) VAR Result = CALCULATE ( ROUND ( [M_actuals_amount_Custom], 2 ), DATESYTD ( 'D_Date'[Date] ) ) RETURN Result^^#,0.00
+TAB_Finance_Reporting;N/A;ly;M_Custom;VAR LastDate_ = CALCULATE ( MAX ( 'F_Actuals'[Accounting Period] ), ALL ( 'D_PNL' ) ) VAR Result = CALCULATE ( ROUND ( [M_actuals_amount_Custom], 2 ), FILTER ( ALL ( 'D_Date'[Year] ), 'D_Date'[Year] = YEAR ( LastDate_ ) - 1 ) ) RETURN Result^^#,0.00
+TAB_Finance_Reporting;N/A;ly_ytd;M_Custom;CALCULATE ( ROUND ( [M_actuals_amount_Custom], 2 ), DATESYTD ( DATEADD ( 'D_Date'[Date], -1, YEAR ) ) )^^#,0.00
+TAB_Finance_Reporting;N/A;budget_amount;M_Custom;VAR Revenues = SWITCH ( SELECTEDVALUE ( 'D_PNL'[PNL Niv 2] ), "Owned", CALCULATE ( - SUM ( 'F_Budget'[Amount] ), 'F_Budget'[Ownership] = "Owned" ), "Third Party", CALCULATE ( - SUM ( 'F_Budget'[Amount] ), 'F_Budget'[Ownership] = "Third Party" ), - SUM ( 'F_Budget'[Amount] ) ) VAR EBITDA = CALCULATE ( - SUM ( 'F_Budget'[Amount] ), FILTER ( ALL ( 'D_PNL' ), 'D_PNL'[PNL Niv 1] IN { "Revenues", "Operating Costs" } ) ) VAR DA = CALCULATE ( - SUM ( 'F_Budget'[Amount] ), FILTER ( ALL ( 'D_PNL' ), 'D_PNL'[PNL Niv 1] = "EBITDA" ) ) VAR IT = CALCULATE ( - SUM ( 'F_Budget'[Amount] ), FILTER ( ALL ( 'D_PNL' ), 'D_PNL'[PNL Niv 1] = "EBIT" ) ) VAR Result = IF ( ISINSCOPE ( 'D_PNL'[PNL Niv 1] ) || ISINSCOPE ( 'D_PNL'[PNL Niv 2] ), SWITCH ( SELECTEDVALUE ( 'D_PNL'[PNL Niv 1] ), "Revenues", Revenues, "Operating Costs", SUM ( 'F_Budget'[Amount] ), "EBITDA", IF ( ISINSCOPE ( 'D_PNL'[PNL Niv 2] ), SUM ( 'F_Budget'[Amount] ), EBITDA ), "EBIT", IF ( ISINSCOPE ( 'D_PNL'[PNL Niv 2] ), SUM ( 'F_Budget'[Amount] ), EBITDA + DA ), "Net Result", EBITDA + DA + IT ), - SUM ( 'F_Budget'[Amount] ) ) RETURN Result
+TAB_Finance_Reporting;N/A;bud;M_Custom;VAR LastDate_ = CALCULATE ( MAX ( 'F_Budget'[Accounting Period] ), 'F_Budget'[Type] = "BUD", ALL ( 'D_PNL' ) ) VAR Result = CALCULATE ( ROUND ( [M_budget_amount_Custom], 2 ), 'F_Budget'[Type] = "BUD", FILTER ( ALL ( 'D_Date'[Year] ), 'D_Date'[Year] = YEAR ( LastDate_ ) ) ) RETURN Result^^#,0.00
+TAB_Finance_Reporting;N/A;bud_ytd;M_Custom;CALCULATE ( ROUND ( [M_budget_amount_Custom], 2 ), 'F_Budget'[Type] = "BUD", DATESYTD ( 'D_Date'[Date] ) )^^#,0.00
+TAB_Finance_Reporting;N/A;le;M_Custom;VAR LastDate_= CALCULATE ( MAX ( 'F_Budget'[Accounting Period] ), CONTAINSSTRING ( 'F_Budget'[Type], "LE" ), ALL ( 'D_PNL' ) ) VAR Result = CALCULATE ( ROUND ( [M_budget_amount_Custom], 2 ), 'F_Budget'[Type] = SELECTEDVALUE ( 'LE'[LE] ), FILTER ( ALL ( 'D_Date'[Year] ), 'D_Date'[Year] = YEAR ( LastDate_ ) ) ) RETURN Result^^#,0.00
+TAB_Finance_Reporting;N/A;le_ytd;M_Custom;CALCULATE ( ROUND ( [M_budget_amount_Custom], 2 ), 'F_Budget'[Type] = SELECTEDVALUE ( 'LE'[LE] ), DATESYTD ( 'D_Date'[Date] ) )^^#,0.00
+TAB_Finance_Reporting;N/A;le_1;M_Custom;VAR LastDate_= CALCULATE ( MAX ( 'F_Budget'[Accounting Period] ), CONTAINSSTRING ( 'F_Budget'[Type], "LE" ), ALL ( 'D_PNL' ) ) VAR Result = CALCULATE ( ROUND ( [M_budget_amount_Custom], 2 ), 'F_Budget'[Type] = "LE1", FILTER ( ALL ( 'D_Date'[Year] ), 'D_Date'[Year] = YEAR ( LastDate_ ) ) ) RETURN Result^^#,0.00
+TAB_Finance_Reporting;N/A;le_1_ytd;M_Custom;CALCULATE ( ROUND ( [M_budget_amount_Custom], 2 ), 'F_Budget'[Type] = "LE1", DATESYTD ( 'D_Date'[Date] ) )^^#,0.00
+TAB_Finance_Reporting;N/A;le_2;M_Custom;VAR LastDate_= CALCULATE ( MAX ( 'F_Budget'[Accounting Period] ), CONTAINSSTRING ( 'F_Budget'[Type], "LE" ), ALL ( 'D_PNL' ) ) VAR Result = CALCULATE ( ROUND ( [M_budget_amount_Custom], 2 ), 'F_Budget'[Type] = "LE2", FILTER ( ALL ( 'D_Date'[Year] ), 'D_Date'[Year] = YEAR ( LastDate_ ) ) ) RETURN Result^^#,0.00
+TAB_Finance_Reporting;N/A;le_2_ytd;M_Custom;CALCULATE ( ROUND ( [M_budget_amount_Custom], 2 ), 'F_Budget'[Type] = "LE2", DATESYTD ( 'D_Date'[Date] ) )^^#,0.00
+TAB_Finance_Reporting;N/A;le_3;M_Custom;VAR LastDate_= CALCULATE ( MAX ( 'F_Budget'[Accounting Period] ), CONTAINSSTRING ( 'F_Budget'[Type], "LE" ), ALL ( 'D_PNL' ) ) VAR Result = CALCULATE ( ROUND ( [M_budget_amount_Custom], 2 ), 'F_Budget'[Type] = "LE3", FILTER ( ALL ( 'D_Date'[Year] ), 'D_Date'[Year] = YEAR ( LastDate_ ) ) ) RETURN Result^^#,0.00
+TAB_Finance_Reporting;N/A;le_3_ytd;M_Custom;CALCULATE ( ROUND ( [M_budget_amount_Custom], 2 ), 'F_Budget'[Type] = "LE3", DATESYTD ( 'D_Date'[Date] ) )^^#,0.00
+TAB_Finance_Reporting;N/A;le_4;M_Custom;VAR LastDate_= CALCULATE ( MAX ( 'F_Budget'[Accounting Period] ), CONTAINSSTRING ( 'F_Budget'[Type], "LE" ), ALL ( 'D_PNL' ) ) VAR Result = CALCULATE ( ROUND ( [M_budget_amount_Custom], 2 ), 'F_Budget'[Type] = "LE4", FILTER ( ALL ( 'D_Date'[Year] ), 'D_Date'[Year] = YEAR ( LastDate_ ) ) ) RETURN Result^^#,0.00
+TAB_Finance_Reporting;N/A;le_4_ytd;M_Custom;CALCULATE ( ROUND ( [M_budget_amount_Custom], 2 ), 'F_Budget'[Type] = "LE4", DATESYTD ( 'D_Date'[Date] ) )^^#,0.00
+TAB_Finance_Reporting;N/A;le_5;M_Custom;VAR LastDate_= CALCULATE ( MAX ( 'F_Budget'[Accounting Period] ), CONTAINSSTRING ( 'F_Budget'[Type], "LE" ), ALL ( 'D_PNL' ) ) VAR Result = CALCULATE ( ROUND ( [M_budget_amount_Custom], 2 ), 'F_Budget'[Type] = "LE5", FILTER ( ALL ( 'D_Date'[Year] ), 'D_Date'[Year] = YEAR ( LastDate_ ) ) ) RETURN Result^^#,0.00
+TAB_Finance_Reporting;N/A;le_5_ytd;M_Custom;CALCULATE ( ROUND ( [M_budget_amount_Custom], 2 ), 'F_Budget'[Type] = "LE5", DATESYTD ( 'D_Date'[Date] ) )^^#,0.00
+TAB_Finance_Reporting;N/A;delta_bud;M_Custom;[M_cy_Custom] - [M_bud_Custom]^^#,0.00%
+TAB_Finance_Reporting;N/A;delta_bud_pct;M_Custom;ROUND ( DIVIDE ( [M_cy_Custom] - [M_bud_Custom], [M_bud_Custom] ), 4 )^^#,0.00%
+TAB_Finance_Reporting;N/A;delta_bud_ytd;M_Custom;[M_cy_ytd_Custom] - [M_bud_ytd_Custom]^^#,0.00%
+TAB_Finance_Reporting;N/A;delta_bud_ytd_pct;M_Custom;ROUND ( DIVIDE ( [M_cy_ytd_Custom] - [M_bud_ytd_Custom], [M_bud_ytd_Custom] ), 4 )^^#,0.00%
+TAB_Finance_Reporting;N/A;status;M_Custom;VAR DeltaBudget = IF ( [M_bud_Custom] > 0, [M_delta_bud_pct_Custom], - [M_delta_bud_pct_Custom] ) VAR Result = IF ( DeltaBudget <= 0, 1, IF ( DeltaBudget <= 0.05, 0, -1 ) ) RETURN Result^^0
+TAB_Finance_Reporting;N/A;status_green;M_Custom;IF ( [M_status_Custom] = 1, 1, BLANK () )^^0
+TAB_Finance_Reporting;N/A;status_orange;M_Custom;IF ( [M_status_Custom] = 0, 0, BLANK () )^^0
+TAB_Finance_Reporting;N/A;status_red;M_Custom;IF ( [M_status_Custom] = -1, -1, BLANK () )^^0
+TAB_Finance_Reporting;N/A;cy;M_Analytics;^^^^false
+TAB_Finance_Reporting;N/A;cy_ytd;M_Analytics;^^^^false
+TAB_Finance_Reporting;N/A;ly;M_Analytics;^^^^false
+TAB_Finance_Reporting;N/A;ly_ytd;M_Analytics;^^^^false
+TAB_Finance_Reporting;N/A;bud;M_Analytics;^^^^false
+TAB_Finance_Reporting;N/A;bud_ytd;M_Analytics;^^^^false
+TAB_Finance_Reporting;N/A;le;M_Analytics;^^^^false
+TAB_Finance_Reporting;N/A;le_ytd;M_Analytics;^^^^false
+TAB_Finance_Reporting;N/A;le_1;M_Analytics;^^^^false
+TAB_Finance_Reporting;N/A;le_1_ytd;M_Analytics;^^^^false
+TAB_Finance_Reporting;N/A;le_2;M_Analytics;^^^^false
+TAB_Finance_Reporting;N/A;le_2_ytd;M_Analytics;^^^^false
+TAB_Finance_Reporting;N/A;le_3;M_Analytics;^^^^false
+TAB_Finance_Reporting;N/A;le_3_ytd;M_Analytics;^^^^false
+TAB_Finance_Reporting;N/A;le_4;M_Analytics;^^^^false
+TAB_Finance_Reporting;N/A;le_4_ytd;M_Analytics;^^^^false
+TAB_Finance_Reporting;N/A;le_5;M_Analytics;^^^^false
+TAB_Finance_Reporting;N/A;le_5_ytd;M_Analytics;^^^^false
+TAB_Finance_Reporting;N/A;delta_bud;M_Analytics;^^^^false
+TAB_Finance_Reporting;N/A;delta_bud_pct;M_Analytics;^^^^false
+TAB_Finance_Reporting;N/A;delta_bud_ytd;M_Analytics;^^^^false
+TAB_Finance_Reporting;N/A;delta_bud_ytd_pct;M_Analytics;^^^^false
+TAB_Finance_Reporting;N/A;status;M_Analytics;^^^^false
+TAB_Finance_Reporting;N/A;status_green;M_Analytics;^^^^false
+TAB_Finance_Reporting;N/A;status_orange;M_Analytics;^^^^false
+TAB_Finance_Reporting;N/A;status_red;M_Analytics;^^^^false
+TAB_Remuneratie;F_Data_Revenue;fact_potential_netaftercommission;M_Summarization;Numeric^^^^data_fact_potential_netaftercommission
+TAB_Remuneratie;F_Data_Revenue;fact_potential_grossaftercommission;M_Summarization;Numeric^^^^data_fact_potential_grossaftercommission
+TAB_Remuneratie;F_Data_Revenue;fact_potential_grossbeforecommission;M_Summarization;Numeric^^^^data_fact_potential_grossbeforecommission
+TAB_Remuneratie;F_Data_Revenue;fact_delivery_netaftercommission;M_Summarization;Numeric^^^^data_fact_delivery_netaftercommission
+TAB_Remuneratie;F_Data_Revenue;fact_delivery_grossaftercommission;M_Summarization;Numeric^^^^data_fact_delivery_grossaftercommission
+TAB_Remuneratie;F_Data_Revenue;fact_delivery_netbeforecommission;M_Summarization;Numeric^^^^data_fact_delivery_netbeforecommission
+TAB_Remuneratie;F_Data_Revenue;fact_delivery_grossbeforecommission;M_Summarization;Numeric^^^^data_fact_delivery_grossbeforecommission
+TAB_Remuneratie;F_Data_Revenue;fact_potential_netbeforecommission;M_Summarization;Numeric^^^^data_fact_potential_netbeforecommission
+TAB_Remuneratie;F_Data_Revenue;fact_potential_quantity;M_Summarization;Numeric^^^^data_fact_potential_quantity
+TAB_Remuneratie;F_Data_Revenue;fact_delivered_quantity;M_Summarization;Numeric^^^^data_fact_delivered_quantity
+TAB_Remuneratie;F_Data_Revenue;percentage_interactions;M_Summarization;Numeric^^Percent^^data_percentage_interactions
+TAB_Remuneratie;F_Data_Revenue;interactions_segment_bucket;M_Summarization;Numeric^^^^data_interactions_segment_bucket
+TAB_Remuneratie;F_Data_Revenue;interactions_segment_bucket_wave;M_Summarization;Numeric^^^^data_interactions_segment_bucket_wave
+TAB_Remuneratie;F_Data_Revenue;interactions_segment_wave;M_Summarization;Numeric^^^^data_interactions_segment_wave
+TAB_Remuneratie;F_Data_Revenue;delivered_quantity_daily;M_Summarization;Numeric^^^^data_delivered_quantity_daily
+TAB_Remuneratie;N/A;data_fact_potential_netaftercommission;M_Analytics;PY,Y,YTD
+TAB_Remuneratie;N/A;data_fact_potential_grossaftercommission;M_Analytics;PY,Y,YTD
+TAB_Remuneratie;N/A;data_fact_potential_grossbeforecommission;M_Analytics;PY,Y,YTD
+TAB_Remuneratie;N/A;data_fact_delivery_netaftercommission;M_Analytics;PY,Y,YTD
+TAB_Remuneratie;N/A;data_fact_delivery_grossaftercommission;M_Analytics;PY,Y,YTD
+TAB_Remuneratie;N/A;data_fact_delivery_netbeforecommission;M_Analytics;PY,Y,YTD
+TAB_Remuneratie;N/A;data_fact_delivery_grossbeforecommission;M_Analytics;PY,Y,YTD
+TAB_Remuneratie;N/A;data_fact_potential_netbeforecommission;M_Analytics;PY,Y,YTD
+TAB_Remuneratie;N/A;data_fact_potential_quantity;M_Analytics;PY,Y,YTD
+TAB_Remuneratie;N/A;data_fact_delivered_quantity;M_Analytics;PY,Y,YTD
+TAB_Remuneratie;N/A;data_percentage_interactions;M_Analytics;PY,Y,YTD
+TAB_Remuneratie;N/A;data_interactions_segment_bucket;M_Analytics;PY,Y,YTD
+TAB_Remuneratie;N/A;data_interactions_segment_bucket_wave;M_Analytics;PY,Y,YTD
+TAB_Remuneratie;N/A;data_interactions_segment_wave;M_Analytics;PY,Y,YTD
+TAB_Remuneratie;N/A;data_delivered_quantity_daily;M_Analytics;PY,Y,YTD
+TAB_Remuneratie;F_Delivery_Revenue;fact_delivered_quantity;M_Summarization;Numeric^^^^delivery_fact_delivered_quantity
+TAB_Remuneratie;F_Delivery_Revenue;fact_delivery_grossaftercommission;M_Summarization;Numeric^^^^delivery_fact_delivery_grossaftercommission
+TAB_Remuneratie;F_Delivery_Revenue;fact_delivery_netaftercommission;M_Summarization;Numeric^^^^delivery_fact_delivery_netaftercommission
+TAB_Remuneratie;F_Delivery_Revenue;fact_delivery_netaftercommission_orig;M_Summarization;Numeric^^^^delivery_fact_delivery_netaftercommission_orig
+TAB_Remuneratie;F_Delivery_Revenue;fact_overdelivered_quantity;M_Summarization;Numeric^^^^delivery_fact_overdelivered_quantity
+TAB_Remuneratie;F_Delivery_Revenue;fact_potential_grossaftercommission;M_Summarization;Numeric^^^^delivery_fact_potential_grossaftercommission
+TAB_Remuneratie;F_Delivery_Revenue;fact_potential_grossaftercommission_orig;M_Summarization;Numeric^^^^delivery_fact_potential_grossaftercommission_orig
+TAB_Remuneratie;F_Delivery_Revenue;fact_potential_netaftercommission;M_Summarization;Numeric^^^^delivery_fact_potential_netaftercommission
+TAB_Remuneratie;F_Delivery_Revenue;fact_potential_netaftercommission_orig;M_Summarization;Numeric^^^^delivery_fact_potential_netaftercommission_orig
+TAB_Remuneratie;F_Delivery_Revenue;fact_potential_quantity;M_Summarization;Numeric^^^^delivery_fact_potential_quantity
+TAB_Remuneratie;N/A;delivery_fact_delivered_quantity;M_Analytics;PY,Y,YTD
+TAB_Remuneratie;N/A;delivery_fact_delivery_grossaftercommission;M_Analytics;PY,Y,YTD
+TAB_Remuneratie;N/A;delivery_fact_delivery_netaftercommission;M_Analytics;PY,Y,YTD
+TAB_Remuneratie;N/A;delivery_fact_delivery_netaftercommission_orig;M_Analytics;PY,Y,YTD
+TAB_Remuneratie;N/A;delivery_fact_delivery_netbeforecommission;M_Analytics;PY,Y,YTD
+TAB_Remuneratie;N/A;delivery_fact_delivery_netbeforecommission_orig;M_Analytics;PY,Y,YTD
+TAB_Remuneratie;N/A;delivery_fact_overdelivered_quantity;M_Analytics;PY,Y,YTD
+TAB_Remuneratie;N/A;delivery_fact_potential_grossaftercommission;M_Analytics;PY,Y,YTD
+TAB_Remuneratie;N/A;delivery_fact_potential_grossaftercommission_orig;M_Analytics;PY,Y,YTD
+TAB_Remuneratie;N/A;delivery_fact_potential_netaftercommission_orig;M_Analytics;PY,Y,YTD
+TAB_Remuneratie;N/A;delivery_fact_potential_netaftercommission;M_Analytics;PY,Y,YTD
+TAB_Remuneratie;N/A;delivery_fact_potential_quantity;M_Analytics;PY,Y,YTD
+TAB_Remuneratie;F_Segment_Contribution;pct_final;M_Summarization;Numeric^^Percent^^segment_contribution_share
+TAB_Remuneratie;N/A;segment_contribution_share;M_Analytics;PY,Y,YTD
+TAB_PowerBI_Activities;N/A;Activities;M_Custom;COUNTROWS(F_Activities)
+TAB_PowerBI_Activities;N/A;Activities;M_Analytics;PM,M,PY,Y,YTD
+TAB_PowerBI_Activities;N/A;Activities_Duplicate;M_Custom;COUNTROWS(F_Activities)
+TAB_PowerBI_Activities;N/A;Activities_Duplicate;M_Analytics;

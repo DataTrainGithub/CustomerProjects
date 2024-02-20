@@ -1,0 +1,517 @@
+{
+    "models": [{
+            "name": "TAB_Programmatic_Insights",
+            "analyzeInExcel": true,
+            "environments": {
+                "DEV": "DaIP_Datasets_DEV",
+                "UAT": "DaIP_Datasets_UAT",
+                "PRD": "DaIP_Datasets_PRD"
+            },
+            "scripts": [
+                "D_TimeIntelligence",
+                "M_Summarization",
+                "M_Custom",
+                "M_Analytics",
+                "M_Functional"
+            ]
+        },
+        {
+            "name": "TAB_Inventory_Insights",
+            "analyzeInExcel": true,
+            "environments": {
+                "DEV": "DaIP_Datasets_DEV",
+                "UAT": "DaIP_Datasets_UAT",
+                "PRD": "DaIP_Datasets_PRD"
+            },
+            "scripts": [
+                "D_TimeIntelligence",
+                "M_Summarization",
+                "M_Custom",
+                "M_Analytics",
+                "M_Statistics",
+                "M_Functional",
+                "M_FieldParameters"
+            ]
+        },
+        {
+            "name": "TAB_KeyValues",
+            "environments": {
+                "DEV": "DaIP_Datasets_DEV",
+                "UAT": "DaIP_Datasets_UAT",
+                "PRD": "DaIP_Datasets_PRD"
+            },
+            "scripts": [
+                "D_TimeIntelligence",
+                "M_Summarization",
+                "M_Analytics"
+            ]
+        },
+        {
+            "name": "TAB_Delivery",
+            "environments": {
+                "DEV": "DaIP_Datasets_DEV",
+                "UAT": "DaIP_Datasets_UAT",
+                "PRD": "DaIP_Datasets_PRD"
+            },
+            "scripts": [
+                "D_TimeIntelligence",
+                "M_Summarization",
+                "M_Custom",
+                "M_Analytics"
+            ]
+        },
+        {
+            "name": "TAB_Estimates",
+            "environments": {
+                "DEV": "DaIP_Datasets_AdHoc"
+            },
+            "scripts": [
+                "D_TimeIntelligence",
+                "M_Summarization",
+                "M_Analytics"
+            ]
+        },
+        {
+            "name": "TAB_Pipeline_Delivery",
+            "environments": {
+                "DEV": "Pipeline%20Insights%20Platform%20(PIP)"
+            },
+            "scripts": [
+                "D_TimeIntelligence",
+                "M_Summarization",
+                "M_Custom",
+                "M_Analytics",
+                "M_Functional"
+            ]
+        },
+        {
+            "name": "TAB_Segment_Insights",
+            "environments": {
+                "DEV": "DaIP_Datasets_DEV",
+                "UAT": "DaIP_Datasets_UAT",
+                "PRD": "DaIP_Datasets_PRD"
+            },
+            "scripts": [
+                "D_TimeIntelligence",
+                "M_Summarization",
+                "M_Custom",
+                "M_Analytics",
+                "M_Functional"
+            ]
+        },
+        {
+            "name": "TAB_Warner_Insights",
+            "environments": {
+                "DEV": "DaIP_Datasets_DEV",
+                "UAT": "DaIP_Datasets_UAT",
+                "PRD": "DaIP_Datasets_PRD"
+            },
+            "scripts": [
+                "D_TimeIntelligence",
+                "M_Summarization",
+                "M_Custom",
+                "M_Analytics",
+                "M_Functional"
+            ]
+        },
+        {
+            "name": "TAB_Campaign_Insights",
+            "analyzeInExcel": true,
+            "environments": {
+                "DEV": "DaIP_Datasets_DEV",
+                "UAT": "DaIP_Datasets_UAT",
+                "PRD": "DaIP_Datasets_PRD"
+            },
+            "scripts": [
+                "D_TimeIntelligence",
+                "F_FormatStrings",
+                "M_Summarization",
+                "M_Custom",
+                "M_Analytics",
+                "M_Functional",
+                "M_FieldParameters",
+                "P_Perspectives"
+            ]
+        },
+        {
+            "name": "TAB_Jira",
+            "environments": {
+                "DEV": "DaIP_Datasets_DEV",
+                "UAT": "DaIP_Datasets_UAT",
+                "PRD": "DaIP_Datasets_PRD"
+            },
+            "scripts": []
+        },
+        {
+            "name": "TAB_4G",
+            "environments": {
+                "DEV": "DaIP_Datasets_DEV",
+                "UAT": "DaIP_Datasets_UAT",
+                "PRD": "DaIP_Datasets_PRD"
+            },
+            "scripts": [
+                "O_QOL",
+                "D_TimeIntelligence",
+                "F_FormatStrings",
+                "M_Summarization",
+                "M_Custom",
+                "M_Analytics",
+                "M_Functional"
+            ]
+        },
+        {
+            "name": "TAB_Pipeline_Insights",
+            "environments": {
+                "DEV": "DaIP_Datasets_DEV",
+                "UAT": "DaIP_Datasets_UAT",
+                "PRD": "DaIP_Datasets_PRD"
+            },
+            "scripts": [
+                "O_QOL",
+                "D_TimeIntelligence",
+                "F_FormatStrings",
+                "M_Summarization",
+                "M_Custom",
+                "M_Analytics",
+                "M_Functional"
+            ]
+        },
+        {
+            "name": "TAB_Commercial_Insights",
+            "derrivativeModels": [{
+                    "name": "TAB_Commercial_Insights_Services",
+                    "mapping": [{
+                            "source": "fact_revenue",
+                            "target": "fact_revenue__services"
+                        },
+                        {
+                            "source": "fin_budget_2024",
+                            "target": "fin_budget_2024__services"
+                        }
+                    ]
+                },
+                {
+                    "name": "TAB_Commercial_Insights_Only_DeBuren",
+                    "mapping": [{
+                            "source": "fact_revenue",
+                            "target": "fact_revenue__only_de_buren"
+                        },
+                        {
+                            "source": "fin_budget_2024",
+                            "target": "fin_budget_2024__only_de_buren"
+                        }
+                    ]
+                },
+                {
+                    "name": "TAB_Commercial_Insights_Excl_DeBuren",
+                    "mapping": [{
+                            "source": "fact_revenue",
+                            "target": "fact_revenue__excl_de_buren"
+                        },
+                        {
+                            "source": "fin_budget_2024",
+                            "target": "fin_budget_2024__excl_de_buren"
+                        }
+                    ]
+                },
+                {
+                    "name": "TAB_Commercial_Insights_Deleted",
+                    "mapping": [{
+                        "source": "fact_revenue",
+                        "target": "fact_revenue__deleted"
+                    }]
+                }
+            ],
+            "environments": {
+                "DEV": "DaIP_Datasets_DEV",
+                "UAT": "DaIP_Datasets_UAT",
+                "PRD": "DaIP_Datasets_PRD"
+            },
+            "scripts": [
+                "D_TimeIntelligence",
+                "F_FormatStrings",
+                "M_Summarization",
+                "M_Custom",
+                "M_Analytics",
+                "M_Functional",
+                "M_HTML",
+                "M_FieldParameters"
+            ]
+        },
+        {
+            "name": "TAB_Commercial_Insights_Freezed_2023",
+            "environments": {
+                "DEV": "DaIP_Datasets_DEV",
+                "UAT": "DaIP_Datasets_UAT",
+                "PRD": "DaIP_Datasets_PRD"
+            },
+            "scripts": [
+                "D_TimeIntelligence",
+                "F_FormatStrings",
+                "M_Summarization",
+                "M_Custom",
+                "M_Analytics",
+                "M_Functional",
+                "M_HTML",
+                "M_FieldParameters"
+            ]
+        },
+        {
+            "name": "TAB_Commercial_Insights_Programmatic",
+            "derrivativeModels": [{
+                    "name": "TAB_Commercial_Insights_Programmatic_Only_DeBuren",
+                    "mapping": [{
+                            "source": "fact_revenue__programmatic",
+                            "target": "fact_revenue__programmatic__only_de_buren"
+                        },
+                        {
+                            "source": "fin_budget_2024",
+                            "target": "fin_budget_2024__only_de_buren"
+                        }
+                    ]
+                },
+                {
+                    "name": "TAB_Commercial_Insights_Programmatic_Excl_DeBuren",
+                    "mapping": [{
+                            "source": "fact_revenue__programmatic",
+                            "target": "fact_revenue__programmatic__excl_de_buren"
+                        },
+                        {
+                            "source": "fin_budget_2024",
+                            "target": "fin_budget_2024__excl_de_buren"
+                        }
+                    ]
+                },
+                {
+                    "name": "TAB_Commercial_Insights_DataRem",
+                    "mapping": [{
+                            "source": "fact_revenue__programmatic",
+                            "target": "dr___fact_revenue"
+                        },
+                        {
+                            "source": "campaign_dimension",
+                            "target": "dr___campaign_dimension"
+                        }
+                    ]
+                },
+                {
+                    "name": "TAB_Commercial_Insights_DataRem_Only_DeBuren",
+                    "mapping": [{
+                            "source": "fact_revenue__programmatic",
+                            "target": "dr___fact_revenue__only_de_buren"
+                        },
+                        {
+                            "source": "fin_budget_2024",
+                            "target": "fin_budget_2024__only_de_buren"
+                        },
+                        {
+                            "source": "campaign_dimension",
+                            "target": "dr___campaign_dimension"
+                        }
+                    ]
+                },
+                {
+                    "name": "TAB_Commercial_Insights_DataRem_Excl_DeBuren",
+                    "mapping": [{
+                            "source": "fact_revenue__programmatic",
+                            "target": "dr___fact_revenue__excl_de_buren"
+                        },
+                        {
+                            "source": "fin_budget_2024",
+                            "target": "fin_budget_2024__excl_de_buren"
+                        },
+                        {
+                            "source": "campaign_dimension",
+                            "target": "dr___campaign_dimension"
+                        }
+                    ]
+                },
+                {
+                    "name": "TAB_Commercial_Insights_DataRem_Services",
+                    "mapping": [{
+                            "source": "fact_revenue__programmatic",
+                            "target": "dr___fact_revenue__services"
+                        },
+                        {
+                            "source": "fin_budget_2024",
+                            "target": "fin_budget_2024__services"
+                        },
+                        {
+                            "source": "campaign_dimension",
+                            "target": "dr___campaign_dimension"
+                        }
+                    ]
+                },
+                {
+                    "name": "TAB_Commercial_Insights_DataRem_Deleted",
+                    "mapping": [{
+                            "source": "fact_revenue__programmatic",
+                            "target": "dr___fact_revenue__deleted"
+                        },
+                        {
+                            "source": "campaign_dimension",
+                            "target": "dr___campaign_dimension"
+                        }
+                    ]
+                },
+                {
+                    "name": "TAB_Commercial_Insights_DataRem_GoWild",
+                    "mapping": [{
+                            "source": "fact_revenue__programmatic",
+                            "target": "dr___fact_revenue_GOWILD"
+                        },
+                        {
+                            "source": "campaign_dimension",
+                            "target": "dr___campaign_dimension"
+                        }
+                    ]
+                }
+            ],
+            "environments": {
+                "DEV": "DaIP_Datasets_DEV",
+                "UAT": "DaIP_Datasets_UAT",
+                "PRD": "DaIP_Datasets_PRD"
+            },
+            "scripts": [
+                "D_TimeIntelligence",
+                "F_FormatStrings",
+                "M_Summarization",
+                "M_Custom",
+                "M_Analytics",
+                "M_Functional",
+                "M_HTML",
+                "M_FieldParameters"
+            ]
+        },
+        {
+            "name": "TAB_Nielsen",
+            "environments": {
+                "DEV": "DaIP_Datasets_DEV",
+                "UAT": "DaIP_Datasets_UAT",
+                "PRD": "DaIP_Datasets_PRD"
+            },
+            "scripts": [
+                "D_TimeIntelligence",
+                "M_Summarization",
+                "M_Custom",
+                "M_Analytics",
+                "M_Functional"
+            ]
+        },
+        {
+            "name": "TAB_MH_Inventory",
+            "environments": {
+                "DEV": "DaIP_Datasets_DEV",
+                "UAT": "DaIP_Datasets_UAT",
+                "PRD": "DaIP_Datasets_PRD"
+            },
+            "scripts": [
+                "D_TimeIntelligence",
+                "M_Summarization",
+                "M_Custom",
+                "M_Analytics",
+                "M_Functional"
+            ]
+        },
+        {
+            "name": "TAB_KGRP_Net",
+            "environments": {
+                "DEV": "DaIP_Datasets_DEV",
+                "UAT": "DaIP_Datasets_UAT",
+                "PRD": "DaIP_Datasets_PRD"
+            },
+            "scripts": [
+                "D_TimeIntelligence",
+                "M_Summarization",
+                "M_Custom",
+                "M_Analytics",
+                "M_Functional"
+            ]
+        },
+        {
+            "name": "TAB_Frequency",
+            "environments": {
+                "DEV": "DaIP_Datasets_DEV",
+                "UAT": "DaIP_Datasets_UAT",
+                "PRD": "DaIP_Datasets_PRD"
+            },
+            "scripts": [
+                "O_QOL",
+                "D_TimeIntelligence",
+                "M_Summarization",
+                "M_Custom",
+                "M_Analytics"
+            ]
+        },
+        {
+            "name": "TAB_Sales_Activity",
+            "environments": {
+                "DEV": "DaIP_Datasets_DEV",
+                "UAT": "DaIP_Datasets_UAT",
+                "PRD": "DaIP_Datasets_PRD"
+            },
+            "scripts": [
+                "M_Custom",
+                "M_Analytics"
+            ]
+        },
+        {
+            "name": "TAB_Finance_Reporting",
+            "environments": {
+                "DEV": "DaIP_Datasets_DEV",
+                "UAT": "DaIP_Datasets_UAT",
+                "PRD": "DaIP_Datasets_PRD"
+            },
+            "scripts": [
+                "M_Custom",
+                "M_Analytics"
+            ]
+        },
+        {
+            "name": "TAB_MDB",
+            "environments": {
+                "DEV": "DaIP_Datasets_DEV",
+                "UAT": "DaIP_Datasets_UAT",
+                "PRD": "DaIP_Datasets_PRD"
+            },
+            "scripts": [
+                "D_TimeIntelligence",
+                "M_Summarization",
+                "M_Custom",
+                "M_Analytics"
+            ]
+        },
+        {
+            "name": "TAB_Remuneratie",
+            "environments": {
+                "DEV": "DaIP_Datasets_DEV",
+                "UAT": "DaIP_Datasets_UAT",
+                "PRD": "DaIP_Datasets_PRD"
+            },
+            "scripts": [
+                "O_QOL",
+                "D_TimeIntelligence",
+                "F_FormatStrings",
+                "M_Summarization",
+                "M_Custom",
+                "M_Analytics"
+            ]
+        },
+        {
+            "name": "TAB_PowerBI_Activities",
+            "environments": {
+                "DEV": "DaIP_Datasets_DEV",
+                "UAT": "DaIP_Datasets_UAT",
+                "PRD": "DaIP_Datasets_PRD"
+            },
+            "scripts": [
+                "O_QOL",
+                "D_TimeIntelligence",
+                "F_FormatStrings",
+                "M_Summarization",
+                "M_Custom",
+                "M_Analytics"
+            ]
+        }
+    ]
+}
